@@ -7,6 +7,19 @@
         <h1>Register</h1>
         <!-- register form -->
         <form method="post" action="<?php echo URL; ?>login/register_action" name="registerform">
+            <!-- the first name input field uses a HTML5 pattern check -->
+            <label for="login_input_fname">
+                First Name
+                <span style="display: block; font-size: 14px; color: #999;">(only letters and numbers, 2 to 64 characters)</span>
+            </label>
+            <input id="login_input_fname" class="login_input" type="text" pattern="[a-zA-Z0-9]{2,64}" name="fname" required />
+            <!-- the last name input field uses a HTML5 pattern check -->
+            <label for="login_input_lname">
+                Last Name
+                <span style="display: block; font-size: 14px; color: #999;">(only letters and numbers, 2 to 64 characters)</span>
+            </label>
+            <input id="login_input_lname" class="login_input" type="text" pattern="[a-zA-Z0-9]{2,64}" name="lname" required />
+
             <!-- the user name input field uses a HTML5 pattern check -->
             <label for="login_input_username">
                 Username

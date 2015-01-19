@@ -6,7 +6,7 @@
 
     <!-- new password form box -->
     <form method="post" action="<?php echo URL; ?>login/setnewpassword" name="new_password_form">
-        <input type='hidden' name='user_name' value='<?php echo $this->user_name; ?>' />
+        <input type='hidden' name='user_email' value='<?php echo $this->user_email; ?>' />
         <input type='hidden' name='user_password_reset_hash' value='<?php echo $this->user_password_reset_hash; ?>' />
         <label for="reset_input_password_new">
             New password (min. 6 characters!

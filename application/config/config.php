@@ -210,15 +210,17 @@ define("FEEDBACK_USER_DOES_NOT_EXIST", "This user does not exist.");
 // The "login failed"-message is a security improved feedback that doesn't show a potential attacker if the user exists or not
 define("FEEDBACK_LOGIN_FAILED", "Login failed.");
 define("FEEDBACK_USERNAME_FIELD_EMPTY", "Username field was empty.");
+define("FEEDBACK_NAME_FIELD_EMPTY", "Your first and/or last name field was empty.");
 define("FEEDBACK_PASSWORD_FIELD_EMPTY", "Password field was empty.");
 define("FEEDBACK_EMAIL_FIELD_EMPTY", "Email and passwords fields were empty.");
 define("FEEDBACK_EMAIL_AND_PASSWORD_FIELDS_EMPTY", "Email field was empty.");
 define("FEEDBACK_USERNAME_SAME_AS_OLD_ONE", "Sorry, that username is the same as your current one. Please choose another one.");
-define("FEEDBACK_USERNAME_ALREADY_TAKEN", "Sorry, that username is already taken. Please choose another one.");
+define("FEEDBACK_USERNAME_ALREADY_TAKEN", "Sorry, your username or name is already taken. Please only make one account.");
 define("FEEDBACK_USER_EMAIL_ALREADY_TAKEN", "Sorry, that email is already in use. Please choose another one.");
 define("FEEDBACK_USERNAME_CHANGE_SUCCESSFUL", "Your username has been changed successfully.");
 define("FEEDBACK_USERNAME_AND_PASSWORD_FIELD_EMPTY", "Username and password fields were empty.");
 define("FEEDBACK_USERNAME_DOES_NOT_FIT_PATTERN", "Username does not fit the name scheme: only a-Z and numbers are allowed, 2 to 64 characters.");
+define("FEEDBACK_NAME_DOES_NOT_FIT_PATTERN", "Your first and/or last name does not fit the name scheme: only a-Z and numbers are allowed, 2 to 20 characters.");
 define("FEEDBACK_EMAIL_DOES_NOT_FIT_PATTERN", "Sorry, your chosen email does not fit into the email naming pattern.");
 define("FEEDBACK_EMAIL_SAME_AS_OLD_ONE", "Sorry, that email address is the same as your current one. Please choose another one.");
 define("FEEDBACK_EMAIL_CHANGE_SUCCESSFUL", "Your email address has been changed successfully.");
@@ -226,6 +228,7 @@ define("FEEDBACK_CAPTCHA_WRONG", "The entered captcha security characters were w
 define("FEEDBACK_PASSWORD_REPEAT_WRONG", "Password and password repeat are not the same.");
 define("FEEDBACK_PASSWORD_TOO_SHORT", "Password has a minimum length of 6 characters.");
 define("FEEDBACK_USERNAME_TOO_SHORT_OR_TOO_LONG", "Username cannot be shorter than 2 or longer than 64 characters.");
+define("FEEDBACK_NAME_TOO_SHORT_OR_TOO_LONG", "Your first and/or last name cannot be shorter than 2 or longer than 20 characters.");
 define("FEEDBACK_EMAIL_TOO_LONG", "Email cannot be longer than 64 characters.");
 define("FEEDBACK_ACCOUNT_SUCCESSFULLY_CREATED", "Your account has been created successfully and we have sent you an email. Please click the VERIFICATION LINK within that mail.");
 define("FEEDBACK_VERIFICATION_MAIL_SENDING_FAILED", "Sorry, we could not send you an verification mail. Your account has NOT been created.");
