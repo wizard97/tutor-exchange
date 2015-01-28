@@ -23,138 +23,58 @@ class SearchModel
     public function getResults()
     {
 
+$math_subject = array("elementary_math", "middle_math", "math_1", "math_2", "math_3", "math_4", "stats", "comp_sci", "calc");
 
+$prepared = "SELECT users.user_id, users.fname, users.lname, users.user_email, users.user_active, users.user_has_avatar, users.user_account_type, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_active =1 AND user_account_type >= 2";
 
-if (isset($_GET['elementary']) || isset($_GET['middle']) || isset($_GET['high']) || isset($_GET['math']) || isset($_GET['science']) || isset($_GET['history']) || isset($_GET['english']) || isset($_GET['language']) || isset($_GET['music']))
+foreach($math_subject as $math_class)
 {
-$query = 'WHERE ';
-
-    	$needand = false;
-
-
-    		if(isset($_GET['elementary']) && $_GET['elementary'] == '1'){
-    		$query .= "tutors.elementary = 1 ";
-    		$needand = true;
-    		}
-
-    		if(isset($_GET['middle']) && $_GET['middle'] == '1'){
-    		if ($needand)
-    		{
-    		$query .=  "AND ";
-    		$needand = false;
-    		}
-    		$query .= "tutors.middle = 1 ";
-    		$needand = true;
-    		}
-
-    		
-    		if(isset($_GET['high']) && $_GET['high'] == '1'){
-    		if ($needand)
-    		{
-    		$query .= "AND ";
-    		$needand = false;
-    		}
-    		$query .= "tutors.high = 1 ";
-    		$needand = true;
-    		}
-
-
-
-    		if(isset($_GET['math']) && $_GET['math'] == '1'){
-    		if ($needand)
-    		{
-    		$query .= "AND ";
-    		$needand = false;
-    		}
-    		$query .= "tutors.math = 1 ";
-    		$needand = true;
-    		}
-
-    		if(isset($_GET['science']) && $_GET['science'] == '1'){
-    		if ($needand)
-    		{
-    		$query .= "AND ";
-    		$needand = false;
-    		}
-    		$query .= "tutors.science = 1 ";
-    		$needand = true;
-    		}
-
-    		
-    		if(isset($_GET['history']) && $_GET['history'] == '1'){
-    		if ($needand)
-    		{
-    		$query .= "AND ";
-    		$needand = false;
-    		}
-    		$query .= "tutors.history = 1 ";
-    		$needand = true;
-    		}
-
-
-    		if(isset($_GET['english']) && $_GET['english'] == '1'){
-    		if ($needand)
-    		{
-    		$query .= "AND ";
-    		$needand = false;
-    		}
-    		$query .= "tutors.english = 1 ";
-    		$needand = true;
-    		}
-
-
-    		if(isset($_GET['language']) && $_GET['language'] == '1'){
-    		if ($needand)
-    		{
-    		$query .= "AND ";
-    		$needand = false;
-    		}
-    		$query .= "tutors.language = 1 ";
-    		$needand = true;
-    		}
-
-
-    		if(isset($_GET['music']) && $_GET['music'] == '1'){
-    		if ($needand)
-    		{
-    		$query .= "AND ";
-    		$needand = false;
-    		}
-    		$query .= "tutors.music = 1";
-    		$needand = true;
-    		}
+    $prepared.=" AND ".$math_class." >= :".$math_class;
 }
-else
+
+$sth = $this->db->prepare($prepared);
+
+
+$query = array();
+
+foreach($math_subject as $math_class)
 {
-	$query = '';
+
+    if (isset($_POST['math']) && isset($_POST[$math_class]) && in_array($math_class, $_POST['math']))
+    {
+        $query[':'.$math_class] = $_POST[$math_class];
+    }
+
+    else $query[':'.$math_class] = 0;
+
 }
-    	$data = $this->db->query("SELECT users.user_id, users.user_name, users.user_email, users.user_active, users.user_has_avatar, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id ".$query);
+
+$sth->execute($query);
 
 
 
 
-   
 
-
-    	//$sth = $this->db->prepare("SELECT users.user_id, users.user_name, users.user_email, users.user_active, users.user_has_avatar, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE tutors.elementary = :elementary AND tutors.middle = :middle AND tutors.high =:high
-    	//						AND tutors.math = :math AND tutors.science = :science AND tutors.history = :history AND tutors.english = :english AND tutors.language = :language AND tutors.music = :music");
-    	
-    	//$sth->execute(array(':elementary' => $_GET['elementary'], ':middle' => $_GET['middle'], ':high' => $_GET['high'], ':math' => $_GET['math'], ':science' => $_GET['science'], ':history' => $_GET['history'], ':english' => $_GET['english'], ':language' => $_GET['language'], ':music' => $_GET['music']));
-    	
-        $count =  $data->rowCount();
+        $count =  $sth->rowCount();
            if ($count == 0) {
             return false;
         }
 
         $all_users = array();
 
-        foreach ($data->fetchAll() as $user) {
+        foreach ($sth->fetchAll() as $user) {
             // a new object for every user. This is eventually not really optimal when it comes
             // to performance, but it fits the view style better
             $all_users[$user->user_id] = new stdClass();
             $all_users[$user->user_id]->user_id = $user->user_id;
-            $all_users[$user->user_id]->user_name = $user->user_name;
+            $all_users[$user->user_id]->fname = $user->fname;
+            $all_users[$user->user_id]->lname = $user->lname;
+            $all_users[$user->user_id]->age = $user->age;
+            $all_users[$user->user_id]->grade = $user->grade;
             $all_users[$user->user_id]->user_email = $user->user_email;
+            $all_users[$user->user_id]->user_account_type = $user->user_account_type;
+            $all_users[$user->user_id]->highest_math_name = $user->highest_math_name;
+            $all_users[$user->user_id]->highest_math_level = $user->highest_math_level;
 
             if (USE_GRAVATAR) {
                 $all_users[$user->user_id]->user_avatar_link =
@@ -169,6 +89,8 @@ else
         return $all_users;
     }
 
+
+
     /**
      * Gets a user's profile data, according to the given $user_id
      * @param int $user_id The user's id
@@ -176,7 +98,7 @@ else
      */
     public function getUserProfile($user_id)
     {
-        $sql = "SELECT user_id, user_name, user_email, user_active, user_has_avatar
+        $sql = "SELECT user_id, fname, lname, user_email, user_active, user_has_avatar
                 FROM users WHERE user_id = :user_id";
         $sth = $this->db->prepare($sql);
         $sth->execute(array(':user_id' => $user_id));

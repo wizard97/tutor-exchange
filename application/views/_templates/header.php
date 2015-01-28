@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>My Application</title>
+    <title>Lexington Tutor Exchange</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSS -->
@@ -20,14 +20,17 @@
     </div>
 
     <div class='title-box'>
-        <a href="<?php echo URL; ?>">Lexington Tutor Beta V1.0</a>
+        <a href="<?php echo URL; ?>">Lexington Tutor Exchange V1.4 Beta</a>
     </div>
 
     <div class="header">
         <div class="header_left_box">
         <ul id="menu">
             <li <?php if ($this->checkForActiveController($filename, "index")) { echo ' class="active" '; } ?> >
-                <a href="<?php echo URL; ?>index/index">Index</a>
+                <a href="<?php echo URL; ?>index/index">Home</a>
+            </li>
+            <li <?php if ($this->checkForActiveController($filename, "search")) { echo ' class="active" '; } ?> >
+                <a href="<?php echo URL; ?>search/index">Search For Tutors</a>
             </li>
             <li <?php if ($this->checkForActiveController($filename, "help")) { echo ' class="active" '; } ?> >
                 <a href="<?php echo URL; ?>help/index">Help</a>
@@ -67,6 +70,21 @@
                         </li>
                     </ul>
                 </li>
+            <?php endif; ?>
+
+            <?php if (Session::get('user_logged_in') == true && Session::get('user_account_type') >= 2):?>
+              <li <?php if ($this->checkForActiveController($filename, "tutor")) { echo ' class="active" '; } ?> >
+                <a href="<?php echo URL; ?>tutor/index">Tutoring Settings</a>
+                <ul class="sub-menu">
+                    <li <?php if ($this->checkForActiveController($filename, "tutor")) { echo ' class="active" '; } ?> >
+                         <a href="<?php echo URL; ?>tutor/index">Overview</a>
+                    </li>
+                    <li <?php if ($this->checkForActiveController($filename, "tutor")) { echo ' class="active" '; } ?> >
+                         <a href="<?php echo URL; ?>tutor/edittutor">Edit tutoring credentials</a>
+                    </li>
+                </ul>
+
+            </li>
             <?php endif; ?>
 
             <!-- for not logged in users -->

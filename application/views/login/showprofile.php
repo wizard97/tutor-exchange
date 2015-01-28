@@ -5,7 +5,7 @@
     <?php $this->renderFeedbackMessages(); ?>
 
     <div>
-        Your username: <?php echo Session::get('user_name'); ?>
+        Your name: <?php echo Session::get('fname').' '.Session::get('lname'); ?>
     </div>
     <div>
         Your email: <?php echo Session::get('user_email'); ?>

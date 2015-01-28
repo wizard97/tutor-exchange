@@ -26,7 +26,7 @@ class LoginModel
     public function login()
     {
         // we do negative-first checks here
-        if (!isset($_POST['user_name']) OR empty($_POST['user_name'])) {
+        if (!isset($_POST['user_email']) OR empty($_POST['user_email'])) {
             $_SESSION["feedback_negative"][] = FEEDBACK_USERNAME_FIELD_EMPTY;
             return false;
         }
@@ -38,7 +38,6 @@ class LoginModel
         // get user's data
         // (we check if the password fits the password_hash via password_verify() some lines below)
         $sth = $this->db->prepare("SELECT user_id,
-                                          user_name,
                                           fname,
                                           lname,
                                           user_email,
@@ -48,11 +47,11 @@ class LoginModel
                                           user_failed_logins,
                                           user_last_failed_login
                                    FROM   users
-                                   WHERE  (user_email = :user_name)
+                                   WHERE  (user_email = :user_email)
                                           AND user_provider_type = :provider_type");
         // DEFAULT is the marker for "normal" accounts (that have a password etc.)
         // There are other types of accounts that don't have passwords etc. (FACEBOOK)
-        $sth->execute(array(':user_name' => $_POST['user_name'], ':provider_type' => 'DEFAULT'));
+        $sth->execute(array(':user_email' => $_POST['user_email'], ':provider_type' => 'DEFAULT'));
         $count =  $sth->rowCount();
         // if there's NOT one result
         if ($count != 1) {
@@ -85,7 +84,6 @@ class LoginModel
             Session::set('user_id', $result->user_id);
             Session::set('fname', $result->fname);
             Session::set('lname', $result->lname);
-            Session::set('user_name', $result->user_name);
             Session::set('user_email', $result->user_email);
             Session::set('user_account_type', $result->user_account_type);
             Session::set('user_provider_type', 'DEFAULT');
@@ -137,9 +135,9 @@ class LoginModel
             // increment the failed login counter for that user
             $sql = "UPDATE users
                     SET user_failed_logins = user_failed_logins+1, user_last_failed_login = :user_last_failed_login
-                    WHERE user_email = :user_name";
+                    WHERE user_email = :user_email";
             $sth = $this->db->prepare($sql);
-            $sth->execute(array(':user_name' => $_POST['user_name'], ':user_last_failed_login' => time() ));
+            $sth->execute(array(':email' => $_POST['user_email'], ':user_last_failed_login' => time() ));
             // feedback message
             $_SESSION["feedback_negative"][] = FEEDBACK_PASSWORD_WRONG;
             return false;
@@ -177,7 +175,7 @@ class LoginModel
         }
 
         // get real token from database (and all other data)
-        $query = $this->db->prepare("SELECT user_id, user_name, fname, lname, user_email, user_password_hash, user_active,
+        $query = $this->db->prepare("SELECT user_id, fname, lname, user_email, user_password_hash, user_active,
                                           user_account_type,  user_has_avatar, user_failed_logins, user_last_failed_login
                                      FROM users
                                      WHERE user_id = :user_id
@@ -196,7 +194,6 @@ class LoginModel
             Session::set('user_id', $result->user_id);
             Session::set('fname', $result->fname);
             Session::set('lname', $result->lname);
-            Session::set('user_name', $result->user_name);
             Session::set('user_email', $result->user_email);
             Session::set('user_account_type', $result->user_account_type);
             Session::set('user_provider_type', 'DEFAULT');
@@ -367,8 +364,6 @@ class LoginModel
         // perform all necessary form checks
         if (!$this->checkCaptcha()) {
             $_SESSION["feedback_negative"][] = FEEDBACK_CAPTCHA_WRONG;
-        } elseif (empty($_POST['user_name'])) {
-            $_SESSION["feedback_negative"][] = FEEDBACK_USERNAME_FIELD_EMPTY;
         } elseif (empty($_POST['fname'])) {
             $_SESSION["feedback_negative"][] = FEEDBACK_NAME_FIELD_EMPTY;
         } elseif (empty($_POST['lname'])) {
@@ -379,14 +374,10 @@ class LoginModel
             $_SESSION["feedback_negative"][] = FEEDBACK_PASSWORD_REPEAT_WRONG;
         } elseif (strlen($_POST['user_password_new']) < 6) {
             $_SESSION["feedback_negative"][] = FEEDBACK_PASSWORD_TOO_SHORT;
-        } elseif (strlen($_POST['user_name']) > 64 OR strlen($_POST['user_name']) < 2) {
-            $_SESSION["feedback_negative"][] = FEEDBACK_USERNAME_TOO_SHORT_OR_TOO_LONG;
         } elseif (strlen($_POST['fname']) > 64 OR strlen($_POST['fname']) < 2) {
             $_SESSION["feedback_negative"][] = FEEDBACK_NAME_TOO_SHORT_OR_TOO_LONG;  
         } elseif (strlen($_POST['lname']) > 64 OR strlen($_POST['lname']) < 2) {
             $_SESSION["feedback_negative"][] = FEEDBACK_NAME_TOO_SHORT_OR_TOO_LONG;
-        } elseif (!preg_match('/^[a-z\d]{2,64}$/i', $_POST['user_name'])) {
-            $_SESSION["feedback_negative"][] = FEEDBACK_USERNAME_DOES_NOT_FIT_PATTERN;
         } elseif (!preg_match('/^[a-z\d]{2,64}$/i', $_POST['fname'])) {
             $_SESSION["feedback_negative"][] = FEEDBACK_NAME_DOES_NOT_FIT_PATTERN;
         } elseif (!preg_match('/^[a-z\d]{2,64}$/i', $_POST['lname'])) {
@@ -397,11 +388,7 @@ class LoginModel
             $_SESSION["feedback_negative"][] = FEEDBACK_EMAIL_TOO_LONG;
         } elseif (!filter_var($_POST['user_email'], FILTER_VALIDATE_EMAIL)) {
             $_SESSION["feedback_negative"][] = FEEDBACK_EMAIL_DOES_NOT_FIT_PATTERN;
-        } elseif (!empty($_POST['user_name'])
-            AND strlen($_POST['user_name']) <= 64
-            AND strlen($_POST['user_name']) >= 2
-            AND preg_match('/^[a-z\d]{2,64}$/i', $_POST['user_name'])
-            AND !empty($_POST['user_email'])
+        } elseif (!empty($_POST['user_email'])
             AND strlen($_POST['user_email']) <= 64
             AND filter_var($_POST['user_email'], FILTER_VALIDATE_EMAIL)
             AND !empty($_POST['user_password_new'])
@@ -418,7 +405,6 @@ class LoginModel
             {
 
             // clean the input
-            $user_name = strip_tags($_POST['user_name']);
             $fname = strip_tags($_POST['fname']);
             $lname = strip_tags($_POST['lname']);
             $user_email = strip_tags($_POST['user_email']);
@@ -431,8 +417,8 @@ class LoginModel
             $user_password_hash = password_hash($_POST['user_password_new'], PASSWORD_DEFAULT, array('cost' => $hash_cost_factor));
 
             // check if username already exists
-            $query = $this->db->prepare("SELECT * FROM users WHERE user_name = :user_name OR (fname = :fname AND lname = :lname)");
-            $query->execute(array(':user_name' => $user_name, ':fname' => $fname, ':lname' => $lname));
+            $query = $this->db->prepare("SELECT * FROM users WHERE (fname = :fname AND lname = :lname)");
+            $query->execute(array(':fname' => $fname, ':lname' => $lname));
             $count =  $query->rowCount();
             if ($count == 1) {
                 $_SESSION["feedback_negative"][] = FEEDBACK_USERNAME_ALREADY_TAKEN;
@@ -454,10 +440,10 @@ class LoginModel
             $user_creation_timestamp = time();
 
             // write new users data into database
-            $sql = "INSERT INTO users (user_name, fname, lname, user_password_hash, user_email, user_creation_timestamp, user_activation_hash, user_provider_type)
-                    VALUES (:user_name, :fname, :lname, :user_password_hash, :user_email, :user_creation_timestamp, :user_activation_hash, :user_provider_type)";
+            $sql = "INSERT INTO users (fname, lname, user_password_hash, user_email, user_creation_timestamp, user_activation_hash, user_provider_type)
+                    VALUES (:fname, :lname, :user_password_hash, :user_email, :user_creation_timestamp, :user_activation_hash, :user_provider_type)";
             $query = $this->db->prepare($sql);
-            $query->execute(array(':user_name' => $user_name,
+            $query->execute(array(
                                   ':fname' => $fname,
                                   ':lname' => $lname,
                                   ':user_password_hash' => $user_password_hash,

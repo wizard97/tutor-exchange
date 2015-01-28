@@ -1,10 +1,12 @@
+[![php-login introduction & quickstart placeholder picture](_tutorial/placeholder-info.png)](http://www.php-login.net)
+
 [![Donate with PayPal banner](_tutorial/donate-with-paypal.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=P5YLUK4MW3LDG)
 
 [![Donate by server affiliate sale](_tutorial/support-a2hosting.png)](https://affiliates.a2hosting.com/idevaffiliate.php?id=4471&url=579)
 
-# php-login 2.0
+# php-login
 
-*Thanks for 1.400+ stars and 650+ forks. Wow!*
+*Thanks for 1.300+ stars and 600+ forks. Wow!*
 
 ### A PHP & MySQL login script built into a skeleton MVC application
 
@@ -12,7 +14,10 @@ This script is part of the **PHP Login Project**, a collection of four similar l
 This script here is the MVC framework version.
 Find the official portal page of the project here: **[php-login.net](http://www.php-login.net)**.
 Follow the project on **[Twitter](https://twitter.com/simplephplogin)**,
-**[Facebook](https://www.facebook.com/pages/PHP-Login-Script/461306677235868)** or have a look on the official support blog **[Dev Metal](http://www.dev-metal.com)**. Ask questions in the **[Official Support Forum](http://support-forum.php-login.net/)**.
+**[Facebook](https://www.facebook.com/pages/PHP-Login-Script/461306677235868)** or
+**[Google+](https://plus.google.com/104110071861201951660)** and have a look on the official support blog
+**[Dev Metal](http://www.dev-metal.com)**.
+Ask questions in the **[Official Support Forum](http://support-forum.php-login.net/)**.
 
 ### MVC Framework Version 2.0 (this one here)
 * built with the official PHP password hashing functions, fitting the most modern password hashing/salting web standards
@@ -39,10 +44,6 @@ Follow the project on **[Twitter](https://twitter.com/simplephplogin)**,
 * is actively developed, maintained and bug-fixed
 * has detailed tutorials
 * [planned: ready-to-go PuPHPet files and Vagrant boxes]
-
-#### Upcoming 2.1 version
-
-Check out the develop branch for the upcoming version 2.1! The is currently under heavy development and for sure not ready for proper use. Expect a massive refactoring, complete restructuring, better features and a much easier installation. Full release of 2.1 will be in early 2015.
 
 ### Other (smaller) versions of this script
 
@@ -98,7 +99,7 @@ Please commit only in *develop* branch. The *master* branch will always contain 
 
 If you think this script is useful and saves you a lot of work, then think about supporting the project:
 
-1. Rent your next server at [A2 Hosting](http://www.a2hosting.com/4471.html), [Virpus](http://my.virpus.com/aff.php?aff=1836) or [DigitalOcean](https://www.digitalocean.com/?refcode=40d978532a20).
+1. Rent your next server at [A2 Hosting](http://www.a2hosting.com/4471.html) or [DigitalOcean](https://www.digitalocean.com/?refcode=40d978532a20).
 2. Donate via [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=P5YLUK4MW3LDG)
    or [GitTip](https://www.gittip.com/Panique/)
 3. Contribute to this project.

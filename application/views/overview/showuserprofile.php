@@ -19,7 +19,7 @@
 
                 echo '<td>'.$this->user->user_id.'</td>';
                 echo '<td class="avatar"><img src="'.$this->user->user_avatar_link.'" /></td>';
-                echo '<td>'.$this->user->user_name.'</td>';
+                echo '<td>'.$this->user->fname.' '.$this->user->lname.'</td>';
                 echo '<td>'.$this->user->user_email.'</td>';
                 echo '<td>Active: '.$this->user->user_active.'</td>';
                 echo "</tr>";

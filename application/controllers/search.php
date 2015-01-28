@@ -20,8 +20,8 @@ class Search extends Controller
      */
     function index()
     {
- //       $overview_model = $this->loadModel('Overview');
-//        $this->view->users = $overview_model->getAllUsersProfiles();
+       // $overview_model = $this->loadModel('Overview');
+       // $this->view->users = $overview_model->getAllUsersProfiles();
         $this->view->render('search/index');
     }
 
@@ -32,8 +32,8 @@ class Search extends Controller
      */
     function showResults()
     {
-           $search_model = $this->loadModel('Search');
-           $this->view->users = $search_model->getResults();
+            $search_model = $this->loadModel('Search');
+            $this->view->users = $search_model->getResults();
             $this->view->render('search/showresults');
 
         }

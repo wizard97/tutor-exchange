@@ -22,7 +22,7 @@ class OverviewModel
      */
     public function getAllUsersProfiles()
     {
-        $sth = $this->db->prepare("SELECT user_id, user_name, user_email, user_active, user_has_avatar FROM users");
+        $sth = $this->db->prepare("SELECT user_id, fname, lname, user_email, user_active, user_has_avatar FROM users");
         $sth->execute();
 
         $all_users_profiles = array();
@@ -32,7 +32,8 @@ class OverviewModel
             // to performance, but it fits the view style better
             $all_users_profiles[$user->user_id] = new stdClass();
             $all_users_profiles[$user->user_id]->user_id = $user->user_id;
-            $all_users_profiles[$user->user_id]->user_name = $user->user_name;
+            $all_users_profiles[$user->user_id]->fname = $user->fname;
+            $all_users_profiles[$user->user_id]->lname = $user->lname;
             $all_users_profiles[$user->user_id]->user_email = $user->user_email;
 
             if (USE_GRAVATAR) {
@@ -55,7 +56,7 @@ class OverviewModel
      */
     public function getUserProfile($user_id)
     {
-        $sql = "SELECT user_id, user_name, user_email, user_active, user_has_avatar
+        $sql = "SELECT user_id, fname, lname, user_email, user_active, user_has_avatar
                 FROM users WHERE user_id = :user_id";
         $sth = $this->db->prepare($sql);
         $sth->execute(array(':user_id' => $user_id));

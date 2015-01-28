@@ -84,6 +84,7 @@ class Login extends Controller
         }
     }
 
+
     /**
      * Show user's profile
      */

@@ -268,3 +268,9 @@ define("FEEDBACK_FACEBOOK_EMAIL_ALREADY_EXISTS", "Sorry, but you have already re
 define("FEEDBACK_FACEBOOK_USERNAME_ALREADY_EXISTS", "Sorry, but you have already registered here (your Facebook username exists in our database).");
 define("FEEDBACK_FACEBOOK_REGISTER_SUCCESSFUL", "You have been successfully registered with Facebook.");
 define("FEEDBACK_FACEBOOK_OFFLINE", "We could not reach the Facebook servers. Maybe Facebook is offline (that really happens sometimes).");
+
+//tutoring feedback
+define("FEEDBACK_INVALID_AGE", "Please double check the age field.");
+define("FEEDBACK_INVALID_GRADE", "Please double check the grade field.");
+define("FEEDBACK_INCOMPLETE_FIELDS", "You must fill in all required fields.");
+define("FEEDBACK_TUTORING_EDIT_SUCESS", "You successfully updated your tutoring credentials.");
