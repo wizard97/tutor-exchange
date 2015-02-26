@@ -30,18 +30,24 @@
             </label>
             <input id="login_input_email" class="login_input" type="email" name="user_email" required />
             <label for="login_input_password_new">
-                Password (min. 6 characters!
-                <span class="login-form-password-pattern-reminder">
-                    Please note: using a long sentence as a password is much much safer then something like "!c00lPa$$w0rd").
-                    Have a look on
-                    <a href="http://security.stackexchange.com/questions/6095/xkcd-936-short-complex-password-or-long-dictionary-passphrase">
-                        this interesting security.stackoverflow.com thread
-                    </a>.
-                </span>
+                Password (min. 6 characters!)
+     
             </label>
             <input id="login_input_password_new" class="login_input" type="password" name="user_password_new" pattern=".{6,}" required autocomplete="off" />
             <label for="login_input_password_repeat">Repeat password</label>
             <input id="login_input_password_repeat" class="login_input" type="password" name="user_password_repeat" pattern=".{6,}" required autocomplete="off" />
+
+             <label for="login_input_account_type">
+                Account Type
+                <span style="display: block; font-size: 12px; color: #999;">
+                    Select "Standard" if all you want to do is search for tutors. Select "Tutor" if you are looking to tutor. If you are a professional tutor, select "Tutor", and you can upgrade your account later.
+                </span>
+            </label>
+           <select name="account_type" id="login_input_account_type" class="login_input" required>
+                <option value="1">Standard</option>
+                <option value="2">Tutor</option>
+           </select>
+           <br><br>
             <!-- show the captcha by calling the login/showCaptcha-method in the src attribute of the img tag -->
             <!-- to avoid weird with-slash-without-slash issues: simply always use the URL constant here -->
             <img id="captcha" src="<?php echo URL; ?>login/showCaptcha" />
@@ -51,11 +57,8 @@
             </span>
             <label>
                 Please enter these characters
-                <span style="display: block; font-size: 11px; color: #999;">
-                    Please note: This captcha will be generated when the img tag requests the captcha-generation
-                    (and a real image) from YOURURL/login/showcaptcha. As this is a client-side triggered request, the
-                    $_SESSION["captcha"] dump in the footer will not show the captcha characters. The captcha generation
-                    happens AFTER the rendering of the footer.
+                <span style="display: block; font-size: 14px; color: #999;">
+                    We don't like Captchas either, but we do it to protect the personal information of our users.
                 </span>
             </label>
             <input type="text" name="captcha" required />
@@ -63,12 +66,5 @@
 
         </form>
     </div>
-
-    <?php if (FACEBOOK_LOGIN == true) { ?>
-        <div class="register-facebook-box">
-            <h1>or</h1>
-            <a href="<?php echo $this->facebook_register_url; ?>" class="facebook-login-button">Register with Facebook</a>
-        </div>
-    <?php } ?>
 
 </div>

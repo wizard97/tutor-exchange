@@ -23,41 +23,111 @@ class SearchModel
     public function getResults()
     {
 
+$this->AddOneSearch();
+
 $math_subject = array("elementary_math", "middle_math", "math_1", "math_2", "math_3", "math_4", "stats", "comp_sci", "calc");
+$science_subject = array("elementary_science", "middle_science", "earth_science", "bio", "chem", "phys");
 
-$prepared = "SELECT users.user_id, users.fname, users.lname, users.user_email, users.user_active, users.user_has_avatar, users.user_account_type, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_active =1 AND user_account_type >= 2";
+$sql_stub = "SELECT users.user_id, users.fname, users.lname, users.user_email, users.user_active, users.user_has_avatar, users.user_account_type, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_active =1 AND user_account_type >= 2";
 
+$sql_vars=array();
+
+//create the prepared statement based on classes the user selected
+
+//math
 foreach($math_subject as $math_class)
 {
-    $prepared.=" AND ".$math_class." >= :".$math_class;
+    if (isset($_POST['math']) && isset($_POST[$math_class]) && in_array($math_class, $_POST['math']) && is_numeric($_POST[$math_class]) && $_POST[$math_class] >= 0 && $_POST[$math_class] <= 6)
+    {
+    $sql_stub.=" AND ".$math_class." >= :".$math_class;
+    $sql_vars[":".$math_class] = $_POST[$math_class];
+    }
 }
 
-$sth = $this->db->prepare($prepared);
-
-
-$query = array();
-
-foreach($math_subject as $math_class)
+//science
+foreach($science_subject as $science_class)
 {
-
-    if (isset($_POST['math']) && isset($_POST[$math_class]) && in_array($math_class, $_POST['math']))
+    if (isset($_POST['science']) && isset($_POST[$science_class]) && in_array($science_class, $_POST['science']) && is_numeric($_POST[$science_class]) && $_POST[$science_class] >= 0 && $_POST[$science_class] <= 6)
     {
-        $query[':'.$math_class] = $_POST[$math_class];
+    $sql_stub.=" AND ".$science_class." >= :".$science_class;
+    $sql_vars[":".$science_class] = $_POST[$science_class];
+    }
+}
+
+//music
+if (isset($_POST['instrument']) && !empty($_POST['instrument']) && isset($_POST['music']) && $_POST['music'] == 1 && isset($_POST['music_level']) && !empty($_POST['music_level']) && is_numeric($_POST['music_level']))
+{
+    $sql_stub.=" AND instrument = :instrument";
+    $sql_stub.=" AND music_level >= :music_level";
+    $sql_vars[":instrument"] = $_POST['instrument'];
+    $sql_vars[":music_level"] = $_POST['music_level'];
+}
+
+
+if (isset($_POST['start_rate']) && isset($_POST['end_rate']) && !empty($_POST['end_rate']) && !empty($_POST['start_rate']))
+{
+    if (trim($_POST['end_rate']) < 0 || trim($_POST['start_rate']) < 0 || trim($_POST['end_rate']) < trim($_POST['start_rate']) || !is_numeric(trim($_POST['start_rate'])) || !is_numeric(trim($_POST['end_rate'])))
+    {
+    $_SESSION["feedback_negative"][] = FEEDBACK_INVALID_RATE;
+    return false;
     }
 
-    else $query[':'.$math_class] = 0;
-
+    else
+    {
+    $sql_stub.=" AND rate >= :start_rate AND rate <= :end_rate";
+    $sql_vars[":start_rate"] = trim($_POST['start_rate']);
+    $sql_vars[":end_rate"] = trim($_POST['end_rate']);
+    }
+}
+elseif (isset($_POST['start_rate']) && !empty($_POST['start_rate']))
+{
+    if (trim($_POST['start_rate']) < 0 || !is_numeric(trim($_POST['start_rate'])))
+    {
+    $_SESSION["feedback_negative"][] = FEEDBACK_INVALID_RATE;
+    return false;
+    }
+    else
+    {
+    $sql_stub.=" AND rate >= :start_rate";
+    $sql_vars[":start_rate"] = trim($_POST['start_rate']);
+    }
+}
+elseif (isset($_POST['end_rate']) && !empty($_POST['end_rate']))
+{
+    if (trim($_POST['end_rate']) < 0 || !is_numeric(trim($_POST['end_rate'])))
+    {
+    $_SESSION["feedback_negative"][] = FEEDBACK_INVALID_RATE;
+    return false;
+    }
+    else
+    {
+    $sql_stub.=" AND rate >= :end_rate";
+    $sql_vars[":end_rate"] = trim($_POST['end_rate']);
+    }
 }
 
-$sth->execute($query);
+
+if (isset($_POST['min_grade']) && is_numeric(trim($_POST['min_grade'])) && trim($_POST['min_grade']) >= 6 && trim($_POST['min_grade']) <= 16)
+{
+$sql_stub.=" AND grade >= :min_grade";
+$sql_vars[":min_grade"] = trim($_POST['min_grade']);
+}
+
+//get the saved tutors
+if(SESSION::get('user_logged_in'))
+{
+$tutor_array = $this->getSavedTutors();
+}
 
 
 
+$sth = $this->db->prepare($sql_stub);
+$sth->execute($sql_vars);
 
 
         $count =  $sth->rowCount();
            if ($count == 0) {
-            return false;
+            return array();
         }
 
         $all_users = array();
@@ -75,6 +145,16 @@ $sth->execute($query);
             $all_users[$user->user_id]->user_account_type = $user->user_account_type;
             $all_users[$user->user_id]->highest_math_name = $user->highest_math_name;
             $all_users[$user->user_id]->highest_math_level = $user->highest_math_level;
+            $all_users[$user->user_id]->rate = $user->rate;
+            if(SESSION::get('user_logged_in') && array_key_exists((string)$user->user_id, $tutor_array))
+            {
+                $all_users[$user->user_id]->check = true;
+            }
+            else
+            {
+               $all_users[$user->user_id]->check = false; 
+            }
+
 
             if (USE_GRAVATAR) {
                 $all_users[$user->user_id]->user_avatar_link =
@@ -90,6 +170,311 @@ $sth->execute($query);
     }
 
 
+        public function AddOneSearch()
+    {
+
+$stmt = $this->db->prepare("UPDATE stats SET searches=searches+1");
+$stmt->execute();
+return false;
+}
+
+
+
+public function saveTutors()
+{
+if (!isset($_POST['saved_tutors_id']) || !is_array($_POST['saved_tutors_id']) || empty($_POST['saved_tutors_id']))
+{
+    return false;
+}
+$tutors_form_array = $_POST['saved_tutors_id'];
+
+
+//get saved tutors from DB
+$tutor_array = array();
+$tutor_array = $this->getSavedTutors();
+
+
+foreach($tutors_form_array  as $tutor_form_id)
+{
+if(count($tutor_array) > 20)
+{
+$_SESSION["feedback_negative"][] = FEEDBACK_TOO_MANY_TUTORS;
+return false;
+}
+elseif (!array_key_exists(stripslashes(str_replace('"', "", $tutor_form_id)), $tutor_array))
+{
+$tutor_array[stripslashes(str_replace('"', "", $tutor_form_id))] = time();
+}
+}
+
+$saved_tutors_time = implode(",", $tutor_array);
+$saved_tutors_id = implode(",", array_keys($tutor_array));
+
+
+$save = $this->db->prepare("UPDATE users SET saved_tutors_id = :saved_tutors_id, saved_tutors_time = :saved_tutors_time WHERE user_id = :user_id LIMIT 1");
+
+$save->execute(array(":saved_tutors_id" => $saved_tutors_id, ":saved_tutors_time" => $saved_tutors_time, ":user_id" => SESSION::get('user_id')));
+
+$_SESSION["feedback_positive"][] = FEEDBACK_SUCESS_SAVING;
+return false;
+}
+
+
+public function getSavedTutors()
+{
+$query = $this->db->prepare("SELECT saved_tutors_id, saved_tutors_time FROM users WHERE user_id = :user_id LIMIT 1");
+$query->execute(array(':user_id' => SESSION::get('user_id')));
+
+$results = $query->fetch();
+$tutor_array = array();
+
+
+if (!empty($results->saved_tutors_id) || !empty($results->saved_tutors_time))
+{
+$saved_tutors_id = explode(",", $results->saved_tutors_id);
+$saved_tutors_time = explode(",", $results->saved_tutors_time);
+
+for($i=0; $i < count($saved_tutors_id); $i++)
+{
+$tutor_array[$saved_tutors_id[$i]] = $saved_tutors_time[$i];
+}
+
+}
+
+return $tutor_array;
+
+}
+
+public function getTutor($user_id)
+{
+if (!isset($user_id))
+{
+     $_SESSION["feedback_negative"][] = FEEDBACK_USER_DOES_NOT_EXIST;
+    return false;   
+}
+
+$query = $this->db->prepare("SELECT fname, lname, user_id FROM users WHERE user_id = :user_id LIMIT 1");
+$query->execute(array(':user_id' => $user_id));
+$tutor = $query->fetch();
+
+if($query->rowCount() != 1)
+{
+    $_SESSION["feedback_negative"][] = FEEDBACK_USER_DOES_NOT_EXIST;
+    return false;
+}
+return $tutor;
+}
+
+public function emailTutor_action($user_id)
+{
+
+if (!isset($user_id))
+{
+     $_SESSION["feedback_negative"][] = FEEDBACK_USER_DOES_NOT_EXIST;
+    return false;   
+}
+
+
+$query = $this->db->prepare("SELECT users.fname, users.lname, users.user_email, users.user_account_type FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_id = :user_id LIMIT 1");
+$query->execute(array(':user_id' => $user_id));
+$tutor = $query->fetch();
+
+if($query->rowCount() != 1)
+{
+    $_SESSION["feedback_negative"][] = FEEDBACK_USER_DOES_NOT_OR_NOT_TUTOR;
+    return false;
+}
+
+      $mail = new PHPMailer;
+
+        // please look into the config/config.php for much more info on how to use this!
+        if (EMAIL_USE_SMTP) {
+            // set PHPMailer to use SMTP
+            $mail->IsSMTP();
+            // useful for debugging, shows full SMTP errors, config this in config/config.php
+            $mail->SMTPDebug = PHPMAILER_DEBUG_MODE;
+            // enable SMTP authentication
+            $mail->SMTPAuth = EMAIL_SMTP_AUTH;
+            // enable encryption, usually SSL/TLS
+            if (defined('EMAIL_SMTP_ENCRYPTION')) {
+                $mail->SMTPSecure = EMAIL_SMTP_ENCRYPTION;
+            }
+            // set SMTP provider's credentials
+            $mail->Host = EMAIL_SMTP_HOST;
+            $mail->Username = EMAIL_SMTP_USERNAME;
+            $mail->Password = EMAIL_SMTP_PASSWORD;
+            $mail->Port = EMAIL_SMTP_PORT;
+        } else {
+            $mail->IsMail();
+        }
+
+
+    $mail->From = EMAIL_FROM;
+    $mail->addReplyTo(SESSION::get('user_email'), (SESSION::get('fname').' '.Session::get('lname')));
+    $mail->FromName = EMAIL_CONTACT_FROM_NAME;
+    $mail->AddAddress($tutor->user_email);
+
+
+    if (empty($_POST['subject']) || !isset($_POST['subject']))
+    {
+       $_SESSION["feedback_negative"][] =  FEEDBACK_NO_SUBJECT;
+       return false;
+    }
+    else
+    {
+    $mail->Subject = trim($_POST['subject']);
+    }
+
+    if (empty(trim($_POST['message'])) || !isset($_POST['message']))
+    {
+      $_SESSION["feedback_negative"][] =  FEEDBACK_NO_MESSAGE;
+       return false;  
+    }
+
+    $mail->Body = "Someone looking for a tutor on Lexington Tutor Exchange has contacted you. They will not know your email address until you reply.\n\nSincerely,\nLexington Tutor Exchange\n\n_____Begin Forwarded Message_____\n\n".trim($_POST['message']);
+        // final sending and check
+        if($mail->Send()) {
+            $_SESSION["feedback_positive"][] = FEEDBACK_EMAIL_SEND_SUCESS;
+            return true;
+        } else {
+            $_SESSION["feedback_negative"][] = FEEDBACK_EMAIL_SEND_FAIL . $mail->ErrorInfo;
+            return false;
+        }
+    }
+
+
+    public function reviewTutor_action($user_id)
+{
+
+if (!isset($user_id))
+{
+     $_SESSION["feedback_negative"][] = FEEDBACK_USER_DOES_NOT_EXIST;
+    return false;   
+}
+elseif($user_id == SESSION::get('user_id'))
+{
+$_SESSION["feedback_negative"][] = FEEDBACK_CANT_REVIEW_YOURSELF;
+return false;
+}
+
+$query = $this->db->prepare("SELECT * FROM tutors WHERE id = :user_id LIMIT 1");
+$query->execute(array(':user_id' => $user_id));
+$tutor = $query->fetch();
+
+if($query->rowCount() != 1)
+{
+    $_SESSION["feedback_negative"][] = FEEDBACK_USER_DOES_NOT_OR_NOT_TUTOR;
+    return false;
+}
+
+$query = $this->db->prepare("SELECT * FROM reviews WHERE reviewer_id = :reviewer_id AND tutor_id = :tutor_id LIMIT 1");
+$query->execute(array('reviewer_id' => SESSION::get('user_id'), ':tutor_id' => $user_id));
+$tutor = $query->fetch();
+
+if($query->rowCount() != 0)
+{
+    $_SESSION["feedback_negative"][] = FEEDBACK_ALREADY_REVIEWED;
+    return false;
+}
+
+if (!isset($_POST['rating']) || empty($_POST['rating']) || !isset($_POST['message']) || ($_POST['reviewer'] != "student" && $_POST['reviewer'] != "parent") || empty($_POST['message']) || !is_numeric($_POST['rating']) || $_POST['rating'] < 0 || $_POST['rating'] > 5)
+{
+$_SESSION["feedback_negative"][] = FEEDBACK_INCOMPLETE_FIELDS;
+return false;
+}
+
+$anonymous = 0;
+if (isset($_POST['anonymous']) && $_POST['anonymous'] == 1)
+{
+$anonymous = 1;
+}
+
+$query = $this->db->prepare("INSERT INTO reviews (reviewer_id, tutor_id, reviewer, rating, message, time, anonymous) VALUES (:reviewer_id, :tutor_id, :reviewer, :rating, :message, :time, :anonymous)");
+$query->execute(array('reviewer_id' => SESSION::get('user_id'), ':tutor_id' => $user_id, ':reviewer' => $_POST['reviewer'], ':rating' => trim($_POST['rating']), ':message' => trim(strip_tags($_POST['message'])), ':time' => time(), ':anonymous' => $anonymous));
+
+$_SESSION["feedback_positive"][] = FEEDBACK_SUCESS_REVIEWING;
+return true;
+    }
+
+
+public function loadSaved()
+{
+$all_users = array();
+
+if (!empty($this->getSavedTutors()))
+{
+
+    $ids = implode(", ", array_keys($this->getSavedTutors()));
+
+    $stub = "SELECT users.user_id, users.fname, users.lname, users.user_email, users.user_active, users.user_has_avatar, users.user_account_type, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_active =1 AND user_account_type >= 2 AND user_id IN ($ids)";
+
+$query = $this->db->prepare($stub);
+
+$query->execute();
+
+        foreach ($query->fetchAll() as $user) {
+            // a new object for every user. This is eventually not really optimal when it comes
+            // to performance, but it fits the view style better
+            $all_users[$user->user_id] = new stdClass();
+            $all_users[$user->user_id]->user_id = $user->user_id;
+            $all_users[$user->user_id]->fname = $user->fname;
+            $all_users[$user->user_id]->lname = $user->lname;
+            $all_users[$user->user_id]->age = $user->age;
+            $all_users[$user->user_id]->grade = $user->grade;
+            $all_users[$user->user_id]->user_email = $user->user_email;
+            $all_users[$user->user_id]->user_account_type = $user->user_account_type;
+            $all_users[$user->user_id]->highest_math_name = $user->highest_math_name;
+            $all_users[$user->user_id]->highest_math_level = $user->highest_math_level;
+            $all_users[$user->user_id]->rate = $user->rate;
+
+
+            if (USE_GRAVATAR) {
+                $all_users[$user->user_id]->user_avatar_link =
+                    $this->getGravatarLinkFromEmail($user->user_email);
+            } else {
+                $all_users[$user->user_id]->user_avatar_link =
+                    $this->getUserAvatarFilePath($user->user_has_avatar, $user->user_id);
+            }
+
+           $all_users[$user->user_id]->user_active = $user->user_active;
+        }
+    }
+        return $all_users;
+
+}
+
+public function deleteSaved()
+{
+if (!isset($_POST['delete_tutors_id']) || !is_array($_POST['delete_tutors_id']) || empty($_POST['delete_tutors_id']))
+{
+    $_SESSION["feedback_negative"][] = FEEDBACK_NO_SELECTION;
+    return false;
+}
+$tutors_form_array = $_POST['delete_tutors_id'];
+
+
+//get saved tutors from DB
+$tutor_array = array();
+$tutor_array = $this->getSavedTutors();
+
+
+foreach($tutors_form_array as $tutor_form_id)
+{
+unset($tutor_array[$tutor_form_id]);
+}
+
+$saved_tutors_time = implode(",", $tutor_array);
+$saved_tutors_id = implode(",", array_keys($tutor_array));
+
+
+$save = $this->db->prepare("UPDATE users SET saved_tutors_id = :saved_tutors_id, saved_tutors_time = :saved_tutors_time WHERE user_id = :user_id LIMIT 1");
+
+$save->execute(array(":saved_tutors_id" => $saved_tutors_id, ":saved_tutors_time" => $saved_tutors_time, ":user_id" => SESSION::get('user_id')));
+
+$_SESSION["feedback_positive"][] = FEEDBACK_SUCESS_SAVING;
+return false;
+}
+
 
     /**
      * Gets a user's profile data, according to the given $user_id
@@ -98,26 +483,28 @@ $sth->execute($query);
      */
     public function getUserProfile($user_id)
     {
-        $sql = "SELECT user_id, fname, lname, user_email, user_active, user_has_avatar
-                FROM users WHERE user_id = :user_id";
+        $sql = "SELECT users.user_id, users.fname, users.lname, users.user_email, users.user_active, users.user_has_avatar, users.user_account_type, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_active =1 AND user_account_type >= 2 AND user_id = :user_id";
+
         $sth = $this->db->prepare($sql);
         $sth->execute(array(':user_id' => $user_id));
 
-        $user = $sth->fetch();
+        $tutor = $sth->fetch();
         $count =  $sth->rowCount();
 
         if ($count == 1) {
             if (USE_GRAVATAR) {
-                $user->user_avatar_link = $this->getGravatarLinkFromEmail($user->user_email);
+                $tutor->user_avatar_link = $this->getGravatarLinkFromEmail($tutor->user_email);
             } else {
-                $user->user_avatar_link = $this->getUserAvatarFilePath($user->user_has_avatar, $user->user_id);
+                $tutor->user_avatar_link = $this->getUserAvatarFilePath($tutor->user_has_avatar, $tutor->user_id);
             }
         } else {
             $_SESSION["feedback_negative"][] = FEEDBACK_USER_DOES_NOT_EXIST;
+            return false;
         }
 
-        return $user;
+        return $tutor;
     }
+
 
     /**
      * Gets a gravatar image link from given email address

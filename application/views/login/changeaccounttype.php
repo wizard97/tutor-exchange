@@ -10,7 +10,7 @@
     {
     ?>
 
-<p style="color: green">You are currently listed as a tutor, thanks!</p>;
+<p style="color: green">You are currently listed as a tutor, thanks!</p>
        <form action="<?php echo URL; ?>login/changeaccounttype_action" method="post">
         <label></label>
         <input type="submit" name="user_account_downgrade" value="Stop Tutoring" />

@@ -45,7 +45,7 @@ class Login extends Controller
         // check login status
         if ($login_successful) {
             // if YES, then move user to dashboard/index (btw this is a browser-redirection, not a rendered view!)
-            header('location: ' . URL . 'dashboard/index');
+            header('location: ' . URL . 'login/showprofile');
         } else {
             // if NO, then move user to login/index (login form) again
             header('location: ' . URL . 'login/index');
@@ -96,7 +96,7 @@ class Login extends Controller
     }
 
     /**
-     * Edit user name (show the view with the form)
+     * Edit user's name (show the view with the form)
      */
     function editUsername()
     {
@@ -106,7 +106,7 @@ class Login extends Controller
     }
 
     /**
-     * Edit user name (perform the real action after form has been submitted)
+     * Edit user's name (perform the real action after form has been submitted)
      */
     function editUsername_action()
     {

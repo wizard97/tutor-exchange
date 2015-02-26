@@ -34,7 +34,118 @@ class Search extends Controller
     {
             $search_model = $this->loadModel('Search');
             $this->view->users = $search_model->getResults();
+            if (is_array($this->view->users))
+            {
             $this->view->render('search/showresults');
+            }
+            else
+            {
+            header('location: ' . URL . 'search/index');
+            }
+        }
 
+    function showtutorprofile($user_id)
+    {
+        $search_model = $this->loadModel('Search');
+        $this->view->tutor = $search_model->getUserProfile($user_id);
+        if ($this->view->tutor == false)
+        {
+            header('location: ' . URL . 'search/saved');
+        }
+        else
+        {
+        $this->view->render('search/showtutorprofile');
+        }
+    }
+
+        function showResults_action()
+    {
+        Auth::handleLogin();
+            $search_model = $this->loadModel('Search');
+            $search_model->saveTutors();
+            $this->view->users = $search_model->getResults();
+            if (is_array($this->view->users))
+            {
+            $this->view->render('search/showresults');
+            }
+            else
+            {
+            header('location: ' . URL . 'search/index');
+            }
+        }
+
+            function saved()
+        {
+        Auth::handleLogin();
+            $search_model = $this->loadModel('Search');
+            $this->view->users = $search_model->loadSaved();
+            $this->view->render('search/saved');
+        }
+
+        function saved_action()
+        {
+        Auth::handleLogin();
+            $search_model = $this->loadModel('Search');
+            $search_model->deleteSaved();
+            $this->view->users = $search_model->loadSaved();
+            $this->view->render('search/saved');
+        }
+
+        function emailTutor($user_id)
+        {
+        Auth::handleLogin();
+            $search_model = $this->loadModel('Search');
+            $this->view->tutor = $search_model->getTutor($user_id);
+            if($this->view->tutor == false)
+            {
+                header('location: ' . URL . 'search/saved');
+            }
+            else
+            {
+            $this->view->render('search/emailtutor');
+            }
+        }
+
+        function emailTutor_action($user_id)
+        {
+        Auth::handleLogin();
+            $search_model = $this->loadModel('Search');
+            if($search_model->emailTutor_action($user_id) == false)
+            {
+                header('location: ' . URL . 'search/emailtutor/'.$user_id);
+            }
+            else
+            {
+                $this->view->tutor = $search_model->getTutor($user_id);
+            $this->view->render('search/emailtutor');
+            }
+        }
+                function reviewTutor($user_id)
+        {
+        Auth::handleLogin();
+            $search_model = $this->loadModel('Search');
+            $this->view->tutor = $search_model->getTutor($user_id);
+            if($this->view->tutor == false)
+            {
+                header('location: ' . URL . 'search/saved');
+            }
+            else
+            {
+            $this->view->render('search/reviewtutor');
+            }
+        }
+                function reviewTutor_action($user_id)
+        {
+        Auth::handleLogin();
+            $search_model = $this->loadModel('Search');
+            if($search_model->reviewTutor_action($user_id) == false)
+            {
+                header('location: ' . URL . 'search/reviewtutor/'.$user_id);
+            }
+            else
+            {
+                $this->view->tutor = $search_model->getTutor($user_id);
+            $this->view->render('search/reviewtutor');
+            }
         }
 }

@@ -262,41 +262,43 @@ class LoginModel
     public function editUserName()
     {
         // new username provided ?
-        if (!isset($_POST['user_name']) OR empty($_POST['user_name'])) {
-            $_SESSION["feedback_negative"][] = FEEDBACK_USERNAME_FIELD_EMPTY;
+        if (!isset($_POST['fname']) OR empty($_POST['fname']) OR !isset($_POST['lname']) OR empty($_POST['lname'])) {
+            $_SESSION["feedback_negative"][] = FEEDBACK_NAME_FIELD_EMPTY;
             return false;
         }
 
         // new username same as old one ?
-        if ($_POST['user_name'] == $_SESSION["user_name"]) {
-            $_SESSION["feedback_negative"][] = FEEDBACK_USERNAME_SAME_AS_OLD_ONE;
+        if ($_POST['fname'] == $_SESSION["fname"] && $_POST['lname'] == $_SESSION["lname"]) {
+            $_SESSION["feedback_negative"][] = FEEDBACK_NAME_SAME_AS_OLD_ONE;
             return false;
         }
 
         // username cannot be empty and must be azAZ09 and 2-64 characters
-        if (!preg_match("/^(?=.{2,64}$)[a-zA-Z][a-zA-Z0-9]*(?: [a-zA-Z0-9]+)*$/", $_POST['user_name'])) {
-            $_SESSION["feedback_negative"][] = FEEDBACK_USERNAME_DOES_NOT_FIT_PATTERN;
+        if (!preg_match("/^(?=.{2,64}$)[a-zA-Z][a-zA-Z0-9]*(?: [a-zA-Z0-9]+)*$/", $_POST['fname']) || !preg_match("/^(?=.{2,64}$)[a-zA-Z][a-zA-Z0-9]*(?: [a-zA-Z0-9]+)*$/", $_POST['lname'])) {
+            $_SESSION["feedback_negative"][] = FEEDBACK_NAME_DOES_NOT_FIT_PATTERN;
             return false;
         }
 
         // clean the input
-        $user_name = substr(strip_tags($_POST['user_name']), 0, 64);
+        $user_fname = substr(strip_tags($_POST['fname']), 0, 64);
+        $user_lname = substr(strip_tags($_POST['lname']), 0, 64);
 
         // check if new username already exists
-        $query = $this->db->prepare("SELECT user_id FROM users WHERE user_name = :user_name");
-        $query->execute(array(':user_name' => $user_name));
+        $query = $this->db->prepare("SELECT user_id FROM users WHERE fname = :fname AND lname = :lname");
+        $query->execute(array(':fname' => $user_fname, ':lname' => $user_lname));
         $count =  $query->rowCount();
         if ($count == 1) {
-            $_SESSION["feedback_negative"][] = FEEDBACK_USERNAME_ALREADY_TAKEN;
+            $_SESSION["feedback_negative"][] = FEEDBACK_NAME_ALREADY_TAKEN;
             return false;
         }
 
-        $query = $this->db->prepare("UPDATE users SET user_name = :user_name WHERE user_id = :user_id");
-        $query->execute(array(':user_name' => $user_name, ':user_id' => $_SESSION['user_id']));
+        $query = $this->db->prepare("UPDATE users SET fname = :user_fname, lname = :user_lname WHERE user_id = :user_id");
+        $query->execute(array(':user_fname' => $user_fname, ':user_lname' => $user_lname, ':user_id' => $_SESSION['user_id']));
         $count =  $query->rowCount();
         if ($count == 1) {
-            Session::set('user_name', $user_name);
-            $_SESSION["feedback_positive"][] = FEEDBACK_USERNAME_CHANGE_SUCCESSFUL;
+            Session::set('fname', $user_fname);
+            Session::set('lname', $user_lname);
+            $_SESSION["feedback_positive"][] = FEEDBACK_NAME_CHANGE_SUCCESSFUL;
             return true;
         } else {
             $_SESSION["feedback_negative"][] = FEEDBACK_UNKNOWN_ERROR;
@@ -388,6 +390,8 @@ class LoginModel
             $_SESSION["feedback_negative"][] = FEEDBACK_EMAIL_TOO_LONG;
         } elseif (!filter_var($_POST['user_email'], FILTER_VALIDATE_EMAIL)) {
             $_SESSION["feedback_negative"][] = FEEDBACK_EMAIL_DOES_NOT_FIT_PATTERN;
+        } elseif (empty($_POST['account_type']) || ($_POST['account_type'] != 1 && $_POST['account_type'] != 2)) {
+            $_SESSION["feedback_negative"][] = FEEDBACK_INVALID_ACCOUNT_TYPE;
         } elseif (!empty($_POST['user_email'])
             AND strlen($_POST['user_email']) <= 64
             AND filter_var($_POST['user_email'], FILTER_VALIDATE_EMAIL)
@@ -400,6 +404,7 @@ class LoginModel
             AND strlen($_POST['fname']) >= 2
             AND strlen($_POST['lname']) <= 64
             AND strlen($_POST['lname']) >= 2
+            AND $_POST['account_type'] == 1 || $_POST['account_type'] == 2
             AND preg_match('/^[a-z\d]{2,64}$/i', $_POST['fname'])
             AND preg_match('/^[a-z\d]{2,64}$/i', $_POST['lname']))
             {
@@ -421,7 +426,7 @@ class LoginModel
             $query->execute(array(':fname' => $fname, ':lname' => $lname));
             $count =  $query->rowCount();
             if ($count == 1) {
-                $_SESSION["feedback_negative"][] = FEEDBACK_USERNAME_ALREADY_TAKEN;
+                $_SESSION["feedback_negative"][] = FEEDBACK_NAME_ALREADY_TAKEN;
                 return false;
             }
 
@@ -467,17 +472,62 @@ class LoginModel
             $result_user_row = $query->fetch();
             $user_id = $result_user_row->user_id;
 
+            
+            if ($_POST['account_type'] == 2)
+            {
+
+            //change account type to 2
+             $upgrade = $this->db->prepare("UPDATE users SET user_account_type = 2 WHERE user_id = :user_id");
+            $upgrade->execute(array(':user_id' => $user_id));
+
+            if ($upgrade->rowCount() != 1)
+              {
+                $_SESSION["feedback_negative"][] = FEEDBACK_UNKNOWN_ERROR;
+            }
+
+            //add entry into tutors table
+
+        $sth = $this->db->prepare("SELECT * FROM tutors WHERE id = :user_id");
+
+        $sth->execute(array(':user_id' => $user_id ));
+
+        $count = $sth->rowCount();
+
+        if ($count > 1)
+        {
+
+            $_SESSION["feedback_negative"][] = FEEDBACK_ERROR_FINDING_ID;
+            return false;
+        }
+        elseif ($count == 0)
+        {
+            $query = $this->db->prepare("INSERT INTO tutors (id) VALUES (:id)");
+            $query->execute(array(':id' => $user_id));
+            $count =  $query->rowCount();
+            if ($count != 1) 
+            {
+                $_SESSION["feedback_negative"][] = FEEDBACK_UNKNOWN_ERROR;
+                return false;
+            }
+        }
+        }
+
             // send verification email, if verification email sending failed: instantly delete the user
-            if ($this->sendVerificationEmail($user_id, $user_email, $user_activation_hash)) {
+            if ($this->sendVerificationEmail($user_id, $user_email, $user_activation_hash)) 
+            {
                 $_SESSION["feedback_positive"][] = FEEDBACK_ACCOUNT_SUCCESSFULLY_CREATED;
                 return true;
-            } else {
+            } 
+            else {
                 $query = $this->db->prepare("DELETE FROM users WHERE user_id = :last_inserted_id");
                 $query->execute(array(':last_inserted_id' => $user_id));
                 $_SESSION["feedback_negative"][] = FEEDBACK_VERIFICATION_MAIL_SENDING_FAILED;
                 return false;
             }
-        } else {
+        }
+
+        else 
+        {
             $_SESSION["feedback_negative"][] = FEEDBACK_UNKNOWN_ERROR;
         }
         // default return, returns only true of really successful (see above)
@@ -638,7 +688,7 @@ class LoginModel
         if ($image_proportions['mime'] == 'image/jpeg' || $image_proportions['mime'] == 'image/png') {
             // create a jpg file in the avatar folder
             $target_file_path = AVATAR_PATH . $_SESSION['user_id'] . ".jpg";
-            $this->resizeAvatarImage($_FILES['avatar_file']['tmp_name'], $target_file_path, AVATAR_SIZE, AVATAR_SIZE, AVATAR_JPEG_QUALITY, true);
+            $this->resizeAvatarImage($_FILES['avatar_file']['tmp_name'], $target_file_path, FULL_AVATAR_SIZE, FULL_AVATAR_SIZE, AVATAR_JPEG_QUALITY, true);
             $query = $this->db->prepare("UPDATE users SET user_has_avatar = TRUE WHERE user_id = :user_id");
             $query->execute(array(':user_id' => $_SESSION['user_id']));
             Session::set('user_avatar_file', $this->getUserAvatarFilePath());
@@ -665,7 +715,7 @@ class LoginModel
      * @return bool success state
      */
     public function resizeAvatarImage(
-        $source_image, $destination_filename, $width = 44, $height = 44, $quality = 85, $crop = true)
+        $source_image, $destination_filename, $width = 44, $height = 44, $quality = 95, $crop = true)
     {
         $image_data = getimagesize($source_image);
         if (!$image_data) {
@@ -1020,9 +1070,9 @@ class LoginModel
 
             // upgrade account type
             $query = $this->db->prepare("UPDATE users SET user_account_type = 2 WHERE user_id = :user_id");
-            $query->execute(array(':user_id' => $_SESSION["user_id"]));
+            $query->execute(array(':user_id' => Session::get('user_id')));
 
-            if ($query->rowCount() == 1) {
+            if ($query->rowCount() == 1 && !($this->addTutor())) {
                 // set account type in session to 2
                 Session::set('user_account_type', 2);
                 $_SESSION["feedback_positive"][] = FEEDBACK_ACCOUNT_UPGRADE_SUCCESSFUL;
@@ -1037,7 +1087,7 @@ class LoginModel
             // ...
 
             $query = $this->db->prepare("UPDATE users SET user_account_type = 1 WHERE user_id = :user_id");
-            $query->execute(array(':user_id' => $_SESSION["user_id"]));
+            $query->execute(array(':user_id' => Session::get('user_id')));
 
             if ($query->rowCount() == 1) {
                 // set account type in session to 1
@@ -1048,6 +1098,33 @@ class LoginModel
             }
         }
     }
+
+public function addTutor()
+{
+        $sth = $this->db->prepare("SELECT * FROM tutors WHERE id = :user_id");
+
+        $sth->execute(array(':user_id' => Session::get('user_id')));
+
+        $count = $sth->rowCount();
+
+        if ($count > 1)
+        {
+
+            $_SESSION["feedback_negative"][] = FEEDBACK_ERROR_FINDING_ID;
+            return true;
+        }
+        elseif ($count == 0)
+        {
+            $query = $this->db->prepare("INSERT INTO tutors (id) VALUES (:id)");
+            $query->execute(array(':id' => Session::get('user_id')));
+            $count =  $query->rowCount();
+            if ($count != 1) {
+                $_SESSION["feedback_negative"][] = FEEDBACK_UNKNOWN_ERROR;
+                return true;
+            }
+        return false;
+        }
+}
 
     /**
      * Generates the captcha, "returns" a real image,

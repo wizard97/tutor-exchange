@@ -20,6 +20,9 @@ class Index extends Controller
      */
     function index()
     {
+        $index_model = $this->loadModel('Index');
+        $index_model->incrementStats();
+        $this->view->info = $index_model->getStats();
             $this->view->render('index/index');
     }
 }

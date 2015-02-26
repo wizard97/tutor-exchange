@@ -29,19 +29,32 @@ class Tutor extends Controller
     function editTutor()
     {
         Auth::handleLogin();
+        if (Session::get('user_account_type') > 1)
+        {
         $tutor_model = $this->loadModel('Tutor');
         $this->view->user = $tutor_model->loadInfo();
         $this->view->render('tutor/edit');
+        }
+        else
+        {
+            header('location: ' . URL . 'login/changeaccounttype');
+        }
     }
 
     
     function editTutor_action()
     {
         Auth::handleLogin();
+         if (Session::get('user_account_type') > 1)
+        {
         $tutor_model = $this->loadModel('Tutor');
         $tutor_model->editInfo();
         $this->view->user = $tutor_model->loadInfo();
         $this->view->render('tutor/edit');
-
+        }
+    else 
+        {
+        header('location: ' . URL . 'login/changeaccounttype');
+        }
     }
 }

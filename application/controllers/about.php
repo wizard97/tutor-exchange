@@ -4,7 +4,7 @@
  * Class Help
  * The help area
  */
-class Help extends Controller
+class About extends Controller
 {
     /**
      * Construct this object by extending the basic Controller class
@@ -19,6 +19,6 @@ class Help extends Controller
      */
     function index()
     {
-        $this->view->render('help/index');
+        $this->view->render('about/index');
     }
 }
