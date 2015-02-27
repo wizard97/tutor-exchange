@@ -1,4 +1,4 @@
-<div class="content">
+<div class="container">
     <h1>Contact Us</h1>
 
     <!-- echo out the system feedback (error and success messages) -->
@@ -16,6 +16,7 @@
     <input name="email" id="email" type="text" value="" size="30" required>
 
     <label for="message">Your message</label>
+    <br>
     <textarea name="message" id="message" rows="7" cols="60" required placeholder="Your message to us goes here."></textarea><br>
     <br>
     <input type="submit" value="Send email"/>

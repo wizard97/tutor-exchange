@@ -8,12 +8,7 @@ fieldset {
 	background-color:#eee;
 	border:2px solid grey;
 }
-label.checkbox-label {
-	display: block;
-    margin-bottom: 5px;
-    line-height: 20px;
-	width:200px;
-}
+
 table.subject-table {
 	width:40%;
 	float:left;
@@ -27,12 +22,7 @@ table.subject-table td{
 	padding: 3px;
 	margin: 0;
 }
-input[type=checkbox].checkbox-format {
-	width:10px;
-	padding: 2px;
-	margin: 2px;
-	float:left;	
-}
+
 html, body {
     padding: 0;
     margin: 0;
@@ -121,15 +111,6 @@ p {
     color: #2C2F3B;
 }
 
-.footer {
-    background-color: #42444f;
-    color: #acadb1;
-    font-size: 15px;
-    font-weight: bold;
-    padding: 30px 35px;
-    /*margin:0 10px 20px 10px;*/
-    margin: 0;
-}
 
 
 h1 {
