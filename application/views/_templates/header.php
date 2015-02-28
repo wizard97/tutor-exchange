@@ -1,11 +1,13 @@
 <!doctype html>
 <html>
 <head>
+<meta name="google-site-verification" content="x91WvPNaAdw3bjXe9VZONNcImZP-iuspmgaPee1oqpM" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Lexington Tutor Exchange</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
 
     
 <link rel="stylesheet" href="<?php echo URL; ?>public/css/reset.css" />

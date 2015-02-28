@@ -20,7 +20,7 @@ class TutorModel
 
     public function loadInfo()
     {
-        $sth = $this->db->prepare("SELECT users.user_id, users.fname, users.lname, users.user_email, users.user_active, users.user_account_type, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_active = 1 AND user_id = :user_id");
+        $sth = $this->db->prepare("SELECT users.user_id, users.fname, users.lname, users.user_email, users.user_active, users.user_account_type, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_active = 1 AND user_id = :user_id AND user_account_type >= 2");
     $sth->execute(array(':user_id' => Session::get('user_id')));
     $user = $sth->fetch();
 
@@ -45,7 +45,7 @@ if (isset($_POST['grade']) && isset($_POST['rate']))
 
 {
 
-        $stmt = $this->db->prepare("UPDATE tutors SET age = :age, grade = :grade, rate = :rate, about_me = :about_me, elementary_math = :elementary_math, middle_math =:middle_math, math_1 = :math_1, math_2 = :math_2, math_3 = :math_3, math_4 = :math_4,
+        $stmt = $this->db->prepare("UPDATE tutors SET tutor_active = 1, age = :age, grade = :grade, rate = :rate, about_me = :about_me, elementary_math = :elementary_math, middle_math =:middle_math, math_1 = :math_1, math_2 = :math_2, math_3 = :math_3, math_4 = :math_4,
          stats = :stats, comp_sci = :comp_sci, calc = :calc, highest_math_name = :highest_math_name, highest_math_level = :highest_math_level, elementary_science = :elementary_science, middle_science = :middle_science,
          earth_science = :earth_science, bio = :bio, chem = :chem, phys =:phys, highest_science_name = :highest_science_name, highest_science_level = :highest_science_level, instrument = :instrument, music_level = :music_level,
          music_years = :music_years WHERE id = :id LIMIT 1");
@@ -97,7 +97,7 @@ else
 
 
 
-    if (is_numeric(trim($_POST['rate'])) && trim($_POST['rate']) >= 0 && trim($_POST['rate']) < 150)
+    if (is_numeric(trim($_POST['rate'])) && trim($_POST['rate']) >= 1 && trim($_POST['rate']) < 150)
     {
     $query[':rate'] = trim($_POST['rate']);
     }

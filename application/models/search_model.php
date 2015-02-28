@@ -28,7 +28,7 @@ $this->AddOneSearch();
 $math_subject = array("elementary_math", "middle_math", "math_1", "math_2", "math_3", "math_4", "stats", "comp_sci", "calc");
 $science_subject = array("elementary_science", "middle_science", "earth_science", "bio", "chem", "phys");
 
-$sql_stub = "SELECT users.user_id, users.fname, users.lname, users.user_email, users.user_active, users.user_has_avatar, users.user_account_type, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_active =1 AND user_account_type >= 2";
+$sql_stub = "SELECT users.user_id, users.fname, users.lname, users.user_email, users.user_active, users.user_has_avatar, users.user_account_type, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_active =1 AND user_account_type >= 2 AND tutor_active = 1";
 
 $sql_vars=array();
 
@@ -66,7 +66,7 @@ if (isset($_POST['instrument']) && !empty($_POST['instrument']) && isset($_POST[
 
 if (isset($_POST['start_rate']) && isset($_POST['end_rate']) && !empty($_POST['end_rate']) && !empty($_POST['start_rate']))
 {
-    if (trim($_POST['end_rate']) < 0 || trim($_POST['start_rate']) < 0 || trim($_POST['end_rate']) < trim($_POST['start_rate']) || !is_numeric(trim($_POST['start_rate'])) || !is_numeric(trim($_POST['end_rate'])))
+    if (trim($_POST['end_rate']) < 1 || trim($_POST['start_rate']) < 1 || trim($_POST['end_rate']) < trim($_POST['start_rate']) || !is_numeric(trim($_POST['start_rate'])) || !is_numeric(trim($_POST['end_rate'])))
     {
     $_SESSION["feedback_negative"][] = FEEDBACK_INVALID_RATE;
     return false;
@@ -81,7 +81,7 @@ if (isset($_POST['start_rate']) && isset($_POST['end_rate']) && !empty($_POST['e
 }
 elseif (isset($_POST['start_rate']) && !empty($_POST['start_rate']))
 {
-    if (trim($_POST['start_rate']) < 0 || !is_numeric(trim($_POST['start_rate'])))
+    if (trim($_POST['start_rate']) < 1 || !is_numeric(trim($_POST['start_rate'])))
     {
     $_SESSION["feedback_negative"][] = FEEDBACK_INVALID_RATE;
     return false;
@@ -94,7 +94,7 @@ elseif (isset($_POST['start_rate']) && !empty($_POST['start_rate']))
 }
 elseif (isset($_POST['end_rate']) && !empty($_POST['end_rate']))
 {
-    if (trim($_POST['end_rate']) < 0 || !is_numeric(trim($_POST['end_rate'])))
+    if (trim($_POST['end_rate']) < 1 || !is_numeric(trim($_POST['end_rate'])))
     {
     $_SESSION["feedback_negative"][] = FEEDBACK_INVALID_RATE;
     return false;
@@ -196,15 +196,14 @@ $tutor_array = $this->getSavedTutors();
 
 foreach($tutors_form_array  as $tutor_form_id)
 {
+$tutor_form_id = preg_replace('/[^0-9.]+/', '', $tutor_form_id);
 if(count($tutor_array) > 20)
 {
 $_SESSION["feedback_negative"][] = FEEDBACK_TOO_MANY_TUTORS;
 return false;
 }
-elseif (!array_key_exists(stripslashes(str_replace('"', "", $tutor_form_id)), $tutor_array))
-{
-$tutor_array[stripslashes(str_replace('"', "", $tutor_form_id))] = time();
-}
+elseif (array_key_exists($tutor_form_id, $tutor_array)) unset($tutor_array[$tutor_form_id]);
+else $tutor_array[$tutor_form_id] = time();
 }
 
 $saved_tutors_time = implode(",", $tutor_array);
@@ -229,20 +228,18 @@ $results = $query->fetch();
 $tutor_array = array();
 
 
-if (!empty($results->saved_tutors_id) || !empty($results->saved_tutors_time))
+if (!empty($results->saved_tutors_id) && !empty($results->saved_tutors_time))
 {
 $saved_tutors_id = explode(",", $results->saved_tutors_id);
 $saved_tutors_time = explode(",", $results->saved_tutors_time);
 
-for($i=0; $i < count($saved_tutors_id); $i++)
+if (count($saved_tutors_id) == count($saved_tutors_time))
 {
-$tutor_array[$saved_tutors_id[$i]] = $saved_tutors_time[$i];
+for($i=0; $i < count($saved_tutors_id); $i++) $tutor_array[$saved_tutors_id[$i]] = $saved_tutors_time[$i];
 }
-
 }
 
 return $tutor_array;
-
 }
 
 public function getTutor($user_id)

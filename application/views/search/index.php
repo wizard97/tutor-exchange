@@ -15,11 +15,11 @@
 <div class="panel-body">
 <div class="form-group">
 	<label for="start_rate">Price range</label>
-    <input type="number" class="form-control" name="start_rate" id="start_rate" size="5" maxlength="3" placeholder="min"  min="0">
+    <input type="number" class="form-control" name="start_rate" id="start_rate" size="5" maxlength="3" placeholder="min"  min="1">
 </div>
 
 <div class="form-group">
-    <input class="form-control" type="number" name="end_rate" id="end_rate" size="5" maxlength="3" min="0" placeholder="max">
+    <input class="form-control" type="number" name="end_rate" id="end_rate" size="5" maxlength="3" min="1" placeholder="max">
     <p class="help-block">Enter your price range in dollars per hour</p>
 </div>
 
@@ -56,10 +56,7 @@
     <div class="col-xs-7">
         
             <div class="checkbox">
-            <label>
-            <input type="checkbox"  name="math[]" value="elementary_math">
-             <b>Elementary School Math</b>
-            </label>
+            <label><input type="checkbox"  name="math[]" value="elementary_math">Elementary School Math</label>
             </div>
         
         </div>
@@ -78,10 +75,7 @@
     <div class="col-xs-7">
         
             <div class="checkbox">
-            <label>
-            <input type="checkbox"  name="math[]" value="middle_math">
-             <b>Middle School Math</b>
-            </label>
+            <label><input type="checkbox"  name="math[]" value="middle_math">Middle School Math</label>
             </div>
         
         </div>
@@ -100,10 +94,7 @@
     <div class="col-xs-7">
         
             <div class="checkbox">
-            <label>
-            <input type="checkbox"  name="math[]" value="math_1">
-             <b>Math 1</b>
-            </label>
+            <label><input type="checkbox"  name="math[]" value="math_1">Math 1</label>
             </div>
         
         </div>
@@ -123,10 +114,7 @@
     <div class="col-xs-7">
         
             <div class="checkbox">
-            <label>
-            <input type="checkbox"  name="math[]" value="math_2">
-             <b>Math 2</b>
-            </label>
+            <label><input type="checkbox"  name="math[]" value="math_2">Math 2</label>
             </div>
         
         </div>
@@ -147,10 +135,7 @@
     <div class="col-xs-7">
         
             <div class="checkbox">
-            <label>
-            <input type="checkbox"  name="math[]" value="math_3">
-             <b>Math 3</b>
-            </label>
+            <label><input type="checkbox"  name="math[]" value="math_3">Math 3</label>
             </div>
         
         </div>
@@ -171,10 +156,7 @@
     <div class="col-xs-7">
         
             <div class="checkbox">
-            <label>
-            <input type="checkbox"  name="math[]" value="math_1">
-             <b>Math 4</b>
-            </label>
+            <label><input type="checkbox"  name="math[]" value="math_4">Math 4</label>
             </div>
         
         </div>
@@ -195,10 +177,7 @@
     <div class="col-xs-7">
         
             <div class="checkbox">
-            <label>
-            <input type="checkbox"  name="math[]" value="stats">
-             <b>Statistics</b>
-            </label>
+            <label><input type="checkbox"  name="math[]" value="stats">Statistics</label>
             </div>
         
         </div>
@@ -218,10 +197,7 @@
     <div class="col-xs-7">
         
             <div class="checkbox">
-            <label>
-            <input type="checkbox"  name="math[]" value="comp_sci">
-             <b>Computer Science</b>
-            </label>
+            <label><input type="checkbox"  name="math[]" value="comp_sci">Computer Science</label>
             </div>
         
         </div>
@@ -239,10 +215,7 @@
     <div class="col-xs-7">
         
             <div class="checkbox">
-            <label>
-            <input type="checkbox"  name="math[]" value="calc">
-             <b>Calculus</b>
-            </label>
+            <label><input type="checkbox"  name="math[]" value="calc">Calculus</label>
             </div>
         
         </div>
@@ -270,14 +243,12 @@
 <div class="panel panel-info">
     <div class="panel-heading"><h3 class="panel-title">Science</h3></div>
     <div class="panel-body">
+
     <div class="row">
     <div class="col-xs-7">
         
             <div class="checkbox">
-            <label>
-            <input type="checkbox"  name="science[]" value="elementary_science">
-             <b>Elementary School Science</b>
-            </label>
+            <label><input type="checkbox"  name="science[]" value="elementary_science">Elementary School Science</label>
             </div>
         
         </div>
@@ -296,10 +267,7 @@
     <div class="col-xs-7">
         
             <div class="checkbox">
-            <label>
-            <input type="checkbox"  name="science[]" value="middle_science">
-             <b>Middle School Science</b>
-            </label>
+            <label><input type="checkbox"  name="science[]" value="middle_science">Middle School Science</label>
             </div>
         
         </div>
@@ -318,10 +286,7 @@
     <div class="col-xs-7">
         
             <div class="checkbox">
-            <label>
-            <input type="checkbox"  name="science[]" value="earth_science">
-             <b>Earth Science</b>
-            </label>
+            <label><input type="checkbox"  name="science[]" value="earth_science">Earth Science</label>
             </div>
         
         </div>
@@ -341,10 +306,7 @@
     <div class="col-xs-7">
         
             <div class="checkbox">
-            <label>
-            <input type="checkbox"  name="science[]" value="bio">
-             <b>Biology</b>
-            </label>
+            <label><input type="checkbox"  name="science[]" value="bio">Biology</label>
             </div>
         
         </div>
@@ -365,10 +327,7 @@
     <div class="col-xs-7">
         
             <div class="checkbox">
-            <label>
-            <input type="checkbox"  name="science[]" value="chem">
-             <b>Chemistry</b>
-            </label>
+            <label><input type="checkbox"  name="science[]" value="chem">Chemistry</label>
             </div>
         
         </div>
@@ -390,10 +349,7 @@
     <div class="col-xs-7">
         
             <div class="checkbox">
-            <label>
-            <input type="checkbox"  name="science[]" value="phys">
-             <b>Physics</b>
-            </label>
+            <label><input type="checkbox"  name="science[]" value="phys">Physics</label>
             </div>
         
         </div>
@@ -409,7 +365,7 @@
         </div>
 
 </div>
-        </div>
+</div>
 </div>
 </div>
 
@@ -424,10 +380,7 @@
 
     
             <div class="checkbox">
-            <label>
-            <input type="checkbox"  name="music" value="1">
-             <b>Music Tutoring</b>
-            </label>
+            <label><input type="checkbox"  name="music" value="1">Music Tutoring</label>
             <p class="help-block">Do you want someone who can tutor you in music?</p>
             </div>
     
@@ -457,7 +410,7 @@
     </div>
 
         <div class="form-group">
-    <label for="music_level">Experiance</label>
+    <label for="music_level">Experience</label>
 
     <select class="form-control" name="music_level" id="music_level">
         <option value="1">None</option>
@@ -476,7 +429,9 @@
 </div>
 
 
-<input type="submit" value="Search" class="btn btn-primary">
+<button type="submit" class="btn btn-lg btn-primary">
+<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+</button>
 
 </form>	
 </div>

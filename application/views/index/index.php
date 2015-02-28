@@ -9,9 +9,12 @@
 
 <div class="jumbotron">
   <div class="container">
-    <h2>Hello, Lexington!</h2>
-    <p>Are you a Lexington student looking either for a tutor or want to become a tutor?</p>
-    <p><a class="btn btn-primary btn-lg" href="<?php echo(URL . 'login/register');?>" role="button">Start Tutoring</a> <a class="btn btn-success btn-lg" href="<?php echo(URL . 'search/index');?>" role="button">Find a Tutor</a></p>
+    <h2>Hello, Lexington MA!</h2>
+    <p>Are you a Lexington student either looking for or wanting to become a tutor? Are you a professional tutor who lives in Lexington, but needs a way for students/parents to find them?</p>
+    <p>
+    <a class="btn btn-success btn-lg" href="<?php echo(URL . 'search/index');?>" role="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Find a Tutor</a> 
+    <a class="btn btn-primary btn-lg" href="<?php echo(URL . 'login/register');?>" role="button"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Start Tutoring</a>
+    </p>
   </div>
 </div>
 

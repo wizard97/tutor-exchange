@@ -1,13 +1,7 @@
 ul.a {list-style-type: disc;}
 ol.a {list-style-type: decimal;}
 
-fieldset {
-	float:left;
-	margin:10px;
-	padding:10px;
-	background-color:#eee;
-	border:2px solid grey;
-}
+
 
 table.subject-table {
 	width:40%;
