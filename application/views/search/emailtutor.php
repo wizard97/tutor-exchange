@@ -5,7 +5,7 @@
 
     <!-- echo out the system feedback (error and success messages) -->
     <?php $this->renderFeedbackMessages(); ?>
-	<div class="col-md-6">
+	<div class="col-md-6 well">
     <form  action="<?php echo URL."search/emailtutor_action/".($this->tutor->user_id)?>" method="POST" enctype="multipart/form-data">
 	<fieldset>
     <div class="form-group">
@@ -33,7 +33,7 @@
     <textarea name="message" id="message" class="form-control" rows="7" cols="60" required placeholder="Your message to the tutor goes here."></textarea>
     </div>
 
-            <button type="submit" class="btn btn-lg btn-primary">
+            <button type="submit" class="btn btn-lg btn-success">
 <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Send Email
 </button>
     </fieldset>

@@ -1,4 +1,4 @@
-<div class="content">
+<div class="container">
 <h1>Tutoring Settings</h1>
 
     <!-- echo out the system feedback (error and success messages) -->

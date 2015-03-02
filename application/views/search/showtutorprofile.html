@@ -1,16 +1,15 @@
 <div class="container">
+
 <div class="page-header">
   <h1><?php echo $this->tutor->fname.' '.$this->tutor->lname;?></h1>
 </div>
 
-    <?php $this->renderFeedbackMessages(); ?>
-<div class="alert alert-warning" role="alert"><strong>Note: </strong>Much of the functionality on this page is not done/working. Please check back later.</div>
 
 
 <div class="col-md-3">
 
 <div class="row">
-<img src="<?php echo $this->tutor->user_avatar_link;?>" width="300" height="300" class="img-thumbnail img-responsive">
+<img src="#" width="300" height="300" class="img-thumbnail img-responsive">
 </div>
 
 <div class="row">
@@ -20,13 +19,13 @@
                 <li class="list-group-item text-right"><span class="pull-left"><strong class="">Age:</strong></span> <?php echo $this->tutor->age;?></li>
                 <li class="list-group-item text-right"><span class="pull-left"><strong class="">Grade:</strong></span> <?php echo $this->tutor->grade;?></li>
                 <li class="list-group-item text-right"><span class="pull-left"><strong class="">Rate:</strong></span> $<?php echo $this->tutor->rate;?></li>
-              	<li class="list-group-item text-right"><span class="pull-left"><strong class="">Joined:</strong></span> <?php echo date("m/d/y", $this->tutor->user_creation_timestamp);?></li>
+              	<li class="list-group-item text-right"><span class="pull-left"><strong class="">Joined:</strong></span> 2.23.97</li>
             
 </ul>
 </div>
 
 <div class="row center-block">
-<button type="button" class="btn btn-success">Save me!</button>  <a class="btn btn-primary" href="<?php echo(URL . 'search/emailtutor/'.$this->tutor->user_id);?>" role="button"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Contact Me</a>
+<button type="button" class="btn btn-success">Book me!</button>  <button type="button" class="btn btn-info">Send me a message</button>
 </div>
 
 </div>

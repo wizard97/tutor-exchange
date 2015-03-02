@@ -1,11 +1,11 @@
 <div class="container">
 <div class="page-header">
-  <h1>Lexington Tutor Exchange <small>V1.6 Beta </small></h1>
+  <h1>Lexington Tutor Exchange <small>V1.7 Beta </small></h1>
 </div>
 
     <!-- echo out the system feedback (error and success messages) -->
     <?php $this->renderFeedbackMessages(); ?>
-<div class="alert alert-warning" role="alert">This tutoring site is in beta. It is currently a work in progress by Aaron Wisner & Matan Silver, please pardon the appearance.</div>
+<div class="alert alert-warning" role="alert"><strong>Note: </strong>This tutoring site is in beta. It is currently a work in progress by Aaron Wisner & Matan Silver, please pardon the appearance and/or any functionality issues.</div>
 
 <div class="jumbotron">
   <div class="container">

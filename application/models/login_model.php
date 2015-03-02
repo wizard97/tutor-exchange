@@ -390,7 +390,7 @@ class LoginModel
             $_SESSION["feedback_negative"][] = FEEDBACK_EMAIL_TOO_LONG;
         } elseif (!filter_var($_POST['user_email'], FILTER_VALIDATE_EMAIL)) {
             $_SESSION["feedback_negative"][] = FEEDBACK_EMAIL_DOES_NOT_FIT_PATTERN;
-        } elseif (empty($_POST['account_type']) || ($_POST['account_type'] != 1 && $_POST['account_type'] != 2)) {
+        } elseif (empty($_POST['account_type']) || $_POST['account_type'] < 1 || $_POST['account_type'] > 3) {
             $_SESSION["feedback_negative"][] = FEEDBACK_INVALID_ACCOUNT_TYPE;
         } elseif (!empty($_POST['user_email'])
             AND strlen($_POST['user_email']) <= 64
@@ -404,7 +404,7 @@ class LoginModel
             AND strlen($_POST['fname']) >= 2
             AND strlen($_POST['lname']) <= 64
             AND strlen($_POST['lname']) >= 2
-            AND $_POST['account_type'] == 1 || $_POST['account_type'] == 2
+            AND $_POST['account_type'] >= 1 && $_POST['account_type'] <= 3
             AND preg_match('/^[a-z\d]{2,64}$/i', $_POST['fname'])
             AND preg_match('/^[a-z\d]{2,64}$/i', $_POST['lname']))
             {

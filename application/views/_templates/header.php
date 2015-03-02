@@ -9,27 +9,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    
-<link rel="stylesheet" href="<?php echo URL; ?>public/css/reset.css" />
-    <link rel="stylesheet" href="<?php echo URL; ?>public/css/style.css" />
-    <!-- in case you wonder: That's the cool-kids-protocol-free way to load jQuery -->
-    <script type="text/javascript" src="//code.jquery.com/jquery-2.0.3.min.js"></script>
-    <script type="text/javascript" src="<?php echo URL; ?>public/js/application.js"></script>
-
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
 <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
 
 <style type="text/css">
+.table tbody>tr>td.vert-align{
+    vertical-align: middle;
+}
 body { padding-bottom: 70px; }
 </style>
 

@@ -40,15 +40,16 @@ class TutorModel
 
         $math_subject = array("elementary_math", "middle_math", "math_1", "math_2", "math_3", "math_4", "stats", "comp_sci", "calc");
         $science_subject = array("elementary_science", "middle_science", "earth_science", "bio", "chem", "phys");
-
+$foreign_language_subject = array("elementary_french", "middle_french", "french_1", "french_2", "french_3", "french_4", "french_5", "french_AP", "elementary_spanish", "middle_spanish", "spanish_1", "spanish_2", "spanish_3", "spanish_4", "spanish_5", "spanish_AP");
 if (isset($_POST['grade']) && isset($_POST['rate']))
 
 {
 
         $stmt = $this->db->prepare("UPDATE tutors SET tutor_active = 1, age = :age, grade = :grade, rate = :rate, about_me = :about_me, elementary_math = :elementary_math, middle_math =:middle_math, math_1 = :math_1, math_2 = :math_2, math_3 = :math_3, math_4 = :math_4,
          stats = :stats, comp_sci = :comp_sci, calc = :calc, highest_math_name = :highest_math_name, highest_math_level = :highest_math_level, elementary_science = :elementary_science, middle_science = :middle_science,
-         earth_science = :earth_science, bio = :bio, chem = :chem, phys =:phys, highest_science_name = :highest_science_name, highest_science_level = :highest_science_level, instrument = :instrument, music_level = :music_level,
-         music_years = :music_years WHERE id = :id LIMIT 1");
+         earth_science = :earth_science, bio = :bio, chem = :chem, phys =:phys, highest_science_name = :highest_science_name, highest_science_level = :highest_science_level, elementary_french = :elementary_french, middle_french = :middle_french, french_1 = :french_1, french_2 = :french_2,
+         french_3 = :french_3, french_4 = :french_4, french_5 = :french_5, french_AP = :french_AP, highest_french_name = :highest_french_name, highest_french_level = :highest_french_level, elementary_spanish = :elementary_spanish, middle_spanish = :middle_spanish, spanish_1 = :spanish_1, spanish_2 = :spanish_2, spanish_3 = :spanish_3, spanish_4 = :spanish_4, spanish_5 = :spanish_5,
+         spanish_AP = :spanish_AP, highest_spanish_name = :highest_spanish_name, highest_spanish_level = :highest_spanish_level, instrument = :instrument, music_level = :music_level, music_years = :music_years WHERE id = :id LIMIT 1");
 
 $query = array();
 $query[':id'] = Session::get('user_id');
@@ -75,6 +76,15 @@ foreach($science_subject as $science_class)
     else $query[':'.$science_class] = 0;
 }
 
+//foreighn language
+foreach($foreign_language_subject as $language_class)
+{
+    if (isset($_POST['foreign_language']) && isset($_POST[$language_class]) && in_array($language_class, $_POST['foreign_language']) && is_numeric($_POST[$language_class]) && $_POST[$language_class] >= 0 && $_POST[$language_class] <= 6)
+    {
+        $query[':'.$language_class] = $_POST[$language_class];
+    }
+    else $query[':'.$language_class] = 0;
+}
 
 //age
 if (isset($_POST['age']) && !empty(trim($_POST['age'])))
@@ -141,7 +151,7 @@ else
 }
 
 
-if (isset($_POST['highest_math_name']) && !empty($_POST['highest_math_name']) && isset($_POST['highest_math_level']) && !empty($_POST['highest_math_level']))
+if (isset($_POST['highest_science_name']) && !empty($_POST['highest_science_name']) && isset($_POST['highest_science_level']) && !empty($_POST['highest_science_level']))
 {
 $query[':highest_science_name'] = trim(strip_tags($_POST['highest_science_name']));
 
@@ -153,6 +163,35 @@ else
     $query[':highest_science_name'] = "";
     $query[':highest_science_level'] = "";
 }
+
+//french
+if (isset($_POST['highest_french_name']) && !empty($_POST['highest_french_name']) && isset($_POST['highest_french_level']) && !empty($_POST['highest_french_level']))
+{
+$query[':highest_french_name'] = trim(strip_tags($_POST['highest_french_name']));
+
+$query[':highest_french_level'] = trim(strip_tags($_POST['highest_french_level']));
+
+}
+else 
+{
+    $query[':highest_french_name'] = "";
+    $query[':highest_french_level'] = "";
+}
+
+//spanish
+if (isset($_POST['highest_spanish_name']) && !empty($_POST['highest_spanish_name']) && isset($_POST['highest_spanish_level']) && !empty($_POST['highest_spanish_level']))
+{
+$query[':highest_spanish_name'] = trim(strip_tags($_POST['highest_spanish_name']));
+
+$query[':highest_spanish_level'] = trim(strip_tags($_POST['highest_spanish_level']));
+
+}
+else 
+{
+    $query[':highest_spanish_name'] = "";
+    $query[':highest_spanish_level'] = "";
+}
+
 
 if (isset($_POST['instrument']) && !empty($_POST['instrument']) && isset($_POST['music_level']) && !empty($_POST['music_level']) && is_numeric($_POST['music_level']) && $_POST['music_level'] > 0)
 {

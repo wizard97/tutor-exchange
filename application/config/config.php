@@ -282,7 +282,7 @@ define("FEEDBACK_ERROR_FINDING_ID", "There was a problem loading your tutoring c
 define("FEEDBACK_TOO_MANY_TUTORS", "You can only save up to 20 tutors, please delete some tutors.");
 define("FEEDBACK_SUCESS_SAVING", "We sucessfully updated your saved tutors.");
 define("FEEDBACK_NO_SELECTION", "You did not make a selection.");
-define("INVALID_ACCOUNT_TYPE", "You did not make a valid account type selection");
+define("FEEDBACK_INVALID_ACCOUNT_TYPE", "You did not make a valid account type selection");
 define("FEEDBACK_NO_SUBJECT", "You must include a subject.");
 define("FEEDBACK_NO_MESSAGE", "You must include a message to the tutor.");
 define("FEEDBACK_EMAIL_SEND_SUCESS", "Your email has been sent.");
@@ -290,3 +290,4 @@ define("FEEDBACK_EMAIL_SEND_FAIL", "An error occured, your email has not been se
 define("FEEDBACK_CANT_REVIEW_YOURSELF", "You cannot review yourself! Nice try...");
 define("FEEDBACK_ALREADY_REVIEWED", "You have already reviewed this tutor. You can only review a tutor once.");
 define("FEEDBACK_SUCESS_REVIEWING", "Your review has been recorded, and is now on the tutor's profile. Thanks!");
+define("FEEDBACK_WARNING_SEARCH_NOT_LOGGED_IN", "You are not logged in. For security reasons, we are hiding most of the tutors' personal info and features of this site. Please <a href=\"".URL.'login"> log in</a>.');

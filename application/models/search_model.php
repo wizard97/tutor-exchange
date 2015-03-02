@@ -27,6 +27,7 @@ $this->AddOneSearch();
 
 $math_subject = array("elementary_math", "middle_math", "math_1", "math_2", "math_3", "math_4", "stats", "comp_sci", "calc");
 $science_subject = array("elementary_science", "middle_science", "earth_science", "bio", "chem", "phys");
+$foreign_language_subject = array("elementary_french", "middle_french", "french_1", "french_2", "french_3", "french_4", "french_5", "french_AP", "elementary_spanish", "middle_spanish", "spanish_1", "spanish_2", "spanish_3", "spanish_4", "spanish_5", "spanish_AP");
 
 $sql_stub = "SELECT users.user_id, users.fname, users.lname, users.user_email, users.user_active, users.user_has_avatar, users.user_account_type, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_active =1 AND user_account_type >= 2 AND tutor_active = 1";
 
@@ -51,6 +52,16 @@ foreach($science_subject as $science_class)
     {
     $sql_stub.=" AND ".$science_class." >= :".$science_class;
     $sql_vars[":".$science_class] = $_POST[$science_class];
+    }
+}
+
+//science
+foreach($foreign_language_subject as $language_class)
+{
+    if (isset($_POST['foreign_language']) && isset($_POST[$language_class]) && in_array($language_class, $_POST['foreign_language']) && is_numeric($_POST[$language_class]) && $_POST[$language_class] >= 0 && $_POST[$language_class] <= 6)
+    {
+    $sql_stub.=" AND ".$language_class." >= :".$language_class;
+    $sql_vars[":".$language_class] = $_POST[$language_class];
     }
 }
 
@@ -118,8 +129,10 @@ if(SESSION::get('user_logged_in'))
 {
 $tutor_array = $this->getSavedTutors();
 }
-
-
+else
+{
+$_SESSION["feedback_neutral"][] = FEEDBACK_WARNING_SEARCH_NOT_LOGGED_IN;
+}
 
 $sth = $this->db->prepare($sql_stub);
 $sth->execute($sql_vars);
@@ -480,7 +493,7 @@ return false;
      */
     public function getUserProfile($user_id)
     {
-        $sql = "SELECT users.user_id, users.fname, users.lname, users.user_email, users.user_active, users.user_has_avatar, users.user_account_type, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_active =1 AND user_account_type >= 2 AND user_id = :user_id";
+        $sql = "SELECT users.*, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_active =1 AND user_account_type >= 2 AND user_id = :user_id";
 
         $sth = $this->db->prepare($sql);
         $sth->execute(array(':user_id' => $user_id));

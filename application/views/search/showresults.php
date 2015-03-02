@@ -34,26 +34,26 @@ elseif(Session::get('user_logged_in')){ ?>
                 echo '<tr>';
             
 
-            echo '<td class="avatar">';
+            echo '<td class="vert-align">';
 
             if (isset($user->user_avatar_link)) {
-                echo '<img height="42" width="42" src="'.$user->user_avatar_link.'" />';
+                echo '<a target="_blank" href="'.$user->user_avatar_link.'">'.'<img href="'.$user->user_avatar_link.'" class="img-rounded" height="50" width="50" src="'.$user->user_avatar_link.'" /></a>';
             }
 
             echo '</td>';
-            echo '<td>'.$user->fname.' '.$user->lname.'</td>';
-            echo '<td>'.$user->grade.'</td>';
-            echo '<td>'.$user->age.'</td>';
-            echo '<td>'.'$'.$user->rate.'</td>';
-            echo '<td>'.$user->highest_math_name;
+            echo '<td class="vert-align">'.$user->fname.' '.$user->lname.'</td>';
+            echo '<td class="vert-align">'.$user->grade.'</td>';
+            echo '<td class="vert-align">'.$user->age.'</td>';
+            echo '<td class="vert-align">'.'$'.$user->rate.'</td>';
+            echo '<td class="vert-align">'.$user->highest_math_name;
             if(!empty($user->highest_math_level))
             {
                 echo ' ('.$user->highest_math_level.')';
             }
             echo '</td>';
 
-            echo '<td><a class="btn btn-success btn-sm" href="'.URL.'search/showtutorprofile/'.$user->user_id.'" '.'role="button"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile</a>';
-            echo ' <a class="btn btn-primary btn-sm" href="'.URL.'search/emailtutor/'.$user->user_id.'" '.'role="button"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Contact</a>';
+            echo '<td class="vert-align""><a class="btn btn-success btn-sm" target="_blank" href="'.URL.'search/showtutorprofile/'.$user->user_id.'" '.'role="button"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile</a>';
+            echo ' <a class="btn btn-primary btn-sm" target="_blank" href="'.URL.'search/emailtutor/'.$user->user_id.'" '.'role="button"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Contact</a>';
             //echo '<td><a target="_blank" href="'.URL."search/emailtutor/".$user->user_id.'">Email Me</a></td>';
             
 if ($user->check){
@@ -79,7 +79,6 @@ else
 ?>
 <div class="table-responsive">
     <table class="table table-striped" id="resultsTable">
-    <p style="color: red">You are not logged in! Please <a href="<?php echo(URL . 'login');?>">log in</a> to see specific information about the tutors.</p>
 <caption>We found you <?php echo(count($this->users));?> tutors:</caption>
 <tr>
 <th>Name</th>
@@ -98,11 +97,15 @@ else
 
                 echo '<tr>';
 
-            echo '<td>'.$user->fname.'</td>';
-            echo '<td>'.$user->grade.'</td>';
-            echo '<td>'.$user->age.'</td>';
-            echo '<td>'.$user->rate.'</td>';
-            echo '<td>'.$user->highest_math_name.' ('.$user->highest_math_level.')</td>';
+            echo '<td class="vert-align">'.$user->fname.'</td>';
+            echo '<td class="vert-align">'.$user->grade.'</td>';
+            echo '<td class="vert-align">'.$user->age.'</td>';
+            echo '<td class="vert-align">'.'$'.$user->rate.'</td>';
+            echo '<td class="vert-align">'.$user->highest_math_name;
+            if(!empty($user->highest_math_level))
+            {
+                echo ' ('.$user->highest_math_level.')';
+            }
             echo "</tr>";
         }
 
