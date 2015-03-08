@@ -43,10 +43,15 @@ class Login extends Controller
         $login_successful = $login_model->login();
 
         // check login status
-        if ($login_successful) {
+        if ($login_successful && Session::get('user_account_type') > 1) {
             // if YES, then move user to dashboard/index (btw this is a browser-redirection, not a rendered view!)
+            header('location: ' . URL . 'tutor/index');
+        } 
+        elseif ($login_successful && Session::get('user_account_type') == 1){
             header('location: ' . URL . 'login/showprofile');
-        } else {
+        }
+
+        else {
             // if NO, then move user to login/index (login form) again
             header('location: ' . URL . 'login/index');
         }
@@ -74,14 +79,21 @@ class Login extends Controller
         $login_model = $this->loadModel('Login');
         $login_successful = $login_model->loginWithCookie();
 
-        if ($login_successful) {
-            header('location: ' . URL . 'dashboard/index');
-        } else {
-            // delete the invalid cookie to prevent infinite login loops
+        // check login status
+        if ($login_successful && Session::get('user_account_type') > 1) {
+            // if YES, then move user to dashboard/index (btw this is a browser-redirection, not a rendered view!)
+            header('location: ' . URL . 'tutor/index');
+        } 
+        elseif ($login_successful && Session::get('user_account_type') == 1){
+            header('location: ' . URL . 'login/showprofile');
+        }
+
+        else {
+            // if NO, then move user to login/index (login form) again
             $login_model->deleteCookie();
-            // if NO, then move user to login/index (login form) (this is a browser-redirection, not a rendered view)
             header('location: ' . URL . 'login/index');
         }
+
     }
 
 

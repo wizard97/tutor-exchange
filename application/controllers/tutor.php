@@ -15,15 +15,27 @@ class Tutor extends Controller
         parent::__construct();
     }
 
-    /**
-     * Index, default action (shows the login form), when you do login/index
-     */
+
     function index()
     {
         Auth::handleLogin();
 
-        // show the view
+        include VIEWS_PATH.'_templates/classes.php';
+        $this->view->math_classes = $math_classes;
+        $this->view->science_classes = $science_classes;
+        $this->view->french_classes = $french_classes;
+        $this->view->spanish_classes = $spanish_classes;
+        $this->view->social_classes = $social_classes;
+        $tutor_model = $this->loadModel('Tutor');
+        $this->view->tutor = $tutor_model->getUserProfile();
+        if ($this->view->tutor == false)
+        {
+            header('location: ' . URL . 'login/changeaccounttype');
+        }
+        else
+        {
         $this->view->render('tutor/index');
+        }
     }
 
     function editTutor()
@@ -57,4 +69,9 @@ class Tutor extends Controller
         header('location: ' . URL . 'login/changeaccounttype');
         }
     }
+
+
+
+
+
 }

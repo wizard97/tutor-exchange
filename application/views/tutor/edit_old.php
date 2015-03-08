@@ -43,7 +43,6 @@
         </div>
       </div>
     </div>
-
     <div class="row">
       <div class="col-md-6">
         <div class="panel panel-info">
@@ -527,7 +526,6 @@
           </div>
         </div>
       </div>
-
       <div class="col-md-6">
         <div class="panel panel-info">
           <div class="panel-heading">
@@ -655,162 +653,6 @@
             </div>
           </div>
         </div>
-
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3 class="panel-title">Social Studies</h3>
-          </div>
-          <div class="panel-body">
-            <div class="form-group">
-              <label for="highest_social_name">Highest completed Social Studies class</label>
-              <input type="text" class="form-control" name="highest_social_name" id="highest_social_name" size="15" maxlength="40" <?php if (!empty($this->user->highest_social_name)){ echo("value=".'"'.$this->user->highest_social_name.'"');} ?>>
-              <p class="help-block">What was the highest Social Studies class you successfully completed?</p>
-            </div>
-            <div class="form=group">
-              <label for="highest_social_level">Class level</label>
-              <input type="text" class="form-control" name="highest_social_level" id="highest_social_level" size="15" maxlength="20" <?php if (!empty($this->user->highest_social_level)){ echo("value=".'"'.$this->user->highest_social_level.'"');} else{echo("placeholder=\"Example: Honors\"");} ?>>
-              <p class="help-block">What level was this class?</p>
-            </div>
-            <p class="help-block">What classes can you teach?</p>
-             <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="social[]" value="elementary_social" <?php if ($this->user->elementary_social != 0){ echo "checked";} ?>>
-                    Elementary School Social Studies</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="elementary_social" id="elementary_social">
-                    <option value="3" <?php if ($this->user->elementary_social == 3){ echo("selected=selected");} ?>>Honors</option>
-                    <option value="2" <?php if ($this->user->elementary_social == 2){ echo("selected=selected");} ?>>Standard</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="social[]" value="middle_social" <?php if ($this->user->middle_social != 0){ echo "checked";} ?>>
-                    Middle School Social Studies</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="middle_social" id="middle_scocial">
-                    <option value="3" <?php if ($this->user->middle_social == 3){ echo("selected=selected");} ?>>Honors</option>
-                    <option value="2" <?php if ($this->user->middle_social == 2){ echo("selected=selected");} ?>>Standard</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="social[]" value="world_history_1" <?php if ($this->user->world_history_1 != 0){ echo "checked";} ?>>
-                    World History I</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="world_history_1" id="world_history_1">
-                    <option value="2" <?php if ($this->user->world_history_1 == 2){ echo("selected=selected");} ?>>Level 1</option>
-                    <option value="1" <?php if ($this->user->world_history_1 == 1){ echo("selected=selected");} ?>>Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="social[]" value="world_history_2" <?php if ($this->user->world_history_2 != 0){ echo "checked";} ?>>
-                    World History II</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="world_history_2" id="world_history_2">
-                    <option value="2"<?php if ($this->user->world_history_2 == 2){ echo("selected=selected");} ?>>Level 1</option>
-                    <option value="1" <?php if ($this->user->world_history_2 == 1){ echo("selected=selected");} ?>>Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="social[]" value="ap_world" <?php if ($this->user->ap_world != 0){ echo "checked";} ?>>
-                    AP World History</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="ap_world" id="ap_world">
-                    <option value="4" <?php if ($this->user->ap_world == 4){ echo("selected=selected");} ?>>AP</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="social[]" value="us_history" <?php if ($this->user->us_history != 0){ echo "checked";} ?>>
-                    US History</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="us_history" id="us_history">
-                    <option value="4" <?php if ($this->user->us_history == 4){ echo("selected=selected");} ?>>AP</option>
-                    <option value="2" <?php if ($this->user->us_history == 2){ echo("selected=selected");} ?>>Level 1</option>
-                    <option value="1" <?php if ($this->user->us_history == 1){ echo("selected=selected");} ?>>Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="social[]" value="econ" <?php if ($this->user->econ != 0){ echo "checked";} ?>>
-                    Economics</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="econ" id="econ">
-                    <option value="4" <?php if ($this->user->econ == 4){ echo("selected=selected");} ?>>AP</option>
-                    <option value="2" <?php if ($this->user->econ == 2){ echo("selected=selected");} ?>>Level 1</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="social[]" value="psych" <?php if ($this->user->psych != 0){ echo "checked";} ?>>
-                    Psychology</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="psych" id="psych">
-                    <option value="4" <?php if ($this->user->psych == 4){ echo("selected=selected");} ?>>AP</option>
-                    <option value="2" <?php if ($this->user->psych == 2){ echo("selected=selected");} ?>>Level 1</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div class="panel panel-info">
           <div class="panel-heading">
             <h3 class="panel-title">Music Tutoring</h3>
@@ -856,7 +698,6 @@
           </div>
         </div>
       </div>
-      
     </div>
     <div class="pull-left">
       <button type="submit" class="btn btn-lg btn-success"> <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Update </button>

@@ -39,7 +39,7 @@
                                   <p class="help-block">Keep me logged in (for two weeks)</p>
                               </div>
                               
-                              <button type="submit" class="btn btn-success btn-block">Login</button>
+                              <button type="submit" name="login" class="btn btn-success btn-block">Login</button>
                               <a href="<?php echo URL; ?>login/requestpasswordreset" class="btn btn-default btn-block">Forgot Password</a>
                           </form>
                       

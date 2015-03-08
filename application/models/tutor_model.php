@@ -41,15 +41,17 @@ class TutorModel
         $math_subject = array("elementary_math", "middle_math", "math_1", "math_2", "math_3", "math_4", "stats", "comp_sci", "calc");
         $science_subject = array("elementary_science", "middle_science", "earth_science", "bio", "chem", "phys");
 $foreign_language_subject = array("elementary_french", "middle_french", "french_1", "french_2", "french_3", "french_4", "french_5", "french_AP", "elementary_spanish", "middle_spanish", "spanish_1", "spanish_2", "spanish_3", "spanish_4", "spanish_5", "spanish_AP");
-if (isset($_POST['grade']) && isset($_POST['rate']))
+$social_studies_subject = array("elementary_social", "middle_social", "world_history_1", "world_history_2", "ap_world", "us_history", "econ", "psych");
 
+if (isset($_POST['grade']) && isset($_POST['rate']))
 {
 
         $stmt = $this->db->prepare("UPDATE tutors SET tutor_active = 1, age = :age, grade = :grade, rate = :rate, about_me = :about_me, elementary_math = :elementary_math, middle_math =:middle_math, math_1 = :math_1, math_2 = :math_2, math_3 = :math_3, math_4 = :math_4,
          stats = :stats, comp_sci = :comp_sci, calc = :calc, highest_math_name = :highest_math_name, highest_math_level = :highest_math_level, elementary_science = :elementary_science, middle_science = :middle_science,
          earth_science = :earth_science, bio = :bio, chem = :chem, phys =:phys, highest_science_name = :highest_science_name, highest_science_level = :highest_science_level, elementary_french = :elementary_french, middle_french = :middle_french, french_1 = :french_1, french_2 = :french_2,
          french_3 = :french_3, french_4 = :french_4, french_5 = :french_5, french_AP = :french_AP, highest_french_name = :highest_french_name, highest_french_level = :highest_french_level, elementary_spanish = :elementary_spanish, middle_spanish = :middle_spanish, spanish_1 = :spanish_1, spanish_2 = :spanish_2, spanish_3 = :spanish_3, spanish_4 = :spanish_4, spanish_5 = :spanish_5,
-         spanish_AP = :spanish_AP, highest_spanish_name = :highest_spanish_name, highest_spanish_level = :highest_spanish_level, instrument = :instrument, music_level = :music_level, music_years = :music_years WHERE id = :id LIMIT 1");
+         spanish_AP = :spanish_AP, highest_spanish_name = :highest_spanish_name, highest_spanish_level = :highest_spanish_level, instrument = :instrument, music_level = :music_level, music_years = :music_years, elementary_social = :elementary_social,
+         middle_social = :middle_social, world_history_1 = :world_history_1, world_history_2 = :world_history_2, ap_world = :ap_world, us_history = :us_history, econ = :econ, psych = :psych,  highest_social_name = :highest_social_name, highest_social_level = :highest_social_level WHERE id = :id LIMIT 1");
 
 $query = array();
 $query[':id'] = Session::get('user_id');
@@ -86,6 +88,16 @@ foreach($foreign_language_subject as $language_class)
     else $query[':'.$language_class] = 0;
 }
 
+//social studies
+foreach($social_studies_subject as $social_class)
+{
+    if (isset($_POST['social']) && isset($_POST[$social_class]) && in_array($social_class, $_POST['social']) && is_numeric($_POST[$social_class]) && $_POST[$social_class] >= 0 && $_POST[$social_class] <= 6)
+    {
+        $query[':'.$social_class] = $_POST[$social_class];
+    }
+    else $query[':'.$social_class] = 0;
+}
+
 //age
 if (isset($_POST['age']) && !empty(trim($_POST['age'])))
 {
@@ -107,7 +119,7 @@ else
 
 
 
-    if (is_numeric(trim($_POST['rate'])) && trim($_POST['rate']) >= 1 && trim($_POST['rate']) < 150)
+    if (is_numeric(trim($_POST['rate'])) && trim($_POST['rate']) >= 8 && trim($_POST['rate']) < 150)
     {
     $query[':rate'] = trim($_POST['rate']);
     }
@@ -118,7 +130,7 @@ else
     }
 
 
-if (is_numeric($_POST['grade']) && is_numeric(trim($_POST['grade'])) && trim($_POST['grade']) >=6 && trim($_POST['grade']) <= 16)
+if (is_numeric($_POST['grade']) && is_numeric(trim($_POST['grade'])) && trim($_POST['grade']) >=7 && trim($_POST['grade']) <= 16)
 {
     $query[':grade'] = $_POST['grade'];
 }
@@ -131,7 +143,7 @@ else
 
 if (isset($_POST['about_me']))
 {
-   $query[':about_me'] = trim(strip_tags($_POST['about_me']));
+   $query[':about_me'] = trim(strip_tags($_POST['about_me']), '<p></p><br></br>');
 }
 else
 {
@@ -162,6 +174,20 @@ else
 {
     $query[':highest_science_name'] = "";
     $query[':highest_science_level'] = "";
+}
+
+
+if (isset($_POST['highest_social_name']) && !empty($_POST['highest_social_name']) && isset($_POST['highest_social_level']) && !empty($_POST['highest_social_level']))
+{
+$query[':highest_social_name'] = trim(strip_tags($_POST['highest_social_name']));
+
+$query[':highest_social_level'] = trim(strip_tags($_POST['highest_social_level']));
+
+}
+else 
+{
+    $query[':highest_social_name'] = "";
+    $query[':highest_social_level'] = "";
 }
 
 //french
@@ -233,6 +259,56 @@ else
     return false;
 }
 }
+
+    public function getUserProfile()
+    {
+        $sql = "SELECT users.*, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_active =1 AND user_account_type >= 2 AND user_id = :user_id";
+
+        $sth = $this->db->prepare($sql);
+        $sth->execute(array(':user_id' => Session::get('user_id')));
+
+        $tutor = $sth->fetch();
+        $count =  $sth->rowCount();
+
+        if ($count == 1) {
+            if (USE_GRAVATAR) {
+                $tutor->user_avatar_link = $this->getGravatarLinkFromEmail($tutor->user_email);
+            } else {
+                $tutor->user_avatar_link = $this->getUserAvatarFilePath($tutor->user_has_avatar, $tutor->user_id);
+            }
+        } else {
+            $_SESSION["feedback_negative"][] = FEEDBACK_USER_DOES_NOT_EXIST;
+            return false;
+        }
+
+        return $tutor;
+    }
+
+        public function getGravatarLinkFromEmail($email, $s = AVATAR_SIZE, $d = 'mm', $r = 'pg', $options = array())
+    {
+        $gravatar_image_link = 'http://www.gravatar.com/avatar/';
+        $gravatar_image_link .= md5( strtolower( trim( $email ) ) );
+        $gravatar_image_link .= "?s=$s&d=$d&r=$r";
+
+        return $gravatar_image_link;
+    }
+
+    /**
+     * Gets the user's avatar file path
+     * @param int $user_has_avatar Marker from database
+     * @param int $user_id User's id
+     * @return string/null Avatar file path
+     */
+    public function getUserAvatarFilePath($user_has_avatar, $user_id)
+    {
+        if ($user_has_avatar) {
+            return URL . AVATAR_PATH . $user_id . '.jpg';
+        } else {
+            return URL . AVATAR_PATH . AVATAR_DEFAULT_IMAGE;
+        }
+        // default return
+        return null;
+    }
 
 
 

@@ -7,9 +7,9 @@
     <!-- echo out the system feedback (error and success messages) -->
     <?php $this->renderFeedbackMessages(); ?>
 
-<?php if (empty($this->users)){ echo("<p>Sorry, we were not able to find a match for you. Perhaps broaden your search criteria and/or check back in a week or two.</p>");} 
+<?php
+if(Session::get('user_logged_in')){ ?>
 
-elseif(Session::get('user_logged_in')){ ?>
 <div class="table-responsive">
 <form action="<?php echo URL; ?>search/showresults_action" method="POST">
     <table class="table table-striped" id="resultsTable">
@@ -21,7 +21,7 @@ elseif(Session::get('user_logged_in')){ ?>
 <th>Grade</th>
 <th>Age</th>
 <th>Hourly Rate</th>
-<th>Highest Math Class (level)</th>
+<th>Tutor Type</th>
 <th>Options</th>
 
 </tr>
@@ -30,8 +30,8 @@ elseif(Session::get('user_logged_in')){ ?>
         <?php
         foreach ($this->users as $user) {
 
-
-                echo '<tr>';
+            if($user->user_account_type > 2) echo '<tr class="success">';
+            else echo '<tr>';
             
 
             echo '<td class="vert-align">';
@@ -45,12 +45,11 @@ elseif(Session::get('user_logged_in')){ ?>
             echo '<td class="vert-align">'.$user->grade.'</td>';
             echo '<td class="vert-align">'.$user->age.'</td>';
             echo '<td class="vert-align">'.'$'.$user->rate.'</td>';
-            echo '<td class="vert-align">'.$user->highest_math_name;
-            if(!empty($user->highest_math_level))
+            if(!empty($user->user_account_type > 2))
             {
-                echo ' ('.$user->highest_math_level.')';
+                echo '<td class="vert-align">Professional Tutor</td>';
             }
-            echo '</td>';
+            else echo '<td class="vert-align">Student Tutor</td>';
 
             echo '<td class="vert-align""><a class="btn btn-success btn-sm" target="_blank" href="'.URL.'search/showtutorprofile/'.$user->user_id.'" '.'role="button"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile</a>';
             echo ' <a class="btn btn-primary btn-sm" target="_blank" href="'.URL.'search/emailtutor/'.$user->user_id.'" '.'role="button"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Contact</a>';
@@ -80,36 +79,37 @@ else
 <div class="table-responsive">
     <table class="table table-striped" id="resultsTable">
 <caption>We found you <?php echo(count($this->users));?> tutors:</caption>
+<thead>
 <tr>
 <th>Name</th>
 <th>Grade</th>
 <th>Age</th>
 <th>Hourly Rate</th>
-<th>Highest Math Class (level)</th>
-
+<th>Tutor Type</th>
 </tr>
-
+</thead>
+<tbody>
         <?php
 
 
         foreach ($this->users as $user) {
 
 
-                echo '<tr>';
+            if($user->user_account_type > 2) echo '<tr class="success">';
+            else echo '<tr>';
 
             echo '<td class="vert-align">'.$user->fname.'</td>';
             echo '<td class="vert-align">'.$user->grade.'</td>';
             echo '<td class="vert-align">'.$user->age.'</td>';
             echo '<td class="vert-align">'.'$'.$user->rate.'</td>';
-            echo '<td class="vert-align">'.$user->highest_math_name;
-            if(!empty($user->highest_math_level))
+            if(!empty($user->user_account_type > 2))
             {
-                echo ' ('.$user->highest_math_level.')';
+                echo '<td class="vert-align">Professional Tutor</td>';
             }
-            echo "</tr>";
+            else echo '<td class="vert-align">Student Tutor</td>';
         }
 
-        echo "</table></div>";
+        echo "</tbody></table></div>";
     }
         ?>
 </div>

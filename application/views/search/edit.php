@@ -676,7 +676,7 @@
               <div class="col-xs-7">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"  name="social[]" value="elementary_social" <?php if ($this->user->elementary_social != 0){ echo "checked";} ?>>
+                    <input type="checkbox"  name="social[]" value="elementary_social">
                     Elementary School Social Studies</label>
                 </div>
               </div>
@@ -693,7 +693,7 @@
               <div class="col-xs-7">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"  name="social[]" value="middle_social" <?php if ($this->user->middle_social != 0){ echo "checked";} ?>>
+                    <input type="checkbox"  name="social[]" value="middle_social">
                     Middle School Social Studies</label>
                 </div>
               </div>
@@ -710,7 +710,7 @@
               <div class="col-xs-7">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"  name="social[]" value="world_history_1" <?php if ($this->user->world_history_1 != 0){ echo "checked";} ?>>
+                    <input type="checkbox"  name="social[]" value="world_history_1">
                     World History I</label>
                 </div>
               </div>
@@ -727,7 +727,7 @@
               <div class="col-xs-7">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"  name="social[]" value="world_history_2" <?php if ($this->user->world_history_2 != 0){ echo "checked";} ?>>
+                    <input type="checkbox"  name="social[]" value="world_history_2">
                     World History II</label>
                 </div>
               </div>
@@ -744,7 +744,7 @@
               <div class="col-xs-7">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"  name="social[]" value="ap_world" <?php if ($this->user->ap_world != 0){ echo "checked";} ?>>
+                    <input type="checkbox"  name="social[]" value="ap_world">
                     AP World History</label>
                 </div>
               </div>
@@ -760,7 +760,7 @@
               <div class="col-xs-7">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"  name="social[]" value="us_history" <?php if ($this->user->us_history != 0){ echo "checked";} ?>>
+                    <input type="checkbox"  name="social[]" value="us_history">
                     US History</label>
                 </div>
               </div>
@@ -778,7 +778,7 @@
               <div class="col-xs-7">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"  name="social[]" value="econ" <?php if ($this->user->econ != 0){ echo "checked";} ?>>
+                    <input type="checkbox"  name="social[]" value="econ">
                     Economics</label>
                 </div>
               </div>
@@ -795,7 +795,7 @@
               <div class="col-xs-7">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"  name="social[]" value="psych" <?php if ($this->user->psych != 0){ echo "checked";} ?>>
+                    <input type="checkbox"  name="social[]" value="psych">
                     Psychology</label>
                 </div>
               </div>

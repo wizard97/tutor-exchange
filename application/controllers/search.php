@@ -31,7 +31,7 @@ class Search extends Controller
      * @param $user_id int id the the user
      */
     function showResults()
-    {
+    {       
             $search_model = $this->loadModel('Search');
             $this->view->users = $search_model->getResults();
             if (is_array($this->view->users))
@@ -46,6 +46,12 @@ class Search extends Controller
 
     function showtutorprofile($user_id)
     {
+        include VIEWS_PATH.'_templates/classes.php';
+        $this->view->math_classes = $math_classes;
+        $this->view->science_classes = $science_classes;
+        $this->view->french_classes = $french_classes;
+        $this->view->spanish_classes = $spanish_classes;
+        $this->view->social_classes = $social_classes;
         $search_model = $this->loadModel('Search');
         $this->view->tutor = $search_model->getUserProfile($user_id);
         if ($this->view->tutor == false)

@@ -187,13 +187,13 @@ define("EMAIL_SMTP_ENCRYPTION", 'ssl');
  * define("EMAIL_VERIFICATION_CONTENT", "Please click on this link to activate your account:");
  */
 define("EMAIL_PASSWORD_RESET_URL", URL . "login/verifypasswordreset");
-define("EMAIL_PASSWORD_RESET_FROM_EMAIL", "no-reply@example.com");
+define("EMAIL_PASSWORD_RESET_FROM_EMAIL", "no-reply@lextutorexchange.com");
 define("EMAIL_PASSWORD_RESET_FROM_NAME", "Lexington Tutor Exchange");
 define("EMAIL_PASSWORD_RESET_SUBJECT", "Password reset for Lex Tutor Exchange");
 define("EMAIL_PASSWORD_RESET_CONTENT", "Please click on this link to reset your password: ");
 
 define("EMAIL_VERIFICATION_URL", URL . "login/verify");
-define("EMAIL_VERIFICATION_FROM_EMAIL", "no-reply@example.com");
+define("EMAIL_VERIFICATION_FROM_EMAIL", "no-reply@lextutorexchange.com");
 define("EMAIL_VERIFICATION_FROM_NAME", "Lexington Tutor Exchange");
 define("EMAIL_VERIFICATION_SUBJECT", "Account Activation");
 define("EMAIL_VERIFICATION_CONTENT", "Thank you for creating an account with Lexington Tutor Exchange. Please click on this link to activate your account: ");
@@ -274,20 +274,18 @@ define("FEEDBACK_FACEBOOK_OFFLINE", "We could not reach the Facebook servers. Ma
 
 //tutoring feedback
 define("FEEDBACK_INVALID_AGE", "Please double check the age field. We require that you are at least 12.");
-define("FEEDBACK_INVALID_GRADE", "Please double check the grade field.");
+define("FEEDBACK_INVALID_GRADE", "Please double check the grade field. We require you be in at least 7th grade.");
 define("FEEDBACK_INCOMPLETE_FIELDS", "You must fill in all required fields.");
-define("FEEDBACK_INVALID_RATE", "Please enter a valid rate in $/hour.");
+define("FEEDBACK_INVALID_RATE", "Please enter a valid rate in $/hour. Minimum rate is $8.");
 define("FEEDBACK_TUTORING_EDIT_SUCESS", "You successfully updated your tutoring credentials.");
 define("FEEDBACK_ERROR_FINDING_ID", "There was a problem loading your tutoring credentials, please contact the administrator.");
 define("FEEDBACK_TOO_MANY_TUTORS", "You can only save up to 20 tutors, please delete some tutors.");
 define("FEEDBACK_SUCESS_SAVING", "We sucessfully updated your saved tutors.");
 define("FEEDBACK_NO_SELECTION", "You did not make a selection.");
-define("FEEDBACK_INVALID_ACCOUNT_TYPE", "You did not make a valid account type selection");
+define("INVALID_ACCOUNT_TYPE", "You did not make a valid account type selection");
 define("FEEDBACK_NO_SUBJECT", "You must include a subject.");
 define("FEEDBACK_NO_MESSAGE", "You must include a message to the tutor.");
 define("FEEDBACK_EMAIL_SEND_SUCESS", "Your email has been sent.");
 define("FEEDBACK_EMAIL_SEND_FAIL", "An error occured, your email has not been sent: ");
-define("FEEDBACK_CANT_REVIEW_YOURSELF", "You cannot review yourself! Nice try...");
-define("FEEDBACK_ALREADY_REVIEWED", "You have already reviewed this tutor. You can only review a tutor once.");
-define("FEEDBACK_SUCESS_REVIEWING", "Your review has been recorded, and is now on the tutor's profile. Thanks!");
-define("FEEDBACK_WARNING_SEARCH_NOT_LOGGED_IN", "You are not logged in. For security reasons, we are hiding most of the tutors' personal info and features of this site. Please <a href=\"".URL.'login"> log in</a>.');
+define("FEEDBACK_WARNING_SEARCH_NOT_LOGGED_IN", "You are not logged in. For the protection of our tutors, we are blocking most of the tutors' personal info and site functionality. Please <a href=\"".URL."login/index\">Login/Register</a>.");
+define("FEEDBACK_WARNING_NO_RESULTS", "Sorry, we were not able to find a match for you. Perhaps broaden your search criteria and/or check back in a week or two. <a href=\"".URL."search/index\">Search Again</a>?");

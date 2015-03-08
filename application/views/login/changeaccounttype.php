@@ -14,7 +14,7 @@
 <p style="color: green">You are currently listed as a tutor, thanks!</p>
        <form action="<?php echo URL; ?>login/changeaccounttype_action" method="post">
         <label></label>
-        <input type="submit" name="user_account_downgrade" value="Stop Tutoring" />
+        <input type="submit" class="btn btn-danger" name="user_account_downgrade" value="Stop Tutoring" />
     </form>
 <?php } 
 
@@ -25,7 +25,7 @@ else
 
 <form action="<?php echo URL; ?>login/changeaccounttype_action" method="post">
         <label></label>
-        <input type="submit" name="user_account_upgrade" value="Start Tutoring" />
+        <input type="submit" class="btn btn-success" name="user_account_upgrade" value="Start Tutoring" />
     </form>
 
 <?php

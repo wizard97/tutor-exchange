@@ -25,6 +25,8 @@
 
 <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
 
+<script src="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
 <style type="text/css">
 .table tbody>tr>td.vert-align{
     vertical-align: middle;
@@ -74,8 +76,8 @@ $(document).ready(function(){
         <li class="dropdown <?php if ($this->checkForActiveController($filename, "tutor")) { echo 'active'; } ?>"><a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo URL; ?>tutor/index">Tutoring Settings
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
-        <li <?php if ($this->checkForActiveControllerAndAction($filename, "tutor/index")) { echo ' class="active" '; } ?>><a href="<?php echo URL; ?>tutor/index">Overview</a></li>
-        <li <?php if ($this->checkForActiveControllerAndAction($filename, "tutor/edittutor")) { echo ' class="active" '; } ?>><a href="<?php echo URL; ?>tutor/edittutor">Edit tutoring credentials</a></li>
+        <li <?php if ($this->checkForActiveControllerAndAction($filename, "tutor/index")) { echo ' class="active" '; } ?>><a href="<?php echo URL; ?>tutor/index">Dashboard</a></li>
+        <li <?php if ($this->checkForActiveControllerAndAction($filename, "tutor/edittutor")) { echo ' class="active" '; } ?>><a href="<?php echo URL; ?>tutor/edittutor">Edit Profile</a></li>
         </ul>
         </li>
         <?php endif; ?>
