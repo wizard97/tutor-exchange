@@ -1061,7 +1061,7 @@ class LoginModel
      */
     public function changeAccountType()
     {
-        if (isset($_POST["user_account_upgrade"]) AND !empty($_POST["user_account_upgrade"])) {
+        if (isset($_POST["user_account_type"]) AND !empty($_POST["user_account_type"]) && (int)$_POST["user_account_type"] > 0 && (int)$_POST["user_account_type"] < 4 && $_POST["user_account_type"] != Session::get('user_account_type')) {
 
             // do whatever you want to upgrade the account here (pay-process etc)
             // ...
@@ -1069,34 +1069,22 @@ class LoginModel
             // ...
 
             // upgrade account type
-            $query = $this->db->prepare("UPDATE users SET user_account_type = 2 WHERE user_id = :user_id");
-            $query->execute(array(':user_id' => Session::get('user_id')));
+            $query = $this->db->prepare("UPDATE users SET user_account_type = :user_account_type WHERE user_id = :user_id");
+            $query->execute(array(':user_account_type' => $_POST["user_account_type"], ':user_id' => Session::get('user_id')));
 
             if ($query->rowCount() == 1 && !($this->addTutor())) {
+
+                if ($_POST["user_account_type"] < Session::get('user_account_type')) $_SESSION["feedback_positive"][] = FEEDBACK_ACCOUNT_DOWNGRADE_SUCCESSFUL;
+                    else $_SESSION["feedback_positive"][] = FEEDBACK_ACCOUNT_UPGRADE_SUCCESSFUL;
                 // set account type in session to 2
-                Session::set('user_account_type', 2);
-                $_SESSION["feedback_positive"][] = FEEDBACK_ACCOUNT_UPGRADE_SUCCESSFUL;
-            } else {
-                $_SESSION["feedback_negative"][] = FEEDBACK_ACCOUNT_UPGRADE_FAILED;
+                Session::set('user_account_type', $_POST["user_account_type"]);
             }
-        } elseif (isset($_POST["user_account_downgrade"]) AND !empty($_POST["user_account_downgrade"])) {
 
-            // do whatever you want to downgrade the account here (pay-process etc)
-            // ...
-            // ... myWhateverProcess();
-            // ...
+         else $_SESSION["feedback_negative"][] = FEEDBACK_ACCOUNT_UPGRADE_FAILED;
+         return false;
+     }
+$_SESSION["feedback_negative"][] = FEEDBACK_ACCOUNT_UPGRADE_FAILED;
 
-            $query = $this->db->prepare("UPDATE users SET user_account_type = 1 WHERE user_id = :user_id");
-            $query->execute(array(':user_id' => Session::get('user_id')));
-
-            if ($query->rowCount() == 1) {
-                // set account type in session to 1
-                Session::set('user_account_type', 1);
-                $_SESSION["feedback_positive"][] = FEEDBACK_ACCOUNT_DOWNGRADE_SUCCESSFUL;
-            } else {
-                $_SESSION["feedback_negative"][] = FEEDBACK_ACCOUNT_DOWNGRADE_FAILED;
-            }
-        }
     }
 
 public function addTutor()

@@ -31,7 +31,7 @@
 .table tbody>tr>td.vert-align{
     vertical-align: middle;
 }
-body { padding-bottom: 70px; }
+body { padding-bottom: 100px; }
 </style>
 
 <script>
@@ -87,7 +87,7 @@ $(document).ready(function(){
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
         <li <?php if ($this->checkForActiveControllerAndAction($filename, "login/showprofile")) { echo ' class="active" '; } ?>><a href="<?php echo URL; ?>login/showprofile">My Account</a></li>
-        <li <?php if ($this->checkForActiveControllerAndAction($filename, "login/changeaccounttype")) { echo ' class="active" '; } ?>><a href="<?php echo URL; ?>login/changeaccounttype">Start/Stop Tutoring</a></li>
+        <li <?php if ($this->checkForActiveControllerAndAction($filename, "login/changeaccounttype")) { echo ' class="active" '; } ?>><a href="<?php echo URL; ?>login/changeaccounttype">Change Account Type</a></li>
         <li <?php if ($this->checkForActiveControllerAndAction($filename, "login/uploadavatar")) { echo ' class="active" '; } ?>><a href="<?php echo URL; ?>login/uploadavatar">Profile Picture</a></li>
         <li <?php if ($this->checkForActiveControllerAndAction($filename, "login/editusername")) { echo ' class="active" '; } ?>><a href="<?php echo URL; ?>login/editusername">Edit Name</a></li>
         <li <?php if ($this->checkForActiveControllerAndAction($filename, "login/edituseremail")) { echo ' class="active" '; } ?>><a href="<?php echo URL; ?>login/edituseremail">Edit Email</a></li>

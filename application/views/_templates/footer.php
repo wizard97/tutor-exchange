@@ -3,6 +3,7 @@
 
 <p class="navbar-text text-muted pull-left">Copyright © <?php echo Date("Y");?>. <a href="http://lextutorexchange.com">Lexington Tutor Exchange</a>. All rights reserved.
 
+<!--
 <div class="pull-right navbar-text">
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
@@ -16,6 +17,7 @@
 </form></p>
 
     </div>
+    -->
     </div>
 
 </div>

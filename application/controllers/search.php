@@ -46,6 +46,8 @@ class Search extends Controller
 
     function showtutorprofile($user_id)
     {
+        Auth::handleLogin();
+        
         include VIEWS_PATH.'_templates/classes.php';
         $this->view->math_classes = $math_classes;
         $this->view->science_classes = $science_classes;

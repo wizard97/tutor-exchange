@@ -285,6 +285,8 @@ if($query->rowCount() != 1)
     $_SESSION["feedback_negative"][] = FEEDBACK_USER_DOES_NOT_EXIST;
     return false;
 }
+
+
 return $tutor;
 }
 
@@ -524,6 +526,8 @@ return false;
             $_SESSION["feedback_negative"][] = FEEDBACK_USER_DOES_NOT_EXIST;
             return false;
         }
+        $stmt = $this->db->prepare("UPDATE tutors SET profile_views=profile_views+1 WHERE id = :user_id LIMIT 1");
+$stmt->execute(array(':user_id' => $user_id));
 
         return $tutor;
     }

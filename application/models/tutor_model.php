@@ -46,7 +46,7 @@ $social_studies_subject = array("elementary_social", "middle_social", "world_his
 if (isset($_POST['grade']) && isset($_POST['rate']))
 {
 
-        $stmt = $this->db->prepare("UPDATE tutors SET tutor_active = 1, age = :age, grade = :grade, rate = :rate, about_me = :about_me, elementary_math = :elementary_math, middle_math =:middle_math, math_1 = :math_1, math_2 = :math_2, math_3 = :math_3, math_4 = :math_4,
+        $stmt = $this->db->prepare("UPDATE tutors SET tutor_active = 1, profile_expiration = :profile_expiration, age = :age, grade = :grade, rate = :rate, about_me = :about_me, elementary_math = :elementary_math, middle_math =:middle_math, math_1 = :math_1, math_2 = :math_2, math_3 = :math_3, math_4 = :math_4,
          stats = :stats, comp_sci = :comp_sci, calc = :calc, highest_math_name = :highest_math_name, highest_math_level = :highest_math_level, elementary_science = :elementary_science, middle_science = :middle_science,
          earth_science = :earth_science, bio = :bio, chem = :chem, phys =:phys, highest_science_name = :highest_science_name, highest_science_level = :highest_science_level, elementary_french = :elementary_french, middle_french = :middle_french, french_1 = :french_1, french_2 = :french_2,
          french_3 = :french_3, french_4 = :french_4, french_5 = :french_5, french_AP = :french_AP, highest_french_name = :highest_french_name, highest_french_level = :highest_french_level, elementary_spanish = :elementary_spanish, middle_spanish = :middle_spanish, spanish_1 = :spanish_1, spanish_2 = :spanish_2, spanish_3 = :spanish_3, spanish_4 = :spanish_4, spanish_5 = :spanish_5,
@@ -243,6 +243,8 @@ else
     $query[':music_years'] = ""; 
 }
 
+//90 days from now
+$query['profile_expiration'] = time() + (3600*24*90);
 
 
 //execute the update
