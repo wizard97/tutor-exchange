@@ -61,10 +61,12 @@
       <h1><?php echo $this->tutor->fname.' '.$this->tutor->lname;?></h1>
     </div>
 
+<?php $this->renderFeedbackMessages(); ?>
+
   <div class="row">
     <form action="<?php echo(URL . 'tutor/index_action');?>" method="POST">
 
-        <div class="col-md-6">
+        <div class="col-md-7">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <i class="fa fa-dashboard"></i> Tutoring Dashboard
@@ -74,21 +76,21 @@
 
                     <div class="btn-group btn-group-justified" role="group">
                         <div class="btn-group" role="group">
-                          <button type="submit" name="actions[]" value="resume_pause" class="btn btn-primary col-sm-3">
+                          <button type="submit" name="actions[]" value="resume_pause" class="btn btn-danger col-sm-3">
                               <?php if($this->tutor->tutor_active != 0) echo '<i class="fa fa-pause"></i><br>Pause Tutoring'; else echo '<i class="fa fa-play"></i><br>Resume Tutoring';?>
                           </button>
                       </div>
                       <div class="btn-group" role="group">
-                          <button type="submit" name="actions[]" value="refresh" class="btn btn-success col-sm-3">
+                          <button type="submit" name="actions[]" value="refresh" class="btn btn-warning col-sm-3">
                             <i class="fa fa-refresh"></i><br>
                             Renew Listing
                         </button>
                     </div>
-                    <a role="button" href="<?php echo(URL . 'tutor/edittutor');?>" class="btn btn-warning col-sm-3">
+                    <a role="button" href="<?php echo(URL . 'tutor/edittutor');?>" class="btn btn-success col-sm-3">
                         <i class="fa fa-edit"></i><br>
                         Edit Profile
                     </a>
-                    <a role="button" href="<?php echo(URL . 'login/uploadavatar');?>" class="btn btn-danger col-sm-3">
+                    <a role="button" href="<?php echo(URL . 'login/uploadavatar');?>" class="btn btn-primary col-sm-3">
                         <i class="fa fa-picture-o"></i><br>
                         Upload Picture
                     </a>
@@ -96,7 +98,7 @@
                 <br>
                 <ul class="list-group">
                     <li class="list-group-item"><i class="fa fa-flash"></i> Currently Tutoring:<span class="pull-right text-muted"><?php if($this->tutor->tutor_active != 0) echo 'Yes'; else echo 'No';?></span></li>
-                    <li class="list-group-item"><i class="fa fa-clock-o"></i> Listing Expiration:<span class="pull-right text-muted"><?php if($this->tutor->tutor_active != 0 && !empty($this->tutor->profile_expiration)) echo date("m/d/y", $this->tutor->profile_expiration); else echo "n/a";?></span></li>
+                    <li class="list-group-item"><i class="fa fa-clock-o"></i> Listing Expiration:<span class="pull-right text-muted"><?php if($this->tutor->tutor_active != 0 && !empty($this->tutor->profile_expiration)) echo date("m/d/y", $this->tutor->profile_expiration); else echo "Expired";?></span></li>
                     <li class="list-group-item"><i class="fa fa-eye"></i> Profile Views:<span class="pull-right text-muted"><?php echo $this->tutor->profile_views;?></span></li>
                 </ul>
 

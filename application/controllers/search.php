@@ -118,17 +118,12 @@ class Search extends Controller
         {
         Auth::handleLogin();
             $search_model = $this->loadModel('Search');
-            if($search_model->emailTutor_action($user_id) == false)
-            {
-                header('location: ' . URL . 'search/emailtutor/'.$user_id);
-            }
-            else
-            {
-                $this->view->tutor = $search_model->getTutor($user_id);
-            $this->view->render('search/emailtutor');
-            }
+            $search_model->emailTutor_action($user_id);
+            header('location: ' . URL . 'search/emailtutor/'.$user_id);
+
         }
-                function reviewTutor($user_id)
+        
+        function reviewTutor($user_id)
         {
         Auth::handleLogin();
             $search_model = $this->loadModel('Search');
@@ -142,18 +137,13 @@ class Search extends Controller
             $this->view->render('search/reviewtutor');
             }
         }
-                function reviewTutor_action($user_id)
+        
+        function reviewTutor_action($user_id)
         {
         Auth::handleLogin();
             $search_model = $this->loadModel('Search');
-            if($search_model->reviewTutor_action($user_id) == false)
-            {
-                header('location: ' . URL . 'search/reviewtutor/'.$user_id);
-            }
-            else
-            {
-                $this->view->tutor = $search_model->getTutor($user_id);
-            $this->view->render('search/reviewtutor');
-            }
+            $search_model->reviewTutor_action($user_id);
+            header('location: ' . URL . 'search/reviewtutor/'.$user_id);
+
         }
 }

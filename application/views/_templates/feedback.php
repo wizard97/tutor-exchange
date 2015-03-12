@@ -9,7 +9,7 @@ $feedback_neutral = Session::get('feedback_neutral');
 if (isset($feedback_positive)) {
     foreach ($feedback_positive as $feedback) {
         echo '<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <strong>Nice Work! </strong>'.$feedback.'</div>';
+  <i class="fa fa-thumbs-up"></i> <strong>Nice Work! </strong>'.$feedback.'</div>';
     }
 }
 
@@ -17,7 +17,7 @@ if (isset($feedback_positive)) {
 if (isset($feedback_negative)) {
     foreach ($feedback_negative as $feedback) {
         echo '<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <strong>Oh snap! </strong>'.$feedback.'</div>';
+  <i class="fa fa-warning"></i> <strong>Oh snap! </strong>'.$feedback.'</div>';
     }
   }
 
@@ -25,6 +25,6 @@ if (isset($feedback_negative)) {
     if (isset($feedback_neutral)) {
     foreach ($feedback_neutral as $feedback) {
         echo '<div class="alert alert-warning" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <strong>Watch out! </strong>'.$feedback.'</div>';
+  <i class="fa fa-info-circle"></i> <strong>Watch out! </strong>'.$feedback.'</div>';
     }
   }

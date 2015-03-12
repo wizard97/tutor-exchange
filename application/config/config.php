@@ -281,7 +281,7 @@ define("FEEDBACK_TUTORING_EDIT_SUCESS", "You successfully updated your tutoring 
 define("FEEDBACK_ERROR_FINDING_ID", "There was a problem loading your tutoring credentials, please contact the administrator.");
 define("FEEDBACK_TOO_MANY_TUTORS", "You can only save up to 20 tutors, please delete some tutors.");
 define("FEEDBACK_SUCESS_SAVING", "We sucessfully updated your saved tutors.");
-define("FEEDBACK_NO_SELECTION", "You did not make a selection.");
+define("FEEDBACK_NO_SELECTION", "You did not make a valid selection.");
 define("INVALID_ACCOUNT_TYPE", "You did not make a valid account type selection");
 define("FEEDBACK_NO_SUBJECT", "You must include a subject.");
 define("FEEDBACK_NO_MESSAGE", "You must include a message to the tutor.");
@@ -289,3 +289,9 @@ define("FEEDBACK_EMAIL_SEND_SUCESS", "Your email has been sent.");
 define("FEEDBACK_EMAIL_SEND_FAIL", "An error occured, your email has not been sent: ");
 define("FEEDBACK_WARNING_SEARCH_NOT_LOGGED_IN", "You are not logged in. For the protection of our tutors, we are blocking most of the tutors' personal info and site functionality. Please <a href=\"".URL."login/index\">Login/Register</a>.");
 define("FEEDBACK_WARNING_NO_RESULTS", "Sorry, we were not able to find a match for you. Perhaps broaden your search criteria and/or check back in a week or two. <a href=\"".URL."search/index\">Search Again</a>?");
+
+//dashboard feedback
+define("FEEDBACK_TUTORING_PAUSE_SUCESS", "You successfully paused your tutoring listing. You will no longer show up in searches. Click resume whenever you are ready to start tutoring again.");
+define("FEEDBACK_TUTORING_RESUME_SUCESS", "You successfully resumed your tutoring listing. You will now show up in searches until your listing expires. Click pause if you want to temporarily stop tutoring.");
+define("FEEDBACK_TUTOR_NOT_ACTIVE", "Your listing is not active. You will not show up in tutor searches. To make your listing active, click the Resume button after making sure your tutor profile is up to date.");
+define("FEEDBACK_TUTOR_RENEW_SUCESS", "Your listing has been refreshed. You will show up in searches until your listing expires.");

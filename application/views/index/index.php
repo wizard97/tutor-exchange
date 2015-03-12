@@ -1,6 +1,6 @@
 <div class="container">
 <div class="page-header">
-  <h1>Lexington Tutor Exchange <small>V1.9 Beta </small></h1>
+  <h1>Lexington Tutor Exchange <small>V1.10 Beta </small></h1>
 </div>
 
     <!-- echo out the system feedback (error and success messages) -->

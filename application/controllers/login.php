@@ -129,7 +129,7 @@ class Login extends Controller
         Auth::handleLogin();
         $login_model = $this->loadModel('Login');
         $login_model->editUserName();
-        $this->view->render('login/editusername');
+        header('location: ' . URL . 'login/editusername');
     }
 
     /**
@@ -154,7 +154,7 @@ class Login extends Controller
         Auth::handleLogin();
         $login_model = $this->loadModel('Login');
         $login_model->editUserEmail();
-        $this->view->render('login/edituseremail');
+        header('location: ' . URL . 'login/edituseremail');
     }
 
     /**
@@ -181,7 +181,7 @@ class Login extends Controller
         Auth::handleLogin();
         $login_model = $this->loadModel('Login');
         $login_model->createAvatar();
-        $this->view->render('login/uploadavatar');
+        header('location: ' . URL . 'login/uploadavatar');
     }
 
     /**
@@ -206,7 +206,7 @@ class Login extends Controller
         Auth::handleLogin();
         $login_model = $this->loadModel('Login');
         $login_model->changeAccountType();
-        $this->view->render('login/changeaccounttype');
+        header('location: ' . URL . 'login/changeaccounttype');
     }
 
     /**
@@ -273,7 +273,7 @@ class Login extends Controller
     {
         $login_model = $this->loadModel('Login');
         $login_model->requestPasswordReset();
-        $this->view->render('login/requestpasswordreset');
+        header('location: ' . URL . 'login/requestpasswordreset');
     }
 
     /**

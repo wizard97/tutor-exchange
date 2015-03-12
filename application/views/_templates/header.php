@@ -32,6 +32,8 @@
     vertical-align: middle;
 }
 body { padding-bottom: 100px; }
+
+.btn { white-space: normal; }
 </style>
 
 <script>
@@ -45,12 +47,30 @@ $(document).ready(function(){
 <body>
 
 <nav class="navbar navbar-inverse">
-<div class="container">
+<div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="<?php echo URL; ?>index/index">Lexington Tutor Exchange</a>
+
+<!--
+   <a class="navbar-brand" rel="home" href="#" title="Buy Sell Rent Everyting">
+        <img style="max-width:100px; margin-top: -7px;"
+             src="<?php echo URL.'favicon.ico';?> >
+    </a>
+
+      <a class="navbar-brand" href="#">
+        <img alt="Brand" src="...">
+      </a>
+-->
+
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+      </button>
+
+      <a class="navbar-brand" href="<?php echo URL; ?>index/index"><i class="fa fa-exchange"></i> Lexington Tutor Exchange</a>
     </div>
 
-    <div>
+    <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li <?php if ($this->checkForActiveControllerAndAction($filename, "index/index")) { echo ' class="active" '; } ?>><a href="<?php echo URL; ?>index/index">Home</a></li>
 
@@ -96,14 +116,27 @@ $(document).ready(function(){
         </li>
         <?php endif; ?>
 
-
-        <!-- for not logged in users -->
+<!--
+        <!-- for not logged in users 
             <?php if (Session::get('user_logged_in') == false):?>
                  <li <?php if ($this->checkForActiveControllerAndAction($filename, "login/index")) { echo ' class="active" '; } ?>><a href="<?php echo URL; ?>login/index">Login</a></li>
                   <li <?php if ($this->checkForActiveControllerAndAction($filename, "login/register")) { echo ' class="active" '; } ?>><a href="<?php echo URL; ?>login/register">Register</a></li>
             <?php endif; ?>
-
+-->
       </ul>
+
+<?php if (Session::get('user_logged_in') == false):?>
+      <ul class="nav navbar-nav navbar-right">
+	<li><a href="<?php echo URL; ?>login/index"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li><a href="<?php echo URL; ?>login/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      </ul>
+ 
+<?php else: ?>
+<ul class="nav navbar-nav navbar-right">
+       <li><a href="<?php echo URL; ?>login/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      </ul>
+ <?php endif; ?>
+
     </div>
   </div>
 

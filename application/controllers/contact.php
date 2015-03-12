@@ -27,6 +27,6 @@ class Contact extends Controller
     {
         $contact_model = $this->loadModel('Contact');
         $contact_model->sendContactEmail();
-        $this->view->render('contact/index');
+        header('location: ' . URL . 'contact/index');
     }
 }
