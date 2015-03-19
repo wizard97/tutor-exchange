@@ -293,7 +293,7 @@ $(function(){
 <div class="col-md-12">
                 <div class="well">
                 <h3>Tutor Reviews <small>They now work!</small></h3>
-                <span style="font-size: 24px">
+                <span style="font-size: 24px" class="text-nowrap">
                     <?php for ($i = 0; $i < $this->reviews['review_stats']->star_count; $i++) echo '<i style="color: #FEC601" class="fa fa-star"></i>';
                     if ($this->reviews['review_stats']->half_star)
                     {
@@ -334,7 +334,7 @@ $(function(){
                     			<input type="checkbox" name="anonymous" value="1">
                     			Make review anonymous</label>
                     	</div>
-                        <div class="text-left">
+                        <div class="text-left text-nowrap">
                             <div class="stars starrr" data-rating="0"></div>
                         </div>
 
@@ -360,7 +360,7 @@ $(function(){
                 {
 				?>
                     <div class="row"><div class="col-md-12">
-                    <span style="font-size: 20px">
+                    <span style="font-size: 20px" class="text-nowrap">
                     <?php for ($i = 0; $i < $review_object->rating; $i++) echo '<i style="color: #FEC601" class="fa fa-star"></i>';
                     for ($i = 0; $i < 5 - $review_object->rating; $i++) echo '<i style="color: #FEC601" class="fa fa-star-o"></i>';
 					?>

@@ -172,6 +172,38 @@ $sth->execute($sql_vars);
             $all_users[$user->user_id]->highest_math_name = $user->highest_math_name;
             $all_users[$user->user_id]->highest_math_level = $user->highest_math_level;
             $all_users[$user->user_id]->rate = $user->rate;
+
+//reviews
+        $stmt = $this->db->prepare("SELECT * FROM reviews WHERE tutor_id = :user_id");
+        $stmt->execute(array(':user_id' => $user->user_id));
+
+$all_users[$user->user_id]->review_number = $stmt->rowCount();
+
+        if ($stmt->rowCount() != 0)
+        {
+            $avg_rating = 0;
+
+            $i = 0;
+            foreach ($stmt->fetchAll() as $tutor_review) {
+                //sum up all reviews, to find average later
+                $avg_rating += $tutor_review->rating;
+                $i++;
+            }
+
+            $all_users[$user->user_id]->star_count = floor($avg_rating/($stmt->rowCount()));
+            $all_users[$user->user_id]->avg_rating = round((float)$avg_rating/(float)($stmt->rowCount()), 1);
+            if((float)$all_users[$user->user_id]->avg_rating - floor($all_users[$user->user_id]->avg_rating) >= 0.2 && (float)$all_users[$user->user_id]->avg_rating - floor($all_users[$user->user_id]->avg_rating) <= 0.7) $all_users[$user->user_id]->half_star = true;
+            else $all_users[$user->user_id]->half_star = false;
+        }
+        else
+        {
+            $all_users[$user->user_id]->star_count = 0;
+            $all_users[$user->user_id]->half_star = false;
+        $all_users[$user->user_id]->avg_rating = 0;
+        }
+
+
+
             if(SESSION::get('user_logged_in') && array_key_exists((string)$user->user_id, $tutor_array))
             {
                 $all_users[$user->user_id]->check = true;
@@ -453,8 +485,6 @@ return true;
     			$i++;
     		}
 
-    		if($avg_rating%$stmt->rowCount() >= 3) $review['review_stats']->half_star = true;
-    		else $review['review_stats']->half_star = false;
 
     		$review['review_stats']->star_count = floor($avg_rating/($stmt->rowCount()));
     		$review['review_stats']->avg_rating = round((float)$avg_rating/(float)($stmt->rowCount()), 1);

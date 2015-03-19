@@ -124,6 +124,7 @@ class Search extends Controller
 
         }
         
+        /* for old review page
         function reviewTutor($user_id)
         {
         Auth::handleLogin();
@@ -138,6 +139,7 @@ class Search extends Controller
             $this->view->render('search/reviewtutor');
             }
         }
+        */
         
         function reviewTutor_action($user_id)
         {
