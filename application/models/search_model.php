@@ -402,7 +402,7 @@ if($query->rowCount() != 0)
     return false;
 }
 
-if (!isset($_POST['rating']) || empty($_POST['rating']) || !isset($_POST['message']) || ($_POST['reviewer'] != "student" && $_POST['reviewer'] != "parent") || empty($_POST['message']) || !is_numeric($_POST['rating']) || $_POST['rating'] < 0 || $_POST['rating'] > 5)
+if (!isset($_POST['review_title']) || empty($_POST['review_title']) || !isset($_POST['message']) || !isset($_POST['rating']) || empty($_POST['rating']) || !isset($_POST['message']) || ($_POST['reviewer'] != "student" && $_POST['reviewer'] != "parent") || empty($_POST['message']) || !is_numeric($_POST['rating']) || $_POST['rating'] < 0 || $_POST['rating'] > 5)
 {
 $_SESSION["feedback_negative"][] = FEEDBACK_INCOMPLETE_FIELDS;
 return false;
@@ -414,13 +414,65 @@ if (isset($_POST['anonymous']) && $_POST['anonymous'] == 1)
 $anonymous = 1;
 }
 
-$query = $this->db->prepare("INSERT INTO reviews (reviewer_id, tutor_id, reviewer, rating, message, time, anonymous) VALUES (:reviewer_id, :tutor_id, :reviewer, :rating, :message, :time, :anonymous)");
-$query->execute(array('reviewer_id' => SESSION::get('user_id'), ':tutor_id' => $user_id, ':reviewer' => $_POST['reviewer'], ':rating' => trim($_POST['rating']), ':message' => trim(strip_tags($_POST['message'])), ':time' => time(), ':anonymous' => $anonymous));
+$query = $this->db->prepare("INSERT INTO reviews (reviewer_id, tutor_id, reviewer, rating, review_title, message, time, anonymous) VALUES (:reviewer_id, :tutor_id, :reviewer, :rating, :review_title, :message, :time, :anonymous)");
+$query->execute(array('reviewer_id' => SESSION::get('user_id'), ':tutor_id' => $user_id, ':reviewer' => $_POST['reviewer'], ':rating' => trim($_POST['rating']), ':review_title' => trim($_POST['review_title']), ':message' => trim(strip_tags($_POST['message'])), ':time' => time(), ':anonymous' => $anonymous));
 
 $_SESSION["feedback_positive"][] = FEEDBACK_SUCESS_REVIEWING;
 return true;
     }
 
+
+    public function getReviews($user_id)
+    {
+    	$review = array();
+    	$stmt = $this->db->prepare("SELECT users.fname, users.lname, reviews.* FROM reviews INNER JOIN users ON reviews.reviewer_id = users.user_id WHERE tutor_id = :user_id ORDER BY time DESC");
+    	$stmt->execute(array(':user_id' => $user_id));
+
+
+    	$review['review_stats'] = new stdClass();
+    	$review['all_reviews'] = array();
+
+    	if ($stmt->rowCount() != 0)
+    	{
+    		$review['review_stats']->has_reviews = true;
+    		$avg_rating = 0;
+
+    		$i = 0;
+    		foreach ($stmt->fetchAll() as $tutor_review) {
+    			//sum up all reviews, to find average later
+    			$avg_rating += $tutor_review->rating;
+    			//save all individual reviews
+    			$review['all_reviews'][$i] = new stdClass();
+    			$review['all_reviews'][$i]->rating = $tutor_review->rating;
+				$review['all_reviews'][$i]->review_title = $tutor_review->review_title;
+    			if (!$tutor_review->anonymous) $review['all_reviews'][$i]->reviewer_name = $tutor_review->fname.' '.$tutor_review->lname;
+    			else $review['all_reviews'][$i]->reviewer_name = "Anonymous";
+    			$review['all_reviews'][$i]->time = $tutor_review->time;
+    			$review['all_reviews'][$i]->reviewer = $tutor_review->reviewer;
+    			$review['all_reviews'][$i]->message = $tutor_review->message;
+    			$i++;
+    		}
+
+    		if($avg_rating%$stmt->rowCount() >= 3) $review['review_stats']->half_star = true;
+    		else $review['review_stats']->half_star = false;
+
+    		$review['review_stats']->star_count = floor($avg_rating/($stmt->rowCount()));
+    		$review['review_stats']->avg_rating = round((float)$avg_rating/(float)($stmt->rowCount()), 1);
+    		if((float)$review['review_stats']->avg_rating - floor($review['review_stats']->avg_rating) >= 0.2 && (float)$review['review_stats']->avg_rating - floor($review['review_stats']->avg_rating) <= 0.7) $review['review_stats']->half_star = true;
+    		else $review['review_stats']->half_star = false;
+    		$review['review_stats']->review_number = $stmt->rowCount();
+
+    	}
+    	else
+    	{
+    		$review['review_stats']->star_count = 0;
+    		$review['review_stats']->half_star = false;
+    	$review['review_stats']->has_reviews = false;
+    	$review['review_stats']->review_number = 0;
+    	$review['review_stats']->avg_rating = 0;
+    	}
+return $review;
+    }
 
 public function loadSaved()
 {

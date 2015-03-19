@@ -55,17 +55,17 @@
         },
         {
             "name": "gregwar/captcha",
-            "version": "v1.0.11",
+            "version": "v1.0.12",
             "target-dir": "Gregwar/Captcha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Gregwar/Captcha.git",
-                "reference": "68c27a070922cf306984dc04a92a27525e534e83"
+                "reference": "c5357cb6f6d2c09f70ed1712382d44af6eae0865"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Gregwar/Captcha/zipball/68c27a070922cf306984dc04a92a27525e534e83",
-                "reference": "68c27a070922cf306984dc04a92a27525e534e83",
+                "url": "https://api.github.com/repos/Gregwar/Captcha/zipball/c5357cb6f6d2c09f70ed1712382d44af6eae0865",
+                "reference": "c5357cb6f6d2c09f70ed1712382d44af6eae0865",
                 "shasum": ""
             },
             "require": {
@@ -100,7 +100,7 @@
                 "captcha",
                 "spam"
             ],
-            "time": "2014-03-19 15:13:34"
+            "time": "2015-01-03 12:41:56"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -203,12 +203,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/raveren/kint.git",
-                "reference": "8bd80dc8908ba46284413e80d0077faf51e5a88f"
+                "reference": "e142a12a153614c05dbd61a3d8873ff821116970"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/raveren/kint/zipball/8bd80dc8908ba46284413e80d0077faf51e5a88f",
-                "reference": "8bd80dc8908ba46284413e80d0077faf51e5a88f",
+                "url": "https://api.github.com/repos/raveren/kint/zipball/e142a12a153614c05dbd61a3d8873ff821116970",
+                "reference": "e142a12a153614c05dbd61a3d8873ff821116970",
                 "shasum": ""
             },
             "require": {
@@ -246,7 +246,7 @@
                 "kint",
                 "php"
             ],
-            "time": "2015-01-06 15:08:14"
+            "time": "2015-02-20 14:54:19"
         }
     ],
     "packages-dev": [],

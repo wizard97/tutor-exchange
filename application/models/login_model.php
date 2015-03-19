@@ -688,7 +688,11 @@ class LoginModel
         if ($image_proportions['mime'] == 'image/jpeg' || $image_proportions['mime'] == 'image/png') {
             // create a jpg file in the avatar folder
             $target_file_path = AVATAR_PATH . $_SESSION['user_id'] . ".jpg";
-            $this->resizeAvatarImage($_FILES['avatar_file']['tmp_name'], $target_file_path, FULL_AVATAR_SIZE, FULL_AVATAR_SIZE, AVATAR_JPEG_QUALITY, true);
+            if(!$this->resizeAvatarImage($_FILES['avatar_file']['tmp_name'], $target_file_path, FULL_AVATAR_SIZE, FULL_AVATAR_SIZE, AVATAR_JPEG_QUALITY, true)) 
+            {
+            $_SESSION["feedback_negative"][] = FEEDBACK_AVATAR_IMAGE_UPLOAD_FAILED;
+            return false;
+            }
             $query = $this->db->prepare("UPDATE users SET user_has_avatar = TRUE WHERE user_id = :user_id");
             $query->execute(array(':user_id' => $_SESSION['user_id']));
             Session::set('user_avatar_file', $this->getUserAvatarFilePath());
@@ -714,8 +718,7 @@ class LoginModel
      * @param bool $crop Whether to crop the image or not. It always crops from the center.
      * @return bool success state
      */
-    public function resizeAvatarImage(
-        $source_image, $destination_filename, $width = 44, $height = 44, $quality = 95, $crop = true)
+    public function resizeAvatarImage($source_image, $destination_filename, $width, $height, $quality, $crop)
     {
         $image_data = getimagesize($source_image);
         if (!$image_data) {
@@ -749,8 +752,10 @@ class LoginModel
         $desired_ratio_after = round($width / $height, 2);
         $desired_ratio_before = round($height / $width, 2);
 
-        if ($old_width < $width OR $old_height < $height) {
+
+        if ($old_width < AVATAR_SIZE OR $old_height < AVATAR_SIZE) {
              // the desired image size is bigger than the original image. Best not to do anything at all really.
+        	$_SESSION["feedback_negative"][] = FEEDBACK_AVATAR_UPLOAD_TOO_SMALL;
             return false;
         }
 

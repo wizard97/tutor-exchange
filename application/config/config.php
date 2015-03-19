@@ -20,7 +20,7 @@ ini_set("display_errors", 1);
  * if you are using a (different) port, then put this in here, like http://mydomain:8888/subfolder/
  * Note: The trailing slash is important!
  */
-define('URL', 'http://wisnerhomenetwork.asuscomm.com:8080/');
+define('URL', 'http://lextutorexchange.com/');
 
 /**
  * Configuration for: Folders
@@ -54,7 +54,7 @@ define('FACEBOOK_REGISTER_PATH', 'login/registerWithFacebook');
  */
 define('USE_GRAVATAR', false);
 define('FULL_AVATAR_SIZE', 720);
-define('AVATAR_SIZE', 44);
+define('AVATAR_SIZE', 240);
 define('AVATAR_JPEG_QUALITY', 85);
 define('AVATAR_DEFAULT_IMAGE', 'default.jpg');
 
@@ -73,7 +73,7 @@ define('AVATAR_DEFAULT_IMAGE', 'default.jpg');
 define('COOKIE_RUNTIME', 1209600);
 // the domain where the cookie is valid for, for local development ".127.0.0.1" and ".localhost" will work
 // IMPORTANT: always put a dot in front of the domain, like ".mydomain.com" !
-define('COOKIE_DOMAIN', '.wisnerhomenetwork.asuscomm.com:8080');
+define('COOKIE_DOMAIN', '.lextutorexchange.com');
 
 /**
  * Configuration for: Database
@@ -287,7 +287,7 @@ define("FEEDBACK_NO_SUBJECT", "You must include a subject.");
 define("FEEDBACK_NO_MESSAGE", "You must include a message to the tutor.");
 define("FEEDBACK_EMAIL_SEND_SUCESS", "Your email has been sent.");
 define("FEEDBACK_EMAIL_SEND_FAIL", "An error occured, your email has not been sent: ");
-define("FEEDBACK_WARNING_SEARCH_NOT_LOGGED_IN", "You are not logged in. For the protection of our tutors, we are blocking most of the tutors' personal info and site functionality. Please <a href=\"".URL."login/index\">Login/Register</a>.");
+define("FEEDBACK_WARNING_SEARCH_NOT_LOGGED_IN", "You are not logged in. For the protection of our tutors, we are blocking most of the tutors' personal info (including tutor profile and contact info) and site functionality. Please <a href=\"".URL."login/index\">Login/Register</a>.");
 define("FEEDBACK_WARNING_NO_RESULTS", "Sorry, we were not able to find a match for you. Perhaps broaden your search criteria and/or check back in a week or two. <a href=\"".URL."search/index\">Search Again</a>?");
 
 //dashboard feedback
@@ -295,3 +295,9 @@ define("FEEDBACK_TUTORING_PAUSE_SUCESS", "You successfully paused your tutoring 
 define("FEEDBACK_TUTORING_RESUME_SUCESS", "You successfully resumed your tutoring listing. You will now show up in searches until your listing expires. Click pause if you want to temporarily stop tutoring.");
 define("FEEDBACK_TUTOR_NOT_ACTIVE", "Your listing is not active. You will not show up in tutor searches. To make your listing active, click the Resume button after making sure your tutor profile is up to date.");
 define("FEEDBACK_TUTOR_RENEW_SUCESS", "Your listing has been refreshed. You will show up in searches until your listing expires.");
+
+//tutor reviews
+define("FEEDBACK_CANT_REVIEW_YOURSELF", "Nice try. You can't review yourself.");
+define("FEEDBACK_USER_DOES_NOT_OR_NOT_TUTOR","This user does not exist or is not a tutor.");
+define("FEEDBACK_ALREADY_REVIEWED","You have already reviewed this tutor.");
+define("FEEDBACK_SUCESS_REVIEWING","You have successfully submitted your review. Thanks for taking the time to write a review!");

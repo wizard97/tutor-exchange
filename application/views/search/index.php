@@ -4,6 +4,8 @@
   </div>
   <?php $this->renderFeedbackMessages(); ?>
   <form method="POST" action="<?php echo URL; ?>search/showresults">
+
+<p><strong>Just select all the credentials you would like your tutor to have, and we will try and find you the best match.</strong></p>
     <div class="row">
       <div class="col-md-6">
         <div class="panel panel-primary">

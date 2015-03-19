@@ -62,6 +62,7 @@ class Search extends Controller
         }
         else
         {
+        $this->view->reviews = $search_model->getReviews($user_id);
         $this->view->render('search/showtutorprofile');
         }
     }
@@ -143,7 +144,7 @@ class Search extends Controller
         Auth::handleLogin();
             $search_model = $this->loadModel('Search');
             $search_model->reviewTutor_action($user_id);
-            header('location: ' . URL . 'search/reviewtutor/'.$user_id);
+            header('location: ' . URL . 'search/showtutorprofile/'.$user_id);
 
         }
 }

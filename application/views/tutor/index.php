@@ -86,14 +86,18 @@
                             Renew Listing
                         </button>
                     </div>
-                    <a role="button" href="<?php echo(URL . 'tutor/edittutor');?>" class="btn btn-success col-sm-3">
+                    <div class="btn-group" role="group">
+                    <a href="<?php echo(URL . 'tutor/edittutor');?>" class="btn btn-success col-sm-3">
                         <i class="fa fa-edit"></i><br>
                         Edit Profile
                     </a>
-                    <a role="button" href="<?php echo(URL . 'login/uploadavatar');?>" class="btn btn-primary col-sm-3">
+                    </div>
+                    <div class="btn-group" role="group">
+                    <a href="<?php echo(URL . 'login/uploadavatar');?>" class="btn btn-primary col-sm-3">
                         <i class="fa fa-picture-o"></i><br>
                         Upload Picture
                     </a>
+                    </div>
                 </div>
                 <br>
                 <ul class="list-group">
