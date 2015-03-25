@@ -281,6 +281,11 @@ public function dashBoardActions()
         { 
             if ($tutor->tutor_active == 0)
             {
+            	if(empty($tutor->grade) || empty($tutor->rate))
+            	{
+            		$_SESSION["feedback_negative"][] = FEEDBACK_TUTORING_RESUME_PROFILE_EMPTY;
+            		return 1;
+            	}
             //once payment process added be sure to check if they are a professional tutor
                 $stmt = $this->db->prepare("UPDATE tutors SET tutor_active = :tutor_active, profile_expiration = :profile_expiration WHERE id = :user_id LIMIT 1");
                 $query[':tutor_active'] = 1;
@@ -315,6 +320,11 @@ public function dashBoardActions()
 
         if (in_array("refresh", $_POST['actions']))
         {
+        	if(empty($tutor->grade) || empty($tutor->rate))
+            	{
+            		$_SESSION["feedback_negative"][] = FEEDBACK_TUTORING_RESUME_PROFILE_EMPTY;
+            		return 1;
+            	}
             //once payment process, check if professional tutor, and if so take them to payment page
              $stmt = $this->db->prepare("UPDATE tutors SET tutor_active = 1, profile_expiration = :profile_expiration WHERE id = :user_id LIMIT 1");
              $query[':profile_expiration'] = time() + (3600*24*90);
@@ -360,6 +370,57 @@ public function getUserProfile()
 
     return $tutor;
 }
+
+    public function getReviews()
+    {
+    	$review = array();
+    	$stmt = $this->db->prepare("SELECT users.fname, users.lname, reviews.* FROM reviews INNER JOIN users ON reviews.reviewer_id = users.user_id WHERE tutor_id = :user_id ORDER BY time DESC");
+    	$stmt->execute(array(':user_id' => Session::get('user_id')));
+
+
+    	$review['review_stats'] = new stdClass();
+    	$review['all_reviews'] = array();
+
+    	if ($stmt->rowCount() != 0)
+    	{
+    		$review['review_stats']->has_reviews = true;
+    		$avg_rating = 0;
+
+    		$i = 0;
+    		foreach ($stmt->fetchAll() as $tutor_review) {
+    			//sum up all reviews, to find average later
+    			$avg_rating += $tutor_review->rating;
+    			//save all individual reviews
+    			$review['all_reviews'][$i] = new stdClass();
+    			$review['all_reviews'][$i]->rating = $tutor_review->rating;
+				$review['all_reviews'][$i]->review_title = $tutor_review->review_title;
+    			if (!$tutor_review->anonymous) $review['all_reviews'][$i]->reviewer_name = $tutor_review->fname.' '.$tutor_review->lname;
+    			else $review['all_reviews'][$i]->reviewer_name = "Anonymous";
+    			$review['all_reviews'][$i]->time = $tutor_review->time;
+    			$review['all_reviews'][$i]->reviewer = $tutor_review->reviewer;
+    			$review['all_reviews'][$i]->message = $tutor_review->message;
+    			$i++;
+    		}
+
+
+    		$review['review_stats']->star_count = floor($avg_rating/($stmt->rowCount()));
+    		$review['review_stats']->avg_rating = round((float)$avg_rating/(float)($stmt->rowCount()), 1);
+    		if((float)$review['review_stats']->avg_rating - floor($review['review_stats']->avg_rating) >= 0.2 && (float)$review['review_stats']->avg_rating - floor($review['review_stats']->avg_rating) <= 0.7) $review['review_stats']->half_star = true;
+    		else $review['review_stats']->half_star = false;
+    		$review['review_stats']->review_number = $stmt->rowCount();
+
+    	}
+    	else
+    	{
+    		$review['review_stats']->star_count = 0;
+    		$review['review_stats']->half_star = false;
+    	$review['review_stats']->has_reviews = false;
+    	$review['review_stats']->review_number = 0;
+    	$review['review_stats']->avg_rating = 0;
+    	}
+return $review;
+    }
+
 
 public function getGravatarLinkFromEmail($email, $s = AVATAR_SIZE, $d = 'mm', $r = 'pg', $options = array())
 {

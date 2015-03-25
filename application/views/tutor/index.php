@@ -42,7 +42,7 @@
   });
 </script>
 <style>
-   .animated {
+ .animated {
     -webkit-transition: height 0.2s;
     -moz-transition: height 0.2s;
     transition: height 0.2s;
@@ -59,9 +59,9 @@
 <div class="container">
     <div class="page-header">
       <h1><?php echo $this->tutor->fname.' '.$this->tutor->lname;?></h1>
-    </div>
+  </div>
 
-<?php $this->renderFeedbackMessages(); ?>
+  <?php $this->renderFeedbackMessages(); ?>
 
   <div class="row">
     <form action="<?php echo(URL . 'tutor/index_action');?>" method="POST">
@@ -87,16 +87,16 @@
                         </button>
                     </div>
                     <div class="btn-group" role="group">
-                    <a href="<?php echo(URL . 'tutor/edittutor');?>" class="btn btn-success col-sm-3">
-                        <i class="fa fa-edit"></i><br>
-                        Edit Profile
-                    </a>
+                        <a href="<?php echo(URL . 'tutor/edittutor');?>" class="btn btn-success col-sm-3">
+                            <i class="fa fa-edit"></i><br>
+                            Edit Profile
+                        </a>
                     </div>
                     <div class="btn-group" role="group">
-                    <a href="<?php echo(URL . 'login/uploadavatar');?>" class="btn btn-primary col-sm-3">
-                        <i class="fa fa-picture-o"></i><br>
-                        Upload Picture
-                    </a>
+                        <a href="<?php echo(URL . 'login/uploadavatar');?>" class="btn btn-primary col-sm-3">
+                            <i class="fa fa-picture-o"></i><br>
+                            Upload Picture
+                        </a>
                     </div>
                 </div>
                 <br>
@@ -344,73 +344,92 @@
     </div>
 </div>
 
+
 <div class="row">
     <div class="col-md-12">
         <div class="well">
-            <h3>Tutor Reviews Coming Soon!</h3>
-            <div class="text-right">
-                <a href="#reviews-anchor" id="open-review-box" class="btn btn-success">Leave a Review</a>
-            </div>
-            <div class="row" id="post-review-box" style="display:none;">
-                <div class="col-md-12">
-                    <form accept-charset="UTF-8" action="" method="post">
-                        <input id="ratings-hidden" name="rating" type="hidden"> 
-                        <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
+            <h3>Tutor Reviews <small>They now work!</small></h3>
+            <span style="font-size: 24px" class="text-nowrap">
+                <?php for ($i = 0; $i < $this->reviews['review_stats']->star_count; $i++) echo '<i style="color: #FEC601" class="fa fa-star"></i>';
+                if ($this->reviews['review_stats']->half_star)
+                {
+                    echo '<i style="color: #FEC601" class="fa fa-star-half-o"></i>';
+                    for ($i = 0; $i < 4 - $this->reviews['review_stats']->star_count; $i++) echo '<i style="color: #FEC601" class="fa fa-star-o"></i>';
+                }
+            else for ($i = 0; $i < 5 - $this->reviews['review_stats']->star_count; $i++) echo '<i style="color: #FEC601" class="fa fa-star-o"></i>';
+            echo ' (<span class="text-primary">'.$this->reviews['review_stats']->review_number.'</span>)';
+            ?>
+        </span>
+        
+        <p class="text-muted"><?php if ($this->reviews['review_stats']->avg_rating) echo $this->reviews['review_stats']->avg_rating.' out of 5 stars'; else echo 'No Reviews';?></p>
+        <div class="text-left">
+            <a href="#reviews-anchor" id="open-review-box" class="btn btn-success">Leave a Review</a>
+        </div>
+        <div class="row" id="post-review-box" style="display:none;">
+            <div class="col-md-12">
+                <hr style="height:1px;border:none;color:#333;background-color:#333;">
+                <form accept-charset="UTF-8" action="<?php echo URL.'search/reviewtutor_action/'.$this->tutor->user_id?>" method="post">
+                    <div class="row">
+                        <div class="col-md-5 form-group">
+                            <label for="review_title">Review Title</label>
+                            <input type="text" class="form-control" id="review_title" name="review_title" maxlength="100" placeholder="100 characters max" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Who are you?</label>
+                            <br>
+                            <label class="radio-inline"><input type="radio" id="reviewer-type" name="reviewer" value="student" checked>Student</label>
+                            
+                            <label class="radio-inline"><input type="radio" id="reviewer-type" name="reviewer" value="parent">Parent</label>
+                            
 
-                        <div class="text-right">
-                            <div class="stars starrr" data-rating="0"></div>
-                            <a class="btn btn-danger btn-sm" href="#" id="close-review-box" style="display:none; margin-right: 10px;">
-                                <span class="glyphicon glyphicon-remove"></span>Cancel</a>
-                                <button class="btn btn-success btn-lg" type="submit">Save</button>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="anonymous" value="1">
+                                    Make review anonymous</label>
+                                </div>
+                                <div class="text-left text-nowrap">
+                                    <div class="stars starrr" data-rating="0"></div>
+                                </div>
+
+                                <input id="ratings-hidden" name="rating" type="hidden"> 
+                                <textarea class="form-control animated" cols="50" id="new-review" name="message" maxlength="5000" placeholder="Enter your review here..." rows="5"></textarea>
+                                <br>
+                                <div class="text-right">
+                                    <a class="btn btn-danger btn-sm" href="#" id="close-review-box" style="display:none; margin-right: 10px;">
+                                        <span class="glyphicon glyphicon-remove"></span> Cancel</a>
+                                        <button class="btn btn-success btn-lg" type="submit">Save</button>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
                 </div>
                 <hr style="height:1px;border:none;color:#333;background-color:#333;">
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        Anonymous
-                        <span class="pull-right">10 days ago</span>
-                        <p>This review system is coming soon.</p>
-                    </div>
-                </div>
 
-                <hr>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        John Smith
-                        <span class="pull-right">12 days ago</span>
-                        <p>This review system is coming soon.</p>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        Anonymous
-                        <span class="pull-right">15 days ago</span>
-                        <p>This review system is coming soon.</p>
-                    </div>
-                </div>
-
+                <?php if ($this->reviews['review_stats']->has_reviews)
+                {
+                    foreach($this->reviews['all_reviews'] as $review_object)
+                    {
+                        ?>
+                        <div class="row"><div class="col-md-12">
+                            <span style="font-size: 20px" class="text-nowrap">
+                                <?php for ($i = 0; $i < $review_object->rating; $i++) echo '<i style="color: #FEC601" class="fa fa-star"></i>';
+                                for ($i = 0; $i < 5 - $review_object->rating; $i++) echo '<i style="color: #FEC601" class="fa fa-star-o"></i>';
+                                    ?>
+                            </span>
+                            <strong><?php echo $review_object->review_title;?></strong>
+                            
+                            <p class="text-muted">By <span class="text-primary"><?php echo $review_object->reviewer_name.' ('.ucfirst($review_object->reviewer).')'; ?></span> on <?php echo date("M d, Y", $review_object->time);?></p>
+                            <p><?php echo nl2br($review_object->message);?></p>
+                        </div></div><hr>
+                        <?php
+                    }
+                }
+                ?>
             </div>
         </div>
     </div>

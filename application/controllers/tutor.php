@@ -19,9 +19,9 @@ class Tutor extends Controller
     function index()
     {
         Auth::handleLogin();
+        Auth::handleTutor();
 
-        if (Session::get('user_account_type') > 1)
-        {
+
             include VIEWS_PATH.'_templates/classes.php';
             $this->view->math_classes = $math_classes;
             $this->view->science_classes = $science_classes;
@@ -36,57 +36,43 @@ class Tutor extends Controller
             }
             else
             {
+                $this->view->reviews = $tutor_model->getReviews();
                 $this->view->render('tutor/index');
             }
-        }
-        else header('location: ' . URL . 'login/changeaccounttype');
 
     }
 
     function index_action()
     {
         Auth::handleLogin();
-
-        if (Session::get('user_account_type') > 1)
-        {
+        Auth::handleTutor();
 
             $tutor_model = $this->loadModel('Tutor');
             $tutor_model->dashBoardActions();
             header('location: ' . URL . 'tutor/index');
 
-        }
-        else header('location: ' . URL . 'login/changeaccounttype');
     }
 
     function editTutor()
     {
         Auth::handleLogin();
-        if (Session::get('user_account_type') > 1)
-        {
+        Auth::handleTutor();
+
             $tutor_model = $this->loadModel('Tutor');
             $this->view->user = $tutor_model->loadInfo();
             $this->view->render('tutor/edit');
-        }
-        else
-        {
-            header('location: ' . URL . 'login/changeaccounttype');
-        }
+
     }
 
     
     function editTutor_action()
     {
         Auth::handleLogin();
-        if (Session::get('user_account_type') > 1)
-        {
+        Auth::handleTutor();
+
             $tutor_model = $this->loadModel('Tutor');
             $tutor_model->editInfo();
             header('location: ' . URL . 'tutor/editTutor');
-        }
-        else 
-        {
-            header('location: ' . URL . 'login/changeaccounttype');
-        }
     }
 
 

@@ -70,18 +70,11 @@ class Search extends Controller
         function showResults_action()
     {
         Auth::handleLogin();
+        //add Auth:: to check if ajax
             $search_model = $this->loadModel('Search');
-            $search_model->saveTutors();
-            $this->view->users = $search_model->getResults();
-            if (is_array($this->view->users))
-            {
-            $this->view->render('search/showresults');
-            }
-            else
-            {
-            header('location: ' . URL . 'search/index');
-            }
-        }
+            $changed_saved = $search_model->saveTutors();
+            echo json_encode($changed_saved);
+    }
 
             function saved()
         {

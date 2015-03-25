@@ -293,6 +293,7 @@ define("FEEDBACK_WARNING_NO_RESULTS", "Sorry, we were not able to find a match f
 //dashboard feedback
 define("FEEDBACK_TUTORING_PAUSE_SUCESS", "You successfully paused your tutoring listing. You will no longer show up in searches. Click resume whenever you are ready to start tutoring again.");
 define("FEEDBACK_TUTORING_RESUME_SUCESS", "You successfully resumed your tutoring listing. You will now show up in searches until your listing expires. Click pause if you want to temporarily stop tutoring.");
+define("FEEDBACK_TUTORING_RESUME_PROFILE_EMPTY", "We cannot list you as a tutor if your tutor profile is empty. Please update your tutor profile.");
 define("FEEDBACK_TUTOR_NOT_ACTIVE", "Your listing is not active. You will not show up in tutor searches. To make your listing active, click the Resume button after making sure your tutor profile is up to date.");
 define("FEEDBACK_TUTOR_RENEW_SUCESS", "Your listing has been refreshed. You will show up in searches until your listing expires.");
 

@@ -22,4 +22,24 @@ class Auth
             exit();
         }
     }
+
+    public static function handleTutor()
+    {
+        if (!isset($_SESSION['user_account_type']) || $_SESSION['user_account_type'] < 2)
+        {
+            $_SESSION["feedback_negative"][] = "You must be registered as a tutor to view that page. You can change your account type here.";
+            header('location: ' . URL . 'login/changeaccounttype');
+            exit();
+        }
+    }
+
+//make sure request is from Ajax
+    public static function handleAjax()
+    {
+        if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest')
+        {
+            header('location: ' . URL . 'error/index');
+            exit();
+        }
+    }
 }

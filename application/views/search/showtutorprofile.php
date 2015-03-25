@@ -40,6 +40,45 @@ $(function(){
     ratingsField.val(value);
   });
 });
+
+//to save tutors
+    $(document).ready(function(){
+        $(".text-center").on("click", "button.btn, #save_btn", function(){
+            var $button = $(this);
+            var id = $button.val();
+            var url = $("#url").val();
+            var $html = "";
+            $.post(url, {
+                'saved_tutors_id[]': [id]
+            },
+            function (data) {
+                var json = $.parseJSON(data);
+                if(json[id] === true)
+                {  
+                    $html = $('<button type="button" id="save_btn" name="saved_tutors_id[]" value="" class="btn btn-info" aria-expanded="false"><span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span> Saved!</button>');
+                    $button.replaceWith($html);
+                    $html.val(id);
+                }
+                else
+                {
+                    $html = $('<button type="button" id="save_btn" name="saved_tutors_id[]" value="" class="btn btn-warning" aria-expanded="false"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save me!</button>');
+                    $button.replaceWith($html);
+                    $html.val(id);
+                }
+                var url_feed = $("#url_feedback").val();
+
+                $.ajax(url_feed, {
+                    success: function(data) {
+                //remove old feedback messages
+                $(".alert").remove();
+                $(".page-header").after(data);
+                }
+        });
+
+            });
+});
+});
+
 </script>
 <style>
  .animated {
@@ -59,7 +98,9 @@ $(function(){
 <div class="page-header">
   <h1><?php echo $this->tutor->fname.' '.$this->tutor->lname;?></h1>
 </div>
-
+    <!-- pass url from php to ajax -->
+    <input type="hidden" id="url" value="<?php echo URL; ?>search/showresults_action">
+    <input type="hidden" id="url_feedback" value="<?php echo URL; ?>ajax/getfeedbackmessages">
     <?php $this->renderFeedbackMessages(); ?>
 
 <div class="row">
@@ -72,7 +113,12 @@ $(function(){
 
 <div class="row">
 <div class="text-center">
-<button type="button" class="btn btn-success">Save me!</button>  <a class="btn btn-primary" href="<?php echo(URL . 'search/emailtutor/'.$this->tutor->user_id);?>" role="button"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Contact Me</a>
+<?php if($this->tutor->saved) { ?>
+<button type="button" id="save_btn" name="saved_tutors_id[]" value="<?php echo $this->tutor->user_id;?>" class="btn btn-info" aria-expanded="false"><span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span> Saved!</button>
+<?php } else { ?>
+<button type="button" id="save_btn" name="saved_tutors_id[]" value="<?php echo $this->tutor->user_id;?>" class="btn btn-warning" aria-expanded="false"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save me!</button>
+<?php }?>
+ <a class="btn btn-primary" href="<?php echo(URL . 'search/emailtutor/'.$this->tutor->user_id);?>" role="button"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Contact Me</a>
 </div>
 <br>
 </div>
@@ -339,7 +385,7 @@ $(function(){
                         </div>
 
                         <input id="ratings-hidden" name="rating" type="hidden"> 
-                        <textarea class="form-control animated" cols="50" id="new-review" name="message" placeholder="Enter your review here..." rows="5"></textarea>
+                        <textarea class="form-control animated" cols="50" id="new-review" name="message" maxlength="5000" placeholder="Enter your review here..." rows="5"></textarea>
                         <br>
                         <div class="text-right">
                             <a class="btn btn-danger btn-sm" href="#" id="close-review-box" style="display:none; margin-right: 10px;">
@@ -368,7 +414,7 @@ $(function(){
                      <strong><?php echo $review_object->review_title;?></strong>
                     
 					<p class="text-muted">By <span class="text-primary"><?php echo $review_object->reviewer_name.' ('.ucfirst($review_object->reviewer).')'; ?></span> on <?php echo date("M d, Y", $review_object->time);?></p>
-                    <p><?php echo $review_object->message;?></p>
+                    <p><?php echo nl2br($review_object->message);?></p>
                     </div></div><hr>
                 <?php
 				}

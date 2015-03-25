@@ -1,11 +1,12 @@
 <div class="container">
 <div class="page-header">
-  <h1>Lexington Tutor Exchange <small>V1.10 Beta </small></h1>
+  <h1>Lexington Tutor Exchange <small>V1.12 Beta </small></h1>
 </div>
 
     <!-- echo out the system feedback (error and success messages) -->
     <?php $this->renderFeedbackMessages(); ?>
-<div class="alert alert-warning" role="alert"><strong>Note: </strong>This tutoring site is in beta. It is currently a work in progress by Aaron Wisner & Matan Silver, please pardon the appearance and/or any functionality issues.</div>
+<div class="alert alert-warning" role="alert"><strong>Note: </strong>This tutoring site is in beta. It is currently under heavy development by Aaron Wisner & Matan Silver, please pardon the appearance and/or any functionality issues.</div>
+<div class="alert alert-success" role="alert"><strong>New in V1.12:</strong> Save tutor button now works without page refresh (using ajax requests and jQuery).</div>
 
 <div class="jumbotron">
   <div class="container">
