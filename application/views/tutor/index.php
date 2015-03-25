@@ -102,7 +102,7 @@
                 <br>
                 <ul class="list-group">
                     <li class="list-group-item"><i class="fa fa-flash"></i> Currently Tutoring:<span class="pull-right text-muted"><?php if($this->tutor->tutor_active != 0) echo 'Yes'; else echo 'No';?></span></li>
-                    <li class="list-group-item"><i class="fa fa-clock-o"></i> Listing Expiration:<span class="pull-right text-muted"><?php if($this->tutor->tutor_active != 0 && !empty($this->tutor->profile_expiration)) echo date("m/d/y", $this->tutor->profile_expiration); else echo "Expired";?></span></li>
+                    <li class="list-group-item"><i class="fa fa-clock-o"></i> Listing Expiration:<span class="pull-right text-muted"><?php if(empty($this->tutor->profile_expiration)){echo "N/A";} else {echo date("m/d/y", $this->tutor->profile_expiration); if($this->tutor->profile_expiration < time() && $this->tutor->tutor_active == 0) {echo " (expired)";}}?></span></li>
                     <li class="list-group-item"><i class="fa fa-eye"></i> Profile Views:<span class="pull-right text-muted"><?php echo $this->tutor->profile_views;?></span></li>
                 </ul>
 
@@ -154,6 +154,7 @@
                 <li class="list-group-item text-right"><span class="pull-left"><i class="fa fa-birthday-cake"></i> <strong>Age:</strong></span> <?php echo $this->tutor->age;?></li>
                 <li class="list-group-item text-right"><span class="pull-left"><i class="fa fa-graduation-cap"></i> <strong>Grade:</strong></span> <?php echo $this->tutor->grade;?></li>
                 <li class="list-group-item text-right"><span class="pull-left"><i class="fa fa-money"></i> <strong>Rate:</strong></span> $<?php echo $this->tutor->rate;?></li>
+                <li class="list-group-item text-right"><span class="pull-left"><i class="fa fa-clock-o"></i> <strong>Listing Expiration:</strong></span> <?php echo date("m/d/y", $this->tutor->profile_expiration);?></li>
                 <li class="list-group-item text-right"><span class="pull-left"><i class="fa fa-sign-in"></i> <strong>Last Login:</strong></span> <?php echo date("m/d/y", $this->tutor->user_last_login_timestamp);?></li>
                 <li class="list-group-item text-right"><span class="pull-left"><i class="fa fa-exchange"></i> <strong>Joined:</strong></span> <?php echo date("m/d/y", $this->tutor->user_creation_timestamp);?></li>
 

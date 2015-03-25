@@ -303,9 +303,8 @@ public function dashBoardActions()
 
             else
             {
-             $stmt = $this->db->prepare("UPDATE tutors SET tutor_active = :tutor_active, profile_expiration = :profile_expiration WHERE id = :user_id LIMIT 1");
+             $stmt = $this->db->prepare("UPDATE tutors SET tutor_active = :tutor_active WHERE id = :user_id LIMIT 1");
              $query[':tutor_active'] = 0;
-             $query[':profile_expiration'] = 0;
              $query[':user_id'] = Session::get('user_id');
 
              $stmt->execute($query);
