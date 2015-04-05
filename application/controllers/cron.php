@@ -20,8 +20,12 @@ class Cron extends Controller
      */
     function update()
     {
+        if (!empty($_POST['password']) && $_POST['password'] == "cron_ac_only")
+        {
         $cron_model = $this->loadModel('Cron');
         $affected_tutors = $cron_model->pauseEmailExpired();
-        echo $affected_tutors." tutor(s) updated.";
+		$warned_tutors = $cron_model->EmailWarn();
+        echo $affected_tutors." tutor(s) paused. ".$warned_tutors." tutor(s) warned.";
+        }
     }
 }

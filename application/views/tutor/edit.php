@@ -35,7 +35,7 @@
             </div>
             <div class="form-group">
               <label for="about_me">About me</label>
-              <textarea name="about_me" class="form-control" id="about_me" rows="10" cols="50" maxlength="3000" <?php if (empty($this->user->about_me)){ echo("placeholder=".'"'."If you want, tell the people searching for tutors a little about yourself/your tutoring ability. Maybe mention your schedule. This is confidential, and will only be viewable by people with registered accounts.".'"');} ?> >
+              <textarea name="about_me" class="form-control" id="about_me" rows="10" cols="50" maxlength="3000" <?php if (empty($this->user->about_me)){ echo("placeholder=".'"'."Tell the people searching for tutors a little about yourself/your tutoring ability. Maybe mention your schedule, your qualifications, or anything else that will make you stand out. This is confidential, and will only be viewable by people with registered accounts.".'"');} ?> >
 <?php if (!empty($this->user->about_me)){echo $this->user->about_me;}?>
 </textarea>
             </div>

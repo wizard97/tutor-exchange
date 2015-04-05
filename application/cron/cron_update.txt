@@ -1,0 +1,2 @@
+MAILTO=aaronwisner@gmail.com
+0 */2 * * * /usr/bin/wget -O /dev/null -o /dev/null --post-data="password=cron_ac_only" http://www.lextutorexchange.com/cron/update

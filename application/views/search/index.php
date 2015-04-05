@@ -15,7 +15,7 @@
           <div class="panel-body">
             <div class="form-group">
               <label for="start_rate">Price range</label>
-              <input type="number" class="form-control" name="start_rate" id="start_rate" size="5" maxlength="3" placeholder="min"  min="1">
+              <input type="number" class="form-control" name="start_rate" id="start_rate" size="5" maxlength="3" placeholder="min"  min="0">
             </div>
             <div class="form-group">
               <input class="form-control" type="number" name="end_rate" id="end_rate" size="5" maxlength="3" min="1" placeholder="max">

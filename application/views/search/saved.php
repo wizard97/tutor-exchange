@@ -1,5 +1,7 @@
 <script>
     $(document).ready(function(){
+        var table = $('#resultsTable').DataTable();
+
         $(".delete_btn").on("click", function(){
             var $button = $(this);
             var id = $button.val();
@@ -11,7 +13,9 @@
                 var json = $.parseJSON(data);
                 if(json[id] === false)
                 {  
-                    $button.parents('tr').remove();
+                    table.row('#' + id).remove().draw(false);
+                    var rowCount = $('#resultsTable tbody .tutors').length;
+                    $('#tutor_num').text(rowCount);
                 }
 
                 var url_feed = $("#url_feedback").val();
@@ -47,7 +51,7 @@
 <?php if (count($this->users) != 0) { ?>
   <div class="table-responsive">
     <table class="table table-striped" id="resultsTable">
-        <caption>You have <?php echo(count($this->users));?> tutors saved:</caption>
+        <caption>You have <span id="tutor_num"><?php echo(count($this->users));?></span> tutors saved:</caption>
         <thead>
           <tr>
             <th>Picture</th>
@@ -66,7 +70,7 @@
             ?>
 
             
-            <tr>
+            <tr id="<?php echo $user->user_id;?>" class="tutors">
                 <td class="vert-align">
                     <?php if (isset($user->user_avatar_link)) { ?>
                     <a target="_blank" href="<?php echo $user->user_avatar_link; ?>"><img href="<?php echo $user->user_avatar_link;?>" class="img-rounded" height="50" width="50" src="<?php echo $user->user_avatar_link;?>"/></a>

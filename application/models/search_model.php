@@ -32,7 +32,10 @@ class SearchModel
 
         $sql_stub = "SELECT users.user_id, users.fname, users.lname, users.user_email, users.user_active, users.user_has_avatar, users.user_account_type, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_active =1 AND user_account_type >= 2 AND tutor_active = 1";
 
+//stores variables passed to sql querry
         $sql_vars=array();
+       //array of sql query to be built later
+        $sql_cond=array();
 
 //create the prepared statement based on classes the user selected
 
@@ -41,7 +44,7 @@ class SearchModel
         {
             if (isset($_POST['math']) && isset($_POST[$math_class]) && in_array($math_class, $_POST['math']) && is_numeric($_POST[$math_class]) && $_POST[$math_class] >= 0 && $_POST[$math_class] <= 6)
             {
-                $sql_stub.=" AND ".$math_class." >= :".$math_class;
+            	$sql_cond[] = $math_class." >= :".$math_class;
                 $sql_vars[":".$math_class] = $_POST[$math_class];
             }
         }
@@ -51,7 +54,7 @@ class SearchModel
         {
             if (isset($_POST['science']) && isset($_POST[$science_class]) && in_array($science_class, $_POST['science']) && is_numeric($_POST[$science_class]) && $_POST[$science_class] >= 0 && $_POST[$science_class] <= 6)
             {
-                $sql_stub.=" AND ".$science_class." >= :".$science_class;
+            	$sql_cond[] = $science_class." >= :".$science_class;
                 $sql_vars[":".$science_class] = $_POST[$science_class];
             }
         }
@@ -61,7 +64,7 @@ class SearchModel
         {
             if (isset($_POST['social']) && isset($_POST[$social_class]) && in_array($social_class, $_POST['social']) && is_numeric($_POST[$social_class]) && $_POST[$social_class] >= 0 && $_POST[$social_class] <= 6)
             {
-                $sql_stub.=" AND ".$social_class." >= :".$social_class;
+            	$sql_cond[] = $social_class." >= :".$social_class;
                 $sql_vars[":".$social_class] = $_POST[$social_class];
             }
         }
@@ -71,7 +74,7 @@ class SearchModel
         {
             if (isset($_POST['foreign_language']) && isset($_POST[$language_class]) && in_array($language_class, $_POST['foreign_language']) && is_numeric($_POST[$language_class]) && $_POST[$language_class] >= 0 && $_POST[$language_class] <= 6)
             {
-                $sql_stub.=" AND ".$language_class." >= :".$language_class;
+            	$sql_cond[] = $language_class." >= :".$language_class;
                 $sql_vars[":".$language_class] = $_POST[$language_class];
             }
         }
@@ -80,8 +83,8 @@ class SearchModel
 //music
         if (isset($_POST['instrument']) && !empty($_POST['instrument']) && isset($_POST['music']) && $_POST['music'] == 1 && isset($_POST['music_level']) && !empty($_POST['music_level']) && is_numeric($_POST['music_level']))
         {
-            $sql_stub.=" AND instrument = :instrument";
-            $sql_stub.=" AND music_level >= :music_level";
+        	$sql_cond[] = "instrument = :instrument";
+        	$sql_cond[] = "music_level >= :music_level";
             $sql_vars[":instrument"] = $_POST['instrument'];
             $sql_vars[":music_level"] = $_POST['music_level'];
         }
@@ -97,7 +100,8 @@ class SearchModel
 
             else
             {
-                $sql_stub.=" AND rate >= :start_rate AND rate <= :end_rate";
+            	$sql_cond[] = "rate >= :start_rate";
+            	$sql_cond[] = "rate <= :end_rate";
                 $sql_vars[":start_rate"] = trim($_POST['start_rate']);
                 $sql_vars[":end_rate"] = trim($_POST['end_rate']);
             }
@@ -111,7 +115,7 @@ class SearchModel
             }
             else
             {
-                $sql_stub.=" AND rate >= :start_rate";
+            	$sql_cond[] = "rate >= :start_rate";
                 $sql_vars[":start_rate"] = trim($_POST['start_rate']);
             }
         }
@@ -124,7 +128,7 @@ class SearchModel
             }
             else
             {
-                $sql_stub.=" AND rate >= :end_rate";
+                $sql_cond[] = "rate <= :end_rate";
                 $sql_vars[":end_rate"] = trim($_POST['end_rate']);
             }
         }
@@ -132,7 +136,7 @@ class SearchModel
 
         if (isset($_POST['min_grade']) && is_numeric(trim($_POST['min_grade'])) && trim($_POST['min_grade']) >= 6 && trim($_POST['min_grade']) <= 16)
         {
-            $sql_stub.=" AND grade >= :min_grade";
+        	$sql_cond[] = "grade >= :min_grade";
             $sql_vars[":min_grade"] = trim($_POST['min_grade']);
         }
 
@@ -145,6 +149,12 @@ class SearchModel
         {
             $_SESSION["feedback_neutral"][] = FEEDBACK_WARNING_SEARCH_NOT_LOGGED_IN;
         }
+
+        //build the dynamic querry from the array, and show professional tutors first
+        if (!empty($sql_cond)) $sql_stub.= " AND ".implode(' AND ', $sql_cond)." ORDER BY user_account_type DESC";
+         else $sql_stub.= " ORDER BY user_account_type DESC";
+
+
 
         $sth = $this->db->prepare($sql_stub);
         $sth->execute($sql_vars);

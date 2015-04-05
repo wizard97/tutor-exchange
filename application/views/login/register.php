@@ -48,7 +48,7 @@
                 <option value="2">Tutor</option>
                 <option value="3">Professional Tutor</option>
                 </select>
-        <p class="help-block">Select "Standard" if you are looking for a tutor, "Tutor" if you a student tutor, and "Professional Tutor" if tutoring is your legitimate job. In the future, being listed as a professional tutor will cost money.</p>
+        <p class="help-block">Select "Standard" if you are looking for a tutor, "Tutor" if you are  a student tutor, and "Professional Tutor" if tutoring is your legitimate job. In the future, being listed as a professional tutor will cost money.</p>
         </div>
 
 <div class="form-group">

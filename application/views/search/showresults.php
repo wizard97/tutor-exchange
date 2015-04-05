@@ -5,6 +5,7 @@
             var id = $button.val();
             var url = $("#url").val();
             var $html = "";
+            ajaxindicatorstart();
             $.post(url, {
                 'saved_tutors_id[]': [id]
             },
@@ -22,19 +23,37 @@
                     $button.replaceWith($html);
                     $html.val(id);
                 }
-                var url_feed = $("#url_feedback").val();
 
-                $.ajax(url_feed, {
-                    success: function(data) {
-                //remove old feedback messages
-                $(".alert").remove();
-                $(".page-header").after(data);
-                }
-        });
+                updateFeedbackMessages();
 
             });
 });
 });
+
+function ajaxindicatorstop()
+{
+$("#loadingResponse").fadeOut(300).remove();
+}
+function ajaxindicatorstart()
+{
+$("h1").append(' <i id="loadingResponse" class="fa fa-refresh fa-spin"></i>');
+}
+
+function updateFeedbackMessages()
+{
+    var url_feed = $("#url_feedback").val();
+        $.ajax(url_feed, {
+        success: function(data) {
+            ajaxindicatorstop();
+        //remove old feedback messages
+        $(".alert").remove();
+        $(".page-header").after(data);
+        $(".alert").hide().fadeIn(500);
+        }
+        });
+
+}
+
 </script>
 
 <div class="container">

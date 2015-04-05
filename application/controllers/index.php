@@ -23,6 +23,7 @@ class Index extends Controller
         $index_model = $this->loadModel('Index');
         $index_model->incrementStats();
         $this->view->info = $index_model->getStats();
-            $this->view->render('index/index');
+        $this->view->member_count = $index_model->countUsers();
+        $this->view->render('index/index');
     }
 }
