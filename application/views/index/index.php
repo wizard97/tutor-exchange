@@ -19,7 +19,7 @@
     <p>
     <a class="btn btn-success btn-lg" href="<?php echo(URL . 'search/index');?>" role="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Find a Tutor</a> 
     <a class="btn btn-primary btn-lg" href="<?php echo(URL . 'login/register');?>" role="button"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Start Tutoring</a>
-    </p>
+    </px>
   </div>
 
 <div class="col-md-4">
@@ -31,7 +31,58 @@
 <!-- <div class="alert alert-success" role="alert"><strong>New in V1.12:</strong> Save tutor button now works without page refresh (using ajax requests and jQuery), Crontab jobs now auto emails tutor when listing expires.</div> -->
 
 
+    <div class="row social">
+        <div class="col-sm-6 col-md-3">
 
+                <div class="panel panel-default box-a">
+                    <div class="panel-body">
+                        <small class="social-title">Members</small>
+                        <h3 class="count">
+                            <span class="integers"><?php echo($this->member_count->std + $this->member_count->tutor); ?></span></h3>
+                        <i class="fa-stat fa fa-users"></i>
+                    </div>
+                </div>
+
+        </div>
+        <div class="col-sm-6 col-md-3">
+
+                <div class="panel panel-default box-b">
+                    <div class="panel-body">
+                        <small class="social-title">Active Tutors</small>
+                        <h3 class="count"><span class="integers">
+                            <?php echo($this->member_count->tutor_active); ?></span></h3>
+                        <i class="fa-stat fa fa-graduation-cap"></i>
+                    </div>
+                </div>
+
+        </div>
+        <div class="col-sm-6 col-md-3">
+
+                <div class="panel panel-default box-c">
+                    <div class="panel-body">
+                        <small class="social-title">Tutor Searches</small>
+                        <h3 class="count"><span class="integers">
+                            <?php echo($this->info->searches); ?></span></h3>
+                        <i class="fa-stat fa fa-search"></i>
+                    </div>
+                </div>
+
+        </div>
+        <div class="col-sm-6 col-md-3">
+
+                <div class="panel panel-default box-d">
+                    <div class="panel-body">
+                        <small class="social-title">Page Visits</small>
+                        <h3 class="count">
+                            <span class="integers"><?php echo($this->info->visitors); ?></span></h3>
+                        <i class="fa-stat fa fa-line-chart"></i>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+
+	<hr>
 
 <div class="row">
 
@@ -93,12 +144,8 @@
         </div>
 
 
+	
 
-<br><br>
-<p>Vistor Number: <?php echo($this->info->visitors); ?></p>
-<p>Tutor Searches: <?php echo($this->info->searches); ?></p>
-<p>Total Members: <?php echo($this->member_count->std + $this->member_count->tutor); ?></p>
-<p>Active Tutors: <?php echo($this->member_count->tutor_active); ?></p>
 
 </div>
 

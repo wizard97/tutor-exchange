@@ -724,7 +724,7 @@
               </div>
               <div class="col-xs-5">
                 <div class="form-group">
-                  <select class="form-control" name="econ" id="econ">
+                  <select class="form-control" name="us_history" id="us_history">
                     <option value="4">AP</option>
                     <option value="2">Level 1</option>
                     <option value="1">Level 2</option>
