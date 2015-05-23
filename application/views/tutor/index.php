@@ -104,6 +104,7 @@
                     <li class="list-group-item"><i class="fa fa-flash"></i> Currently Tutoring:<span class="pull-right text-muted"><?php if($this->tutor->tutor_active != 0) echo 'Yes'; else echo 'No';?></span></li>
                     <li class="list-group-item"><i class="fa fa-clock-o"></i> Listing Expiration:<span class="pull-right text-muted"><?php if(empty($this->tutor->profile_expiration)){echo "N/A";} else {echo date("m/d/y", $this->tutor->profile_expiration); if($this->tutor->profile_expiration < time() && $this->tutor->tutor_active == 0) {echo " (expired)";}}?></span></li>
                     <li class="list-group-item"><i class="fa fa-eye"></i> Profile Views:<span class="pull-right text-muted"><?php echo $this->tutor->profile_views;?></span></li>
+                    <li class="list-group-item"><i class="fa fa-envelope"></i> Contacted:<span class="pull-right text-muted"><?php echo $this->tutor->contact_num;?> time(s)</span></li>
                 </ul>
 
             </div>

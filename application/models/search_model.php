@@ -248,6 +248,41 @@ public function AddOneSearch()
 
 
 
+public function saveTutor_id($tutor_id)
+{
+
+//get saved tutors from DB
+    $tutor_array = array();
+    $tutor_array = $this->getSavedTutors();
+
+
+
+        $tutor_id = preg_replace('/[^0-9.]+/', '', $tutor_id);
+        if(count($tutor_array) > 20)
+        {
+            $_SESSION["feedback_negative"][] = FEEDBACK_TOO_MANY_TUTORS;
+            return true;
+        }
+        elseif (!array_key_exists($tutor_id, $tutor_array))
+        {
+            $tutor_array[$tutor_id] = time();
+                //you saved a tutor
+        }
+
+
+    $saved_tutors_time = implode(",", $tutor_array);
+    $saved_tutors_id = implode(",", array_keys($tutor_array));
+
+
+    $save = $this->db->prepare("UPDATE users SET saved_tutors_id = :saved_tutors_id, saved_tutors_time = :saved_tutors_time WHERE user_id = :user_id LIMIT 1");
+
+    $save->execute(array(":saved_tutors_id" => $saved_tutors_id, ":saved_tutors_time" => $saved_tutors_time, ":user_id" => SESSION::get('user_id')));
+
+    $_SESSION["feedback_positive"][] = FEEDBACK_SUCESS_SAVING;
+    return 0;
+}
+
+
 public function saveTutors()
 {
     $changes = array();
@@ -373,6 +408,8 @@ public function emailTutor_action($user_id)
     return false;
 }
 
+if (!empty($_POST['save_tutor']) && isset($_POST['save_tutor']) && $_POST['save_tutor'] == 1) $this->saveTutor_id($user_id);
+
 $mail = new PHPMailer;
 
         // please look into the config/config.php for much more info on how to use this!
@@ -418,11 +455,16 @@ if (empty(trim($_POST['message'])) || !isset($_POST['message']))
   $_SESSION["feedback_negative"][] =  FEEDBACK_NO_MESSAGE;
   return false;  
 }
-
-$mail->Body = "Someone looking for a tutor on Lexington Tutor Exchange has contacted you. They will not know your email address until you reply.\n\nSincerely,\nLexington Tutor Exchange\n\n_____Begin Forwarded Message_____\n\n".trim($_POST['message']);
+//create heading for message
+$mail->Body = "Dear ".$tutor->fname." ".$tutor->lname.",\n\n"."Someone looking for a tutor on Lexington Tutor Exchange has contacted you. Please note they will not know your email address until you reply.\n\nSincerely,\nLexington Tutor Exchange\n\n_____Begin Forwarded Message_____\n\n".trim($_POST['message']);
         // final sending and check
 if($mail->Send()) {
     $_SESSION["feedback_positive"][] = FEEDBACK_EMAIL_SEND_SUCESS;
+    //update stats in database
+    $stmt = $this->db->prepare("UPDATE tutors SET contact_num = contact_num + 1 WHERE id = :user_id LIMIT 1");
+    $stmt->execute(array(':user_id' => $user_id));
+    $stm = $this->db->prepare("UPDATE stats SET tutor_contacts = tutor_contacts + 1");
+    $stm->execute();
     return true;
 } else {
     $_SESSION["feedback_negative"][] = FEEDBACK_EMAIL_SEND_FAIL . $mail->ErrorInfo;

@@ -19,7 +19,7 @@
 	</div>
     
     <div class="form-group">
-    <label for="email">Your email address</label>
+    <label for="email">Your Email Address</label>
     <input name="email" id="email" class="form-control" type="text" size="30" required disabled value="<?php echo(SESSION::get('user_email'));?>">
 	</div>
     
@@ -27,9 +27,15 @@
     <label for="subject">Subject</label>
     <input name="subject" id="subject" class="form-control" type="text" size="30" required value="Tutoring Inquiry">
 	</div>
+
+    <div class="checkbox">
+    <label>
+    <input type="checkbox"  name="save_tutor" value="1" checked>
+    Add Tutor to <a href="<?php echo URL; ?>search/saved">My Saved Tutors</a> (so you can find his/her profile later)</label>
+    </div>
     
 	<div class="form-group">
-    <label for="message">Your message</label>
+    <label for="message">Your Message</label>
     <textarea name="message" id="message" class="form-control" rows="7" cols="60" required placeholder="Your message to the tutor goes here."></textarea>
     </div>
 

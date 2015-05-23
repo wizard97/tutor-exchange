@@ -29,13 +29,16 @@
                 <option value="15" <?php if ($this->user->grade == "15"){ echo("selected=selected");} ?> >College Graduate</option>
               </select>
             </div>
+
+
+
             <div class="form-group">
-              <label for="rate">Requested hourly rate</label>
+              <label for="rate">Requested hourly rate <a type="button" data-toggle="modal" data-target="#Rates">[Help Me]</a></label>
               <input type="number" class="form-control" name="rate" id="rate" size="5" maxlength="3" min="8" max="150" required <?php if (!empty($this->user->rate) || $this->user->rate == 0){ echo("value=".'"'.$this->user->rate.'"');} else {echo("placeholder=".'"'."$/hour".'"');} ?>>
             </div>
             <div class="form-group">
               <label for="about_me">About me</label>
-              <textarea name="about_me" class="form-control" id="about_me" rows="10" cols="50" maxlength="3000" <?php if (empty($this->user->about_me)){ echo("placeholder=".'"'."Tell the people searching for tutors a little about yourself/your tutoring ability. Maybe mention your schedule, your qualifications, or anything else that will make you stand out. This is confidential, and will only be viewable by people with registered accounts.".'"');} ?> >
+              <textarea name="about_me" class="form-control" id="about_me" rows="10" cols="50" maxlength="3000" <?php if (empty($this->user->about_me)){ echo("placeholder=".'"'."Tell the people searching for tutors a little about yourself/your tutoring ability. We recommend mentioning your schedule, your availability, your qualifications, and anything else that will make you stand out. Are you an NHS member? What college do you attend? This is confidential, and will only be viewable by people with registered accounts.".'"');} ?> >
 <?php if (!empty($this->user->about_me)){echo $this->user->about_me;}?>
 </textarea>
             </div>
@@ -43,6 +46,27 @@
         </div>
       </div>
     </div>
+
+
+<div class="modal fade" id="Rates" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Picking an Hourly Rate</h4>
+      </div>
+      <div class="modal-body">
+        <p>You are welcome to charge whatever you like. However, if you are an upper-class high schooler, we recommend charging between $20-$30 per hour. If you are younger, probably charge a bit less. If you are older, feel free to charge a bit more. Keep in mind many professional tutors charge $100+ each hour!</p>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
     <div class="row">
       <div class="col-md-6">

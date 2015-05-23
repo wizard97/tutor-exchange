@@ -12,4 +12,14 @@
 
     <p>Please leave us suggestions, feedback, and bug reports by sending us a message through out contact form.</p>
 
+<h3>Special Thanks To</h3>
+<ul>
+<li><a href="http://www.php-login.net/">The PHP-Login Project</a></li>
+<li><a href="http://getbootstrap.com/">Bootstrap</a></li>
+<li><a href="http://startbootstrap.com/">Start Bootstrap</a></li>
+<li><a href="https://www.datatables.net/">DataTables</a></li>
+<li><a href="http://glyphicons.com/">Glyphicons</a></li>
+<li><a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a></li>
+<li><a href="http://jedfoster.com/Readmore.js/">Readmore.js</a></li>
+</ul>
 </div>

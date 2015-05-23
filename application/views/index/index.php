@@ -22,7 +22,7 @@
     </px>
   </div>
 
-<div class="col-md-4">
+<div class="col-md-4 hidden-sm hidden-xs">
 <h1><i class="fa fa-exchange fa-5x"></i></h1>
 </div>
   </div>
@@ -32,7 +32,7 @@
 
 
     <div class="row social">
-        <div class="col-sm-6 col-md-3">
+        <div class="col-sm-6 col-md-6 col-lg-3">
 
                 <div class="panel panel-default box-a">
                     <div class="panel-body">
@@ -44,7 +44,7 @@
                 </div>
 
         </div>
-        <div class="col-sm-6 col-md-3">
+        <div class="col-sm-6 col-md-6 col-lg-3">
 
                 <div class="panel panel-default box-b">
                     <div class="panel-body">
@@ -56,7 +56,10 @@
                 </div>
 
         </div>
-        <div class="col-sm-6 col-md-3">
+
+
+
+        <div class="col-sm-6 col-md-6 col-lg-3">
 
                 <div class="panel panel-default box-c">
                     <div class="panel-body">
@@ -68,18 +71,20 @@
                 </div>
 
         </div>
-        <div class="col-sm-6 col-md-3">
+
+                <div class="col-sm-6 col-md-6 col-lg-3">
 
                 <div class="panel panel-default box-d">
                     <div class="panel-body">
-                        <small class="social-title">Page Visits</small>
+                        <small class="social-title">Tutor Matches</small>
                         <h3 class="count">
-                            <span class="integers"><?php echo($this->info->visitors); ?></span></h3>
-                        <i class="fa-stat fa fa-line-chart"></i>
+                            <span class="integers"><?php echo($this->info->tutor_contacts); ?></span></h3>
+                        <i class="fa-stat fa fa-envelope"></i>
                     </div>
                 </div>
 
         </div>
+
     </div>
 
 	<hr>
@@ -105,7 +110,7 @@
                     </div>
                     <div class="caption">
                         <h3>Find The Perfect Tutor</h3>
-                        <p>Just select the credentials you require in your tutor, and we will search all our listing to find you the best one. You can even rate tutors. Currently there are <?php echo($this->member_count->std + $this->member_count->tutor); ?> active tutors.</p>
+                        <p>Just select the credentials you require in your tutor, and we will search all our listing to find you the best one. You can even rate tutors. Currently there are <?php echo($this->member_count->tutor); ?> tutors, <?php echo($this->member_count->tutor_active); ?> of which are active.</p>
                         <p>
                             <a href="<?php echo(URL . 'search/index');?>" class="btn btn-default">Find a Tutor »</a>
                         </p>
