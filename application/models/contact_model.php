@@ -66,11 +66,20 @@ else
         // final sending and check
         if($mail->Send()) {
             $_SESSION["feedback_positive"][] = FEEDBACK_EMAIL_SEND_SUCESS;
+            $this->save_email('contact_form', 0, 0, $mail->Subject, $mail->Body);
             return true;
         } else {
             $_SESSION["feedback_negative"][] = FEEDBACK_EMAIL_SEND_FAIL . $mail->ErrorInfo;
             return false;
         }
+    }
+
+        public function save_email($email_type, $from_id, $to_id, $subject, $message)
+    {
+
+        $sql = $this->db->prepare("INSERT INTO emails (email_type, from_id, to_id, subject, message, time_sent) VALUES (:email_type, :from_id, :to_id, :subject, :message, :time_sent)");
+        if(!$sql->execute(array(':email_type' => trim($email_type), ':from_id' => trim($from_id), ':to_id' => trim($to_id), ':subject' => trim($subject), ':message' => $message, ':time_sent' => time()))) return 0;
+        return 1;
     }
 }
 

@@ -577,6 +577,7 @@ class LoginModel
         // final sending and check
         if($mail->Send()) {
             $_SESSION["feedback_positive"][] = FEEDBACK_VERIFICATION_MAIL_SENDING_SUCCESSFUL;
+            $this->save_email('register_user', 0, $user_id, $mail->Subject, $mail->Body);
             return true;
         } else {
             $_SESSION["feedback_negative"][] = FEEDBACK_VERIFICATION_MAIL_SENDING_ERROR . $mail->ErrorInfo;
@@ -858,7 +859,7 @@ class LoginModel
         // set token (= a random hash string and a timestamp) into database
         if ($this->setPasswordResetDatabaseToken($user_email, $user_password_reset_hash, $temporary_timestamp) == true) {
             // send a mail to the user, containing a link with username and token hash string
-            if ($this->sendPasswordResetMail($user_password_reset_hash, $user_email)) {
+            if ($this->sendPasswordResetMail($user_password_reset_hash, $user_email, $result_user_row->user_id)) {
                 return true;
             }
         }
@@ -901,7 +902,7 @@ class LoginModel
      * @param string $user_email user email
      * @return bool success status
      */
-    public function sendPasswordResetMail($user_password_reset_hash, $user_email)
+    public function sendPasswordResetMail($user_password_reset_hash, $user_email, $user_id)
     {
         // create PHPMailer object here. This is easily possible as we auto-load the according class(es) via composer
         $mail = new PHPMailer;
@@ -938,6 +939,7 @@ class LoginModel
         // send the mail
         if($mail->Send()) {
             $_SESSION["feedback_positive"][] = FEEDBACK_PASSWORD_RESET_MAIL_SENDING_SUCCESSFUL;
+            $this->save_email('password_reset', 0, $user_id, $mail->Subject, $mail->Body);
             return true;
         } else {
             $_SESSION["feedback_negative"][] = FEEDBACK_PASSWORD_RESET_MAIL_SENDING_ERROR . $mail->ErrorInfo;
@@ -1151,5 +1153,14 @@ public function addTutor()
         // default return
         return false;
     }
+
+        public function save_email($email_type, $from_id, $to_id, $subject, $message)
+    {
+
+        $sql = $this->db->prepare("INSERT INTO emails (email_type, from_id, to_id, subject, message, time_sent) VALUES (:email_type, :from_id, :to_id, :subject, :message, :time_sent)");
+        if(!$sql->execute(array(':email_type' => trim($email_type), ':from_id' => trim($from_id), ':to_id' => trim($to_id), ':subject' => trim($subject), ':message' => $message, ':time_sent' => time()))) return 0;
+        return 1;
+    }
+
 
  }

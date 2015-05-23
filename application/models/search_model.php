@@ -461,6 +461,10 @@ $mail->Body = "Dear ".$tutor->fname." ".$tutor->lname.",\n\n"."Someone looking f
 if($mail->Send()) {
     $_SESSION["feedback_positive"][] = FEEDBACK_EMAIL_SEND_SUCESS;
     //update stats in database
+//copy of message
+    $this->save_email('tutor_contact', SESSION::get('user_id'), $user_id, $mail->Subject, $mail->Body);
+
+    //mailing stats
     $stmt = $this->db->prepare("UPDATE tutors SET contact_num = contact_num + 1 WHERE id = :user_id LIMIT 1");
     $stmt->execute(array(':user_id' => $user_id));
     $stm = $this->db->prepare("UPDATE stats SET tutor_contacts = tutor_contacts + 1");
@@ -498,7 +502,7 @@ if($query->rowCount() != 1)
 }
 
 $query = $this->db->prepare("SELECT * FROM reviews WHERE reviewer_id = :reviewer_id AND tutor_id = :tutor_id LIMIT 1");
-$query->execute(array('reviewer_id' => SESSION::get('user_id'), ':tutor_id' => $user_id));
+$query->execute(array(':reviewer_id' => SESSION::get('user_id'), ':tutor_id' => $user_id));
 $tutor = $query->fetch();
 
 if($query->rowCount() != 0)
@@ -520,7 +524,7 @@ if (isset($_POST['anonymous']) && $_POST['anonymous'] == 1)
 }
 
 $query = $this->db->prepare("INSERT INTO reviews (reviewer_id, tutor_id, reviewer, rating, review_title, message, time, anonymous) VALUES (:reviewer_id, :tutor_id, :reviewer, :rating, :review_title, :message, :time, :anonymous)");
-$query->execute(array('reviewer_id' => SESSION::get('user_id'), ':tutor_id' => $user_id, ':reviewer' => $_POST['reviewer'], ':rating' => trim($_POST['rating']), ':review_title' => trim($_POST['review_title']), ':message' => trim(strip_tags($_POST['message'])), ':time' => time(), ':anonymous' => $anonymous));
+$query->execute(array(':reviewer_id' => SESSION::get('user_id'), ':tutor_id' => $user_id, ':reviewer' => $_POST['reviewer'], ':rating' => trim($_POST['rating']), ':review_title' => trim($_POST['review_title']), ':message' => trim(strip_tags($_POST['message'])), ':time' => time(), ':anonymous' => $anonymous));
 
 $_SESSION["feedback_positive"][] = FEEDBACK_SUCESS_REVIEWING;
 return true;
@@ -766,4 +770,15 @@ public function deleteSaved()
         // default return
         return null;
     }
+
+    //to save emails to database
+    public function save_email($email_type, $from_id, $to_id, $subject, $message)
+    {
+
+        $sql = $this->db->prepare("INSERT INTO emails (email_type, from_id, to_id, subject, message, time_sent) VALUES (:email_type, :from_id, :to_id, :subject, :message, :time_sent)");
+        if(!$sql->execute(array(':email_type' => trim($email_type), ':from_id' => trim($from_id), ':to_id' => trim($to_id), ':subject' => trim($subject), ':message' => $message, ':time_sent' => time()))) return 0;
+        return 1;
+    }
+
+
 }

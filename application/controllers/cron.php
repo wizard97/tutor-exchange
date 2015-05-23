@@ -25,7 +25,8 @@ class Cron extends Controller
         $cron_model = $this->loadModel('Cron');
         $affected_tutors = $cron_model->pauseEmailExpired();
 		$warned_tutors = $cron_model->EmailWarn();
-        echo $affected_tutors." tutor(s) paused. ".$warned_tutors." tutor(s) warned.";
+        $email_review = $cron_model->EmailFollowup();
+        echo $affected_tutors." tutor(s) paused. ".$warned_tutors." tutor(s) warned. ".$email_review." sent followup.";
         }
     }
 }

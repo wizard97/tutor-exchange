@@ -7,76 +7,15 @@
  * If you want to know why we use "define" instead of "const" @see http://stackoverflow.com/q/2447791/1114320
  */
 
-
-//sensitive information removed from here
-
-
 /**
- * Configuration for: Hashing strength
- * This is the place where you define the strength of your password hashing/salting
- *
- * To make password encryption very safe and future-proof, the PHP 5.5 hashing/salting functions
- * come with a clever so called COST FACTOR. This number defines the base-2 logarithm of the rounds of hashing,
- * something like 2^12 if your cost factor is 12. By the way, 2^12 would be 4096 rounds of hashing, doubling the
- * round with each increase of the cost factor and therefore doubling the CPU power it needs.
- * Currently, in 2013, the developers of this functions have chosen a cost factor of 10, which fits most standard
- * server setups. When time goes by and server power becomes much more powerful, it might be useful to increase
- * the cost factor, to make the password hashing one step more secure. Have a look here
- * (@see https://github.com/panique/php-login/wiki/Which-hashing-&-salting-algorithm-should-be-used-%3F)
- * in the BLOWFISH benchmark table to get an idea how this factor behaves. For most people this is irrelevant,
- * but after some years this might be very very useful to keep the encryption of your database up to date.
- *
- * Remember: Every time a user registers or tries to log in (!) this calculation will be done.
- * Don't change this if you don't know what you do.
- *
- * To get more information about the best cost factor please have a look here
- * @see http://stackoverflow.com/q/4443476/1114320
+ * Configuration for: Error reporting
+ * Useful to show every little problem during development, but only show hard errors in production
  */
 
-// the hash cost factor, PHP's internal default is 10. You can leave this line
-// commented out until you need another factor then 10.
-define("HASH_COST_FACTOR", "10");
 
-/**
- * Configuration for: Email server credentials
- *
- * Here you can define how you want to send emails.
- * If you have successfully set up a mail server on your linux server and you know
- * what you do, then you can skip this section. Otherwise please set EMAIL_USE_SMTP to true
- * and fill in your SMTP provider account data.
- *
- * An example setup for using gmail.com [Google Mail] as email sending service,
- * works perfectly in August 2013. Change the "xxx" to your needs.
- * Please note that there are several issues with gmail, like gmail will block your server
- * for "spam" reasons or you'll have a daily sending limit. See the readme.md for more info.
- *
- * define("PHPMAILER_DEBUG_MODE", 0);
- * define("EMAIL_USE_SMTP", true);
- * define("EMAIL_SMTP_HOST", 'ssl://smtp.gmail.com');
- * define("EMAIL_SMTP_AUTH", true);
- * define("EMAIL_SMTP_USERNAME", 'xxxxxxxxxx@gmail.com');
- * define("EMAIL_SMTP_PASSWORD", 'xxxxxxxxxxxxxxxxxxxx');
- * define("EMAIL_SMTP_PORT", 465);
- * define("EMAIL_SMTP_ENCRYPTION", 'ssl');
- *
- * It's really recommended to use SMTP!
- */
-// Options: 0 = off, 1 = commands, 2 = commands and data, perfect to see SMTP errors, see the PHPMailer manual for more
-define("PHPMAILER_DEBUG_MODE", 0);
-// use SMTP or basic mail() ? SMTP is strongly recommended
-define("EMAIL_USE_SMTP", true);
-// name of your host
-define("EMAIL_SMTP_HOST", 'smtp.gmail.com');
-// leave this true until your SMTP can be used without login
-define("EMAIL_SMTP_AUTH", true);
-// SMTP provider username
-define("EMAIL_SMTP_USERNAME", 'lextutorexchange');
-// SMTP provider password
-define("EMAIL_SMTP_PASSWORD", 'tutorsmtpemail');
-// SMTP provider port
-define("EMAIL_SMTP_PORT", 465);
-// SMTP encryption, usually SMTP providers use "tls" or "ssl", for details see the PHPMailer manual
-define("EMAIL_SMTP_ENCRYPTION", 'ssl');
+//removed passwords and configs for security reasons
+
+
 
 /**
  * Configuration for: Email content data
