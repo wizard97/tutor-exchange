@@ -4,13 +4,35 @@
   </div>
   <?php $this->renderFeedbackMessages(); ?>
   <form method="POST" action="<?php echo URL; ?>tutor/edittutor_action">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">Basic Tutoring Info</h3>
-          </div>
-          <div class="panel-body">
+
+  <p class="alert alert-success"><i class="fa fa-info-circle"></i> This is where you update your tutoring info. Make sure to fill it out as completely as possible and keep it updated.</p>
+    
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#criteria">Your Info</a></li>
+  <li><a data-toggle="tab" href="#math">Math</a></li>
+  <li><a data-toggle="tab" href="#science">Science</a></li>
+  <li><a data-toggle="tab" href="#social_studies">Social Studies</a></li>
+  <li><a data-toggle="tab" href="#english">English</a></li>
+    <li role="presentation" class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+      Language <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+    <li><a data-toggle="tab" href="#french">French</a></li>
+    <li><a data-toggle="tab" href="#german">German</a></li>
+    <li><a data-toggle="tab" href="#italian">Italian</a></li>
+    <li><a data-toggle="tab" href="#mandarin">Mandarin</a></li>
+    <li><a data-toggle="tab" href="#spanish">Spanish</a></li>
+    </ul>
+  </li>
+    <li><a data-toggle="tab" href="#music">Music</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="criteria" class="tab-pane fade in active">
+  <div class="row">
+  <div class="col-md-6">
+  <h3>Your Info</h3>
             <div class="form-group">
               <label for="age">Age</label>
               <input type="number" class="form-control" name="age" id="age" size="5" maxlength="3" <?php if (!empty($this->user->age)){ echo("value=".'"'.$this->user->age.'"');} ?>>
@@ -29,52 +51,24 @@
                 <option value="15" <?php if ($this->user->grade == "15"){ echo("selected=selected");} ?> >College Graduate</option>
               </select>
             </div>
-
-
-
             <div class="form-group">
-              <label for="rate">Requested hourly rate <a type="button" data-toggle="modal" data-target="#Rates">[Help Me]</a></label>
+              <label for="rate">Requested hourly rate</label>
               <input type="number" class="form-control" name="rate" id="rate" size="5" maxlength="3" min="8" max="150" required <?php if (!empty($this->user->rate) || $this->user->rate == 0){ echo("value=".'"'.$this->user->rate.'"');} else {echo("placeholder=".'"'."$/hour".'"');} ?>>
             </div>
             <div class="form-group">
               <label for="about_me">About me</label>
-              <textarea name="about_me" class="form-control" id="about_me" rows="10" cols="50" maxlength="3000" <?php if (empty($this->user->about_me)){ echo("placeholder=".'"'."Tell the people searching for tutors a little about yourself/your tutoring ability. We recommend mentioning your schedule, your availability, your qualifications, and anything else that will make you stand out. Are you an NHS member? What college do you attend? This is confidential, and will only be viewable by people with registered accounts.".'"');} ?> >
+              <textarea name="about_me" class="form-control" id="about_me" rows="10" cols="50" maxlength="3000" <?php if (empty($this->user->about_me)){ echo("placeholder=".'"'."If you want, tell the people searching for tutors a little about yourself/your tutoring ability. Maybe mention your schedule. This is confidential, and will only be viewable by people with registered accounts.".'"');} ?> >
 <?php if (!empty($this->user->about_me)){echo $this->user->about_me;}?>
 </textarea>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-<div class="modal fade" id="Rates" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Picking an Hourly Rate</h4>
-      </div>
-      <div class="modal-body">
-        <p>You are welcome to charge whatever you like. However, if you are an upper-class high schooler, we recommend charging between $20-$30 per hour. If you are younger, probably charge a bit less. If you are older, feel free to charge a bit more. Keep in mind many professional tutors charge $100+ each hour!</p>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
   </div>
-</div>
+  </div>
+  </div>
 
-
-
-    <div class="row">
-      <div class="col-md-6">
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3 class="panel-title">Math Tutoring</h3>
-          </div>
-          <div class="panel-body">
+    <div id="math" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+  <h3>Math Tutoring</h3>
             <div class="form-group">
               <label for="highest_math_name">Highest completed math class</label>
               <input type="text" class="form-control" name="highest_math_name" id="highest_math_name" size="15" maxlength="40" <?php if (!empty($this->user->highest_math_name)){ echo("value=".'"'.$this->user->highest_math_name.'"');} ?>>
@@ -85,7 +79,7 @@
               <input type="text" class="form-control" name="highest_math_level" id="highest_math_level" size="15" maxlength="20" <?php if (!empty($this->user->highest_math_level)){ echo("value=".'"'.$this->user->highest_math_level.'"');} else{echo("placeholder=\"Example: Honors\"");} ?>>
               <p class="help-block">What level was this class?</p>
             </div>
-            <p class="help-block">What classes can you teach?</p>
+            <label>Which of these classes can you tutor?</label>
             <div class="row">
               <div class="col-xs-7">
                 <div class="checkbox">
@@ -231,334 +225,15 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3 class="panel-title">Foreign Language</h3>
-          </div>
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-xs-12">
-                <h3>French</h3>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="highest_french_name">Highest completed French class</label>
-              <input type="text" class="form-control" name="highest_french_name" id="highest_french_name" size="15" maxlength="40" <?php if (!empty($this->user->highest_french_name)){ echo("value=".'"'.$this->user->highest_french_name.'"');} ?>>
-              <p class="help-block">What was the highest French class you successfully completed?</p>
-            </div>
-            <div class="form-group">
-              <label for="highest_french_level">Class level</label>
-              <input type="text" class="form-control" name="highest_french_level" id="highest_french_level" size="15" maxlength="20" <?php if (!empty($this->user->highest_french_level)){ echo("value=".'"'.$this->user->highest_french_level.'"');} else{echo("placeholder=\"Example: Honors\"");} ?>>
-              <p class="help-block">What level was this class?</p>
-            </div>
-            <p class="help-block">What classes can you teach?</p>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="elementary_french" <?php if ($this->user->elementary_french != 0){ echo "checked";} ?>>
-                    Elementary School French</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="elementary_french" id="elementary_french">
-                    <option value="3" <?php if ($this->user->elementary_french == 3){ echo("selected=selected");} ?>>Honors</option>
-                    <option value="2" <?php if ($this->user->elementary_french == 2){ echo("selected=selected");} ?>>Standard</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="middle_french" <?php if ($this->user->middle_french != 0){ echo "checked";} ?>>
-                    Middle School French</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="middle_french" id="middle_french">
-                    <option value="3" <?php if ($this->user->middle_french == 3){ echo("selected=selected");} ?>>Honors</option>
-                    <option value="2" <?php if ($this->user->middle_french == 2){ echo("selected=selected");} ?>>Standard</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="french_1" <?php if ($this->user->french_1 != 0){ echo "checked";} ?>>
-                    French 1</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="french_1" id="french_1">
-                    <option value="3" <?php if ($this->user->french_1 == 3){ echo("selected=selected");} ?>>Honors</option>
-                    <option value="2" <?php if ($this->user->french_1 == 2){ echo("selected=selected");} ?>>Level 1</option>
-                    <option value="1" <?php if ($this->user->french_1 == 1){ echo("selected=selected");} ?>>Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="french_2" <?php if ($this->user->french_2 != 0){ echo "checked";} ?>>
-                    French 2</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="french_2" id="french_2">
-                    <option value="3" <?php if ($this->user->french_2 == 3){ echo("selected=selected");} ?>>Honors</option>
-                    <option value="2" <?php if ($this->user->french_2 == 2){ echo("selected=selected");} ?>>Level 1</option>
-                    <option value="1" <?php if ($this->user->french_2 == 1){ echo("selected=selected");} ?>>Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="french_3" <?php if ($this->user->french_3 != 0){ echo "checked";} ?>>
-                    French 3</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="french_3" id="french_3">
-                    <option value="3" <?php if ($this->user->french_3 == 3){ echo("selected=selected");} ?>>Honors</option>
-                    <option value="2" <?php if ($this->user->french_3 == 2){ echo("selected=selected");} ?>>Level 1</option>
-                    <option value="1" <?php if ($this->user->french_3 == 1){ echo("selected=selected");} ?>>Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="french_4" <?php if ($this->user->french_4 != 0){ echo "checked";} ?>>
-                    French 4</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="french_4" id="french_4">
-                    <option value="3" <?php if ($this->user->french_4 == 3){ echo("selected=selected");} ?>>Honors</option>
-                    <option value="2" <?php if ($this->user->french_4 == 2){ echo("selected=selected");} ?>>Level 1</option>
-                    <option value="1" <?php if ($this->user->french_4 == 1){ echo("selected=selected");} ?>>Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="french_5" <?php if ($this->user->french_5 != 0){ echo "checked";} ?>>
-                    French 5</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="french_5" id="french_5">
-                    <option value="2" <?php if ($this->user->french_5 == 2){ echo("selected=selected");} ?>>Level 1</option>
-                    <option value="1" <?php if ($this->user->french_5 == 1){ echo("selected=selected");} ?>>Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="french_AP" <?php if ($this->user->french_AP != 0){ echo "checked";} ?>>
-                    AP French</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="french_AP" id="french_AP">
-                    <option value="4" <?php if ($this->user->french_AP == 4){ echo("selected=selected");} ?>>AP French</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12">
-                <h3>Spanish</h3>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="highest_spanish_name">Highest completed Spanish class</label>
-              <input type="text" class="form-control" name="highest_spanish_name" id="highest_spanish_name" size="15" maxlength="40" <?php if (!empty($this->user->highest_spanish_name)){ echo("value=".'"'.$this->user->highest_spanish_name.'"');} ?>>
-              <p class="help-block">What was the highest Spanish class you successfully completed?</p>
-            </div>
-            <div class="form-group">
-              <label for="highest_spanish_level">Class level</label>
-              <input type="text" class="form-control" name="highest_spanish_level" id="highest_spanish_level" size="15" maxlength="20" <?php if (!empty($this->user->highest_spanish_level)){ echo("value=".'"'.$this->user->highest_spanish_level.'"');} else{echo("placeholder=\"Example: Honors\"");} ?>>
-              <p class="help-block">What level was this class?</p>
-            </div>
-            <p class="help-block">What classes can you teach?</p>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="elementary_spanish" <?php if ($this->user->elementary_spanish != 0){ echo "checked";} ?>>
-                    Elementary School Spanish</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="elementary_spanish" id="elementary_spanish">
-                    <option value="3" <?php if ($this->user->elementary_spanish == 3){ echo("selected=selected");} ?>>Honors</option>
-                    <option value="2" <?php if ($this->user->elementary_spanish == 2){ echo("selected=selected");} ?>>Standard</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="middle_spanish" <?php if ($this->user->middle_spanish != 0){ echo "checked";} ?>>
-                    Middle School Spanish</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="middle_spanish" id="middle_spanish">
-                    <option value="3" <?php if ($this->user->middle_spanish == 3){ echo("selected=selected");} ?>>Honors</option>
-                    <option value="2" <?php if ($this->user->middle_spanish == 2){ echo("selected=selected");} ?>>Standard</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="spanish_1" <?php if ($this->user->spanish_1 != 0){ echo "checked";} ?>>
-                    Spanish 1</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="spanish_1" id="spanish_1">
-                    <option value="3" <?php if ($this->user->spanish_1 == 3){ echo("selected=selected");} ?>>Honors</option>
-                    <option value="2" <?php if ($this->user->spanish_1 == 2){ echo("selected=selected");} ?>>Level 1</option>
-                    <option value="1" <?php if ($this->user->spanish_1 == 1){ echo("selected=selected");} ?>>Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="spanish_2" <?php if ($this->user->spanish_2 != 0){ echo "checked";} ?>>
-                    Spanish 2</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="spanish_2" id="spanish_2">
-                    <option value="3" <?php if ($this->user->spanish_2 == 3){ echo("selected=selected");} ?>>Honors</option>
-                    <option value="2" <?php if ($this->user->spanish_2 == 2){ echo("selected=selected");} ?>>Level 1</option>
-                    <option value="1" <?php if ($this->user->spanish_2 == 1){ echo("selected=selected");} ?>>Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="spanish_3" <?php if ($this->user->spanish_3 != 0){ echo "checked";} ?>>
-                    Spanish 3</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="spanish_3" id="spanish_3">
-                    <option value="3" <?php if ($this->user->spanish_3 == 3){ echo("selected=selected");} ?>>Honors</option>
-                    <option value="2" <?php if ($this->user->spanish_3 == 2){ echo("selected=selected");} ?>>Level 1</option>
-                    <option value="1" <?php if ($this->user->spanish_3 == 1){ echo("selected=selected");} ?>>Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="spanish_4" <?php if ($this->user->spanish_4 != 0){ echo "checked";} ?>>
-                    Spanish 4</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="spanish_4" id="spanish_4">
-                    <option value="3" <?php if ($this->user->spanish_4 == 3){ echo("selected=selected");} ?>>Honors</option>
-                    <option value="2" <?php if ($this->user->spanish_4 == 2){ echo("selected=selected");} ?>>Level 1</option>
-                    <option value="1" <?php if ($this->user->spanish_4 == 1){ echo("selected=selected");} ?>>Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="spanish_5" <?php if ($this->user->spanish_5 != 0){ echo "checked";} ?>>
-                    Spanish 5</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="spanish_5" id="spanish_5">
-                    <option value="2" <?php if ($this->user->spanish_5 == 2){ echo("selected=selected");} ?>>Level 1</option>
-                    <option value="1" <?php if ($this->user->spanish_5 == 1){ echo("selected=selected");} ?>>Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="spanish_AP" <?php if ($this->user->spanish_AP != 0){ echo "checked";} ?>>
-                    AP Spanish</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="spanish_AP" id="spanish_AP">
-                    <option value="4" <?php if ($this->user->spanish_AP == 4){ echo("selected=selected");} ?>>AP Spanish</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  </div>
+  </div>
+  </div>
 
-      <div class="col-md-6">
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3 class="panel-title">Science Tutoring</h3>
-          </div>
-          <div class="panel-body">
-            <div class="form-group">
+    <div id="science" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+<h3>Science Tutoring</h3>
+           <div class="form-group">
               <label for="highest_science_name">Highest completed science class</label>
               <input type="text" class="form-control" name="highest_science_name" id="highest_science_name" size="15" maxlength="40" <?php if (!empty($this->user->highest_science_name)){ echo("value=".'"'.$this->user->highest_science_name.'"');} ?>>
               <p class="help-block">What was the highest science class you successfully completed?</p>
@@ -568,7 +243,7 @@
               <input type="text" class="form-control" name="highest_science_level" id="highest_science_level" size="15" maxlength="20" <?php if (!empty($this->user->highest_science_level)){ echo("value=".'"'.$this->user->highest_science_level.'"');} else{echo("placeholder=\"Example: Honors\"");} ?>>
               <p class="help-block">What level was this class?</p>
             </div>
-            <p class="help-block">What classes can you teach?</p>
+            <label>Which of these classes can you tutor?</label>
             <div class="row">
               <div class="col-xs-7">
                 <div class="checkbox">
@@ -677,14 +352,14 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+  </div>
+  </div>
+  </div>
 
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3 class="panel-title">Social Studies</h3>
-          </div>
-          <div class="panel-body">
+      <div id="social_studies" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+<h3>Social Studies</h3>
             <div class="form-group">
               <label for="highest_social_name">Highest completed Social Studies class</label>
               <input type="text" class="form-control" name="highest_social_name" id="highest_social_name" size="15" maxlength="40" <?php if (!empty($this->user->highest_social_name)){ echo("value=".'"'.$this->user->highest_social_name.'"');} ?>>
@@ -695,7 +370,7 @@
               <input type="text" class="form-control" name="highest_social_level" id="highest_social_level" size="15" maxlength="20" <?php if (!empty($this->user->highest_social_level)){ echo("value=".'"'.$this->user->highest_social_level.'"');} else{echo("placeholder=\"Example: Honors\"");} ?>>
               <p class="help-block">What level was this class?</p>
             </div>
-            <p class="help-block">What classes can you teach?</p>
+            <label>Which of these classes can you tutor?</label>
              <div class="row">
               <div class="col-xs-7">
                 <div class="checkbox">
@@ -832,14 +507,775 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+  </div>
+  </div>
+  </div>
 
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3 class="panel-title">Music Tutoring</h3>
-          </div>
-          <div class="panel-body">
+
+      <div id="french" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+<h3>French Tutoring</h3>
+            <div class="form-group">
+              <label for="highest_french_name">Highest completed French class</label>
+              <input type="text" class="form-control" name="highest_french_name" id="highest_french_name" size="15" maxlength="40" <?php if (!empty($this->user->highest_french_name)){ echo("value=".'"'.$this->user->highest_french_name.'"');} ?>>
+              <p class="help-block">What was the highest French class you successfully completed?</p>
+            </div>
+            <div class="form-group">
+              <label for="highest_french_level">Class level</label>
+              <input type="text" class="form-control" name="highest_french_level" id="highest_french_level" size="15" maxlength="20" <?php if (!empty($this->user->highest_french_level)){ echo("value=".'"'.$this->user->highest_french_level.'"');} else{echo("placeholder=\"Example: Honors\"");} ?>>
+              <p class="help-block">What level was this class?</p>
+            </div>
+            <label>Which of these classes can you tutor?</label>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="elementary_french" <?php if ($this->user->elementary_french != 0){ echo "checked";} ?>>
+                    Elementary School French</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="elementary_french" id="elementary_french">
+                    <option value="3" <?php if ($this->user->elementary_french == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->elementary_french == 2){ echo("selected=selected");} ?>>Standard</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="middle_french" <?php if ($this->user->middle_french != 0){ echo "checked";} ?>>
+                    Middle School French</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="middle_french" id="middle_french">
+                    <option value="3" <?php if ($this->user->middle_french == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->middle_french == 2){ echo("selected=selected");} ?>>Standard</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="french_1" <?php if ($this->user->french_1 != 0){ echo "checked";} ?>>
+                    French 1</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="french_1" id="french_1">
+                    <option value="3" <?php if ($this->user->french_1 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->french_1 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->french_1 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="french_2" <?php if ($this->user->french_2 != 0){ echo "checked";} ?>>
+                    French 2</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="french_2" id="french_2">
+                    <option value="3" <?php if ($this->user->french_2 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->french_2 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->french_2 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="french_3" <?php if ($this->user->french_3 != 0){ echo "checked";} ?>>
+                    French 3</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="french_3" id="french_3">
+                    <option value="3" <?php if ($this->user->french_3 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->french_3 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->french_3 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="french_4" <?php if ($this->user->french_4 != 0){ echo "checked";} ?>>
+                    French 4</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="french_4" id="french_4">
+                    <option value="3" <?php if ($this->user->french_4 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->french_4 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->french_4 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="french_5" <?php if ($this->user->french_5 != 0){ echo "checked";} ?>>
+                    French 5</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="french_5" id="french_5">
+                    <option value="2" <?php if ($this->user->french_5 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->french_5 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="french_AP" <?php if ($this->user->french_AP != 0){ echo "checked";} ?>>
+                    AP French</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="french_AP" id="french_AP">
+                    <option value="4" <?php if ($this->user->french_AP == 4){ echo("selected=selected");} ?>>AP</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+  </div>
+  </div>
+  </div>
+
+      <div id="spanish" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+<h3>Spanish Tutoring</h3>
+            <div class="form-group">
+              <label for="highest_spanish_name">Highest completed Spanish class</label>
+              <input type="text" class="form-control" name="highest_spanish_name" id="highest_spanish_name" size="15" maxlength="40" <?php if (!empty($this->user->highest_spanish_name)){ echo("value=".'"'.$this->user->highest_spanish_name.'"');} ?>>
+              <p class="help-block">What was the highest Spanish class you successfully completed?</p>
+            </div>
+            <div class="form-group">
+              <label for="highest_spanish_level">Class level</label>
+              <input type="text" class="form-control" name="highest_spanish_level" id="highest_spanish_level" size="15" maxlength="20" <?php if (!empty($this->user->highest_spanish_level)){ echo("value=".'"'.$this->user->highest_spanish_level.'"');} else{echo("placeholder=\"Example: Honors\"");} ?>>
+              <p class="help-block">What level was this class?</p>
+            </div>
+            <label>Which of these classes can you tutor?</label>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="elementary_spanish" <?php if ($this->user->elementary_spanish != 0){ echo "checked";} ?>>
+                    Elementary School Spanish</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="elementary_spanish" id="elementary_spanish">
+                    <option value="3" <?php if ($this->user->elementary_spanish == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->elementary_spanish == 2){ echo("selected=selected");} ?>>Standard</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="middle_spanish" <?php if ($this->user->middle_spanish != 0){ echo "checked";} ?>>
+                    Middle School Spanish</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="middle_spanish" id="middle_spanish">
+                    <option value="3" <?php if ($this->user->middle_spanish == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->middle_spanish == 2){ echo("selected=selected");} ?>>Standard</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="spanish_1" <?php if ($this->user->spanish_1 != 0){ echo "checked";} ?>>
+                    Spanish 1</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="spanish_1" id="spanish_1">
+                    <option value="3" <?php if ($this->user->spanish_1 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->spanish_1 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->spanish_1 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="spanish_2" <?php if ($this->user->spanish_2 != 0){ echo "checked";} ?>>
+                    Spanish 2</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="spanish_2" id="spanish_2">
+                    <option value="3" <?php if ($this->user->spanish_2 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->spanish_2 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->spanish_2 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="spanish_3" <?php if ($this->user->spanish_3 != 0){ echo "checked";} ?>>
+                    Spanish 3</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="spanish_3" id="spanish_3">
+                    <option value="3" <?php if ($this->user->spanish_3 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->spanish_3 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->spanish_3 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="spanish_4" <?php if ($this->user->spanish_4 != 0){ echo "checked";} ?>>
+                    Spanish 4</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="spanish_4" id="spanish_4">
+                    <option value="3" <?php if ($this->user->spanish_4 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->spanish_4 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->spanish_4 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="spanish_5" <?php if ($this->user->spanish_5 != 0){ echo "checked";} ?>>
+                    Spanish 5</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="spanish_5" id="spanish_5">
+                    <option value="2" <?php if ($this->user->spanish_5 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->spanish_5 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="spanish_AP" <?php if ($this->user->spanish_AP != 0){ echo "checked";} ?>>
+                    AP Spanish</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="spanish_AP" id="spanish_AP">
+                    <option value="4" <?php if ($this->user->spanish_AP == 4){ echo("selected=selected");} ?>>AP</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+  </div>
+  </div>
+  </div>
+
+  <div id="german" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+<h3>German Tutoring</h3>
+            <div class="form-group">
+              <label for="highest_german_name">Highest completed German class</label>
+              <input type="text" class="form-control" name="highest_german_name" id="highest_german_name" size="15" maxlength="40" <?php if (!empty($this->user->highest_german_name)){ echo("value=".'"'.$this->user->highest_german_name.'"');} ?>>
+              <p class="help-block">What was the highest German class you successfully completed?</p>
+            </div>
+            <div class="form-group">
+              <label for="highest_german_level">Class level</label>
+              <input type="text" class="form-control" name="highest_german_level" id="highest_german_level" size="15" maxlength="20" <?php if (!empty($this->user->highest_german_level)){ echo("value=".'"'.$this->user->highest_german_level.'"');} else{echo("placeholder=\"Example: Honors\"");} ?>>
+              <p class="help-block">What level was this class?</p>
+            </div>
+            <label>Which of these classes can you tutor?</label>
+
+ <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="german_1" <?php if ($this->user->german_1 != 0){ echo "checked";} ?>>
+                    German 1</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="german_1" id="german_1">
+                    <option value="3" <?php if ($this->user->german_1 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->german_1 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->german_1 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="german_2" <?php if ($this->user->german_2 != 0){ echo "checked";} ?>>
+                    German 2</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="german_2" id="german_2">
+                    <option value="3" <?php if ($this->user->german_2 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->german_2 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->german_2 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="german_3" <?php if ($this->user->german_3 != 0){ echo "checked";} ?>>
+                    German 3</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="german_3" id="german_3">
+                    <option value="3" <?php if ($this->user->german_3 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->german_3 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->german_3 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="german_4" <?php if ($this->user->german_4 != 0){ echo "checked";} ?>>
+                    German 4</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="german_4" id="german_4">
+                    <option value="3" <?php if ($this->user->german_4 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->german_4 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->german_4 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+           
+  </div>
+  </div>
+  </div>
+
+
+    <div id="italian" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+<h3>Italian Tutoring</h3>
+            <div class="form-group">
+              <label for="highest_italian_name">Highest completed Italian class</label>
+              <input type="text" class="form-control" name="highest_italian_name" id="highest_italian_name" size="15" maxlength="40" <?php if (!empty($this->user->highest_italian_name)){ echo("value=".'"'.$this->user->highest_italian_name.'"');} ?>>
+              <p class="help-block">What was the highest Italian class you successfully completed?</p>
+            </div>
+            <div class="form-group">
+              <label for="highest_italian_level">Class level</label>
+              <input type="text" class="form-control" name="highest_italian_level" id="highest_italian_level" size="15" maxlength="20" <?php if (!empty($this->user->highest_italian_level)){ echo("value=".'"'.$this->user->highest_italian_level.'"');} else{echo("placeholder=\"Example: Honors\"");} ?>>
+              <p class="help-block">What level was this class?</p>
+            </div>
+            <label>Which of these classes can you tutor?</label>
+
+ <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="italian_1" <?php if ($this->user->italian_1 != 0){ echo "checked";} ?>>
+                    Italian 1</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="italian_1" id="italian_1">
+                    <option value="3" <?php if ($this->user->italian_1 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->italian_1 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->italian_1 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="italian_2" <?php if ($this->user->italian_2 != 0){ echo "checked";} ?>>
+                    Italian 2</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="italian_2" id="italian_2">
+                    <option value="3" <?php if ($this->user->italian_2 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->italian_2 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->italian_2 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="italian_3" <?php if ($this->user->italian_3 != 0){ echo "checked";} ?>>
+                    Italian 3</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="italian_3" id="italian_3">
+                    <option value="3" <?php if ($this->user->italian_3 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->italian_3 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->italian_3 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="italian_4" <?php if ($this->user->italian_4 != 0){ echo "checked";} ?>>
+                    Italian 4</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="italian_4" id="italian_4">
+                    <option value="3" <?php if ($this->user->italian_4 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->italian_4 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->italian_4 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="italian_AP" <?php if ($this->user->italian_AP != 0){ echo "checked";} ?>>
+                    AP Italian</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="italian_AP" id="italian_AP">
+                    <option value="4" <?php if ($this->user->italian_AP == 4){ echo("selected=selected");} ?>>AP italian</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+  </div>
+  </div>
+  </div>
+
+  <div id="mandarin" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+<h3>Mandarin Tutoring</h3>
+            <div class="form-group">
+              <label for="highest_mandarin_name">Highest completed Mandarin class</label>
+              <input type="text" class="form-control" name="highest_mandarin_name" id="highest_mandarin_name" size="15" maxlength="40" <?php if (!empty($this->user->highest_mandarin_name)){ echo("value=".'"'.$this->user->highest_mandarin_name.'"');} ?>>
+              <p class="help-block">What was the highest Mandarin class you successfully completed?</p>
+            </div>
+            <div class="form-group">
+              <label for="highest_mandarin_level">Class level</label>
+              <input type="text" class="form-control" name="highest_mandarin_level" id="highest_mandarin_level" size="15" maxlength="20" <?php if (!empty($this->user->highest_mandarin_level)){ echo("value=".'"'.$this->user->highest_mandarin_level.'"');} else{echo("placeholder=\"Example: Honors\"");} ?>>
+              <p class="help-block">What level was this class?</p>
+            </div>
+            <label>Which of these classes can you tutor?</label>
+
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="mandarin_1" <?php if ($this->user->mandarin_1 != 0){ echo "checked";} ?>>
+                    Mandarin 1</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="mandarin_1" id="mandarin_1">
+                    <option value="3" <?php if ($this->user->mandarin_1 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->mandarin_1 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->mandarin_1 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="mandarin_2" <?php if ($this->user->mandarin_2 != 0){ echo "checked";} ?>>
+                    Mandarin 2</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="mandarin_2" id="mandarin_2">
+                    <option value="3" <?php if ($this->user->mandarin_2 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->mandarin_2 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->mandarin_2 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="mandarin_3" <?php if ($this->user->mandarin_3 != 0){ echo "checked";} ?>>
+                    Mandarin 3</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="mandarin_3" id="mandarin_3">
+                    <option value="3" <?php if ($this->user->mandarin_3 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->mandarin_3 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->mandarin_3 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="mandarin_4" <?php if ($this->user->mandarin_4 != 0){ echo "checked";} ?>>
+                    Mandarin 4</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="mandarin_4" id="mandarin_4">
+                    <option value="3" <?php if ($this->user->mandarin_4 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->mandarin_4 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->mandarin_4 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="mandarin_5" <?php if ($this->user->mandarin_5 != 0){ echo "checked";} ?>>
+                    Mandarin 5</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="mandarin_5" id="mandarin_5">
+                  <option value="3" <?php if ($this->user->mandarin_5 == 3){ echo("selected=selected");} ?>>Honors</option>
+                    <option value="2" <?php if ($this->user->mandarin_5 == 2){ echo("selected=selected");} ?>>Level 1</option>
+                    <option value="1" <?php if ($this->user->mandarin_5 == 1){ echo("selected=selected");} ?>>Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="mandarin_AP" <?php if ($this->user->mandarin_AP != 0){ echo "checked";} ?>>
+                    AP Mandarin</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="mandarin_AP" id="mandarin_AP">
+                    <option value="4" <?php if ($this->user->mandarin_AP == 4){ echo("selected=selected");} ?>>AP</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+  </div>
+  </div>
+  </div>
+
+  <div id="english" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+<h3>English Tutoring</h3>
+            <div class="form-group">
+              <label for="highest_english_name">Highest completed English class</label>
+              <input type="text" class="form-control" name="highest_english_name" id="highest_english_name" size="15" maxlength="40" <?php if (!empty($this->user->highest_english_name)){ echo("value=".'"'.$this->user->highest_english_name.'"');} ?>>
+              <p class="help-block">What was the highest English class you successfully completed?</p>
+            </div>
+            <div class="form-group">
+              <label for="highest_english_level">Class level</label>
+              <input type="text" class="form-control" name="highest_english_level" id="highest_english_level" size="15" maxlength="20" <?php if (!empty($this->user->highest_english_level)){ echo("value=".'"'.$this->user->highest_english_level.'"');} else{echo("placeholder=\"Example: Honors\"");} ?>>
+              <p class="help-block">What level was this class?</p>
+            </div>
+            <label>Which of these can you help students in?</label>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="english[]" id="analytical_essay" value="analytical_essay" <?php if ($this->user->analytical_essay != 0){ echo "checked";} ?>>
+                    Analytical Essays</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="analytical_essay">
+                    <option value="4" <?php if ($this->user->analytical_essay == 4){ echo("selected=selected");} ?>>High School (11-12th)</option>
+                    <option value="3" <?php if ($this->user->analytical_essay == 3){ echo("selected=selected");} ?>>High School (9-10th)</option>
+                    <option value="2" <?php if ($this->user->analytical_essay == 2){ echo("selected=selected");} ?>>Middle School</option>
+                    <option value="1" <?php if ($this->user->analytical_essay == 1){ echo("selected=selected");} ?>>Elementary School</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="english[]" id="memoir" value="memoir" <?php if ($this->user->memoir != 0){ echo "checked";} ?>>
+                    Memoir/Narrative/Fiction</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="memoir" id="memoir">
+                    <option value="4" <?php if ($this->user->memoir == 4){ echo("selected=selected");} ?>>High School (11-12th)</option>
+                    <option value="3" <?php if ($this->user->memoir == 3){ echo("selected=selected");} ?>>High School (9-10th)</option>
+                    <option value="2" <?php if ($this->user->memoir == 2){ echo("selected=selected");} ?>>Middle School</option>
+                    <option value="1" <?php if ($this->user->memoir == 1){ echo("selected=selected");} ?>>Elementary School</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="english[]" id="poetry" value="poetry" <?php if ($this->user->poetry != 0){ echo "checked";} ?>>
+                    Poetry</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="poetry" id="poetry">
+                    <option value="4" <?php if ($this->user->poetry == 4){ echo("selected=selected");} ?>>High School (11-12th)</option>
+                    <option value="3" <?php if ($this->user->poetry == 3){ echo("selected=selected");} ?>>High School (9-10th)</option>
+                    <option value="2" <?php if ($this->user->poetry == 2){ echo("selected=selected");} ?>>Middle School</option>
+                    <option value="1" <?php if ($this->user->poetry == 1){ echo("selected=selected");} ?>>Elementary School</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="english[]" id="english_project" value="english_project" <?php if ($this->user->english_project != 0){ echo "checked";} ?>>
+                    Project Help</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="english_project" id="english_project">
+                    <option value="4" <?php if ($this->user->english_project == 4){ echo("selected=selected");} ?>>High School (11-12th)</option>
+                    <option value="3" <?php if ($this->user->english_project == 3){ echo("selected=selected");} ?>>High School (9-10th)</option>
+                    <option value="2" <?php if ($this->user->english_project == 2){ echo("selected=selected");} ?>>Middle School</option>
+                    <option value="1" <?php if ($this->user->english_project == 1){ echo("selected=selected");} ?>>Elementary School</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="english[]" id="other_english" value="other_english" <?php if ($this->user->other_english != 0){ echo "checked";} ?>>
+                    Other</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="other_english" id="other_english">
+                    <option value="4" <?php if ($this->user->other_english == 4){ echo("selected=selected");} ?>>High School (11-12th)</option>
+                    <option value="3" <?php if ($this->user->other_english== 3){ echo("selected=selected");} ?>>High School (9-10th)</option>
+                    <option value="2" <?php if ($this->user->other_english == 2){ echo("selected=selected");} ?>>Middle School</option>
+                    <option value="1" <?php if ($this->user->other_english == 1){ echo("selected=selected");} ?>>Elementary School</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+  </div>
+  </div>
+  </div>
+
+  <div id="music" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+<h3>Music Tutoring</h3>
             <div class="form-group">
               <label for="instrument">Instrument</label>
               <select name="instrument" class="form-control" id="instrument" >
@@ -877,11 +1313,17 @@
               <input type="number" class="form-control" name="music_years" id="tutor_level" size="5" maxlength="3" min="0"  <?php if (!empty($this->user->music_years)){ echo("value=".'"'.$this->user->music_years.'"');} ?>>
               <p class="help-block">How many years have you played?</p>
             </div>
-          </div>
-        </div>
-      </div>
+
+  </div>
+  </div>
+  </div>
+</div>
+
+
+
+
       
-    </div>
+<hr>
     <div class="pull-left">
       <button type="submit" class="btn btn-lg btn-success"> <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Update </button>
     </div>

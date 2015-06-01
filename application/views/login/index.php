@@ -53,7 +53,7 @@
                           <li><span class="fa fa-check text-success"></span> Find student & professional tutor matches based on search criteria</li>
                           <li><span class="fa fa-check text-success"></span> View tutor's personal profiles and message them</li>
                           <li><span class="fa fa-check text-success"></span> Register as a tutor yourself (both professional & student tutors are welcome)</li>
-                          <li><span class="fa fa-check text-success"></span> It's <span class="text-success">FREE</span> <small>(except for professional tutors)</small></li>
+                          <li><span class="fa fa-check text-success"></span> It's <span class="text-success">FREE</span></li>
                           <li><a href="<?php echo URL; ?>about/index"><u>About us</u></a></li>
                       </ul>
                       <p><a href="<?php echo URL; ?>login/register" class="btn btn-info btn-block">Register now!</a></p>

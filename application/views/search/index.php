@@ -1,3 +1,4 @@
+
 <div class="container">
   <div class="page-header">
     <h1>Find Me a Tutor</h1>
@@ -5,22 +6,48 @@
   <?php $this->renderFeedbackMessages(); ?>
   <form method="POST" action="<?php echo URL; ?>search/showresults">
 
-<p><strong>Just select all the credentials you would like your tutor to have, and we will try and find you the best match.</strong></p>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">Tutor Criteria</h3>
-          </div>
-          <div class="panel-body">
-            <div class="form-group">
+<p class="alert alert-success"><i class="fa fa-info-circle"></i> Just select all the credentials you would like your tutor to have, and we will try and find you the best match.</p>
+    
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#criteria">Tutor Criteria</a></li>
+  <li><a data-toggle="tab" href="#math">Math</a></li>
+  <li><a data-toggle="tab" href="#science">Science</a></li>
+  <li><a data-toggle="tab" href="#social_studies">Social Studies</a></li>
+  <li><a data-toggle="tab" href="#english">English</a></li>
+    <li role="presentation" class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+      Language <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+    <li><a data-toggle="tab" href="#french">French</a></li>
+    <li><a data-toggle="tab" href="#german">German</a></li>
+    <li><a data-toggle="tab" href="#italian">Italian</a></li>
+    <li><a data-toggle="tab" href="#mandarin">Mandarin</a></li>
+    <li><a data-toggle="tab" href="#spanish">Spanish</a></li>
+    </ul>
+  </li>
+    <li><a data-toggle="tab" href="#music">Music</a></li>
+</ul>
+
+
+
+
+<div class="tab-content">
+  <div id="criteria" class="tab-pane fade in active">
+  <div class="row">
+  <div class="col-md-6">
+    <h3>Tutor Criteria</h3>
               <label for="start_rate">Price range</label>
+              <div class="row">
+              <div class="col-xs-4">
               <input type="number" class="form-control" name="start_rate" id="start_rate" size="5" maxlength="3" placeholder="min"  min="0">
-            </div>
-            <div class="form-group">
+              </div>
+               <div class="col-xs-4">
               <input class="form-control" type="number" name="end_rate" id="end_rate" size="5" maxlength="3" min="1" placeholder="max">
-              <p class="help-block">Enter your price range in dollars per hour</p>
+              </div>
             </div>
+            <p class="help-block">Enter your price range in dollars per hour</p>
+
             <div class="form-group">
               <label for="min_grade">Minimum grade</label>
               <select class="form-control" name="min_grade" id ="min_grade">
@@ -37,22 +64,21 @@
               </select>
               <p class="help-block">The minimum grade your tutor should be in</p>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3 class="panel-title">Math</h3>
-          </div>
-          <div class="panel-body">
+  </div>
+
+  </div>
+  </div>
+
+  <div id="math" class="tab-pane fade">
+  <div class="row">
+    <div class="col-md-6">
+    <h3>Math</h3>
+
             <div class="row">
               <div class="col-xs-7">
                 <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="math[]" value="elementary_math">
+                <label>
+                    <input type="checkbox" name="math[]" value="elementary_math">
                     Elementary School Math</label>
                 </div>
               </div>
@@ -65,6 +91,7 @@
                 </div>
               </div>
             </div>
+            
             <div class="row">
               <div class="col-xs-7">
                 <div class="checkbox">
@@ -82,6 +109,7 @@
                 </div>
               </div>
             </div>
+            
             <div class="row">
               <div class="col-xs-7">
                 <div class="checkbox">
@@ -100,6 +128,7 @@
                 </div>
               </div>
             </div>
+            
             <div class="row">
               <div class="col-xs-7">
                 <div class="checkbox">
@@ -118,6 +147,7 @@
                 </div>
               </div>
             </div>
+            
             <div class="row">
               <div class="col-xs-7">
                 <div class="checkbox">
@@ -136,6 +166,7 @@
                 </div>
               </div>
             </div>
+            
             <div class="row">
               <div class="col-xs-7">
                 <div class="checkbox">
@@ -154,6 +185,7 @@
                 </div>
               </div>
             </div>
+            
             <div class="row">
               <div class="col-xs-7">
                 <div class="checkbox">
@@ -173,6 +205,7 @@
                 </div>
               </div>
             </div>
+            
             <div class="row">
               <div class="col-xs-7">
                 <div class="checkbox">
@@ -189,6 +222,7 @@
                 </div>
               </div>
             </div>
+            
             <div class="row">
               <div class="col-xs-7">
                 <div class="checkbox">
@@ -209,311 +243,14 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3 class="panel-title">Foreign Language</h3>
-          </div>
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-xs-12">
-                <h3>French</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="elementary_french">
-                    Elementary School French</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="elementary_french" id="elementary_french">
-                    <option value="3">Honors</option>
-                    <option value="2">Standard</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="middle_french">
-                    Middle School French</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="middle_french" id="middle_french">
-                    <option value="3">Honors</option>
-                    <option value="2">Standard</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="french_1">
-                    French 1</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="french_1" id="french_1">
-                    <option value="3">Honors</option>
-                    <option value="2">Level 1</option>
-                    <option value="1">Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="french_2">
-                    French 2</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="french_2" id="french_2">
-                    <option value="3">Honors</option>
-                    <option value="2">Level 1</option>
-                    <option value="1">Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="french_3">
-                    French 3</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="french_3" id="french_3">
-                    <option value="3">Honors</option>
-                    <option value="2">Level 1</option>
-                    <option value="1">Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="french_4">
-                    French 4</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="french_4" id="french_4">
-                    <option value="3">Honors</option>
-                    <option value="2">Level 1</option>
-                    <option value="1">Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="french_5">
-                    French 5</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="french_5" id="french_5">
-                    <option value="2">Level 1</option>
-                    <option value="1">Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="french_AP">
-                    AP French</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="french_AP" id="french_AP">
-                    <option value="4">AP French</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12">
-                <h3>Spanish</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="elementary_spanish">
-                    Elementary School Spanish</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="elementary_spanish" id="elementary_spanish">
-                    <option value="3">Honors</option>
-                    <option value="2">Standard</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="middle_spanish">
-                    Middle School Spanish</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="middle_spanish" id="middle_spanish">
-                    <option value="3">Honors</option>
-                    <option value="2">Standard</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="spanish_1">
-                    Spanish 1</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="spanish_1" id="spanish_1">
-                    <option value="3">Honors</option>
-                    <option value="2">Level 1</option>
-                    <option value="1">Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="spanish_2">
-                    Spanish 2</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="spanish_2" id="spanish_2">
-                    <option value="3">Honors</option>
-                    <option value="2">Level 1</option>
-                    <option value="1">Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="spanish_3">
-                    Spanish 3</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="spanish_3" id="spanish_3">
-                    <option value="3">Honors</option>
-                    <option value="2">Level 1</option>
-                    <option value="1">Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="spanish_4">
-                    Spanish 4</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="spanish_4" id="spanish_4">
-                    <option value="3">Honors</option>
-                    <option value="2">Level 1</option>
-                    <option value="1">Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="spanish_5">
-                    Spanish 5</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="spanish_5" id="spanish_5">
-                    <option value="2">Level 1</option>
-                    <option value="1">Level 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-7">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"  name="foreign_language[]" value="spanish_AP">
-                    AP Spanish</label>
-                </div>
-              </div>
-              <div class="col-xs-5">
-                <div class="form-group">
-                  <select class="form-control" name="spanish_AP" id="spanish_AP">
-                    <option value="4">AP Spanish</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  </div>
+  </div>
+  </div>
 
-      <div class="col-md-6">
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3 class="panel-title">Science</h3>
-          </div>
-          <div class="panel-body">
+  <div id="science" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+    <h3>Science</h3>
             <div class="row">
               <div class="col-xs-7">
                 <div class="checkbox">
@@ -623,13 +360,14 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3 class="panel-title">Social Studies</h3>
-          </div>
-          <div class="panel-body">
+  </div>
+  </div>
+  </div>
+
+<div id="social_studies" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+<h3>Social Studies</h3>
             <div class="row">
               <div class="col-xs-7">
                 <div class="checkbox">
@@ -766,13 +504,714 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3 class="panel-title">Music</h3>
-          </div>
-          <div class="panel-body">
+</div>
+</div>
+</div>
+
+
+<div id="french" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+<h3>French</h3>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="elementary_french">
+                    Elementary School French</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="elementary_french" id="elementary_french">
+                    <option value="3">Honors</option>
+                    <option value="2">Standard</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="middle_french">
+                    Middle School French</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="middle_french" id="middle_french">
+                    <option value="3">Honors</option>
+                    <option value="2">Standard</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="french_1">
+                    French 1</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="french_1" id="french_1">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="french_2">
+                    French 2</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="french_2" id="french_2">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="french_3">
+                    French 3</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="french_3" id="french_3">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="french_4">
+                    French 4</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="french_4" id="french_4">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="french_5">
+                    French 5</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="french_5" id="french_5">
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="french_AP">
+                    AP French</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="french_AP" id="french_AP">
+                    <option value="4">AP</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+</div>
+</div>
+</div>
+
+
+<div id="german" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+<h3>German</h3>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="german_1">
+                    German 1</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="german_1" id="german_1">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="german_2">
+                    German 2</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="german_2" id="german_2">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="german_3">
+                    German 3</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="german_3" id="german_3">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="german_4">
+                    German 4</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="german_4" id="german_4">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+
+</div>
+</div>
+</div>
+
+
+<div id="spanish" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+<h3>Spanish</h3>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="elementary_spanish">
+                    Elementary School Spanish</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="elementary_spanish" id="elementary_spanish">
+                    <option value="3">Honors</option>
+                    <option value="2">Standard</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="middle_spanish">
+                    Middle School Spanish</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="middle_spanish" id="middle_spanish">
+                    <option value="3">Honors</option>
+                    <option value="2">Standard</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="spanish_1">
+                    Spanish 1</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="spanish_1" id="spanish_1">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="spanish_2">
+                    Spanish 2</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="spanish_2" id="spanish_2">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="spanish_3">
+                    Spanish 3</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="spanish_3" id="spanish_3">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="spanish_4">
+                    Spanish 4</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="spanish_4" id="spanish_4">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="spanish_5">
+                    Spanish 5</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="spanish_5" id="spanish_5">
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="spanish_AP">
+                    AP Spanish</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="spanish_AP" id="spanish_AP">
+                    <option value="4">AP</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+</div>
+</div>
+</div>
+
+<div id="italian" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+<h3>Italian</h3>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="italian_1">
+                    Italian 1</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="italian_1" id="italian_1">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="italian_2">
+                    Italian 2</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="italian_2" id="italian_2">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="italian_3">
+                    Italian 3</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="italian_3" id="italian_3">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="italian_4">
+                    Italian 4</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="italian_4" id="italian_4">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="italian_AP">
+                    AP Italian</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="italian_AP" id="italian_AP">
+                    <option value="4">AP</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+</div>
+</div>
+</div>
+
+<div id="mandarin" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+<h3>Mandarin</h3>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="mandarin_1">
+                    Mandarin 1</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="mandarin_1" id="mandarin_1">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="mandarin_2">
+                    Mandarin 2</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="mandarin_2" id="mandarin_2">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="mandarin_3">
+                    Mandarin 3</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="mandarin_3" id="mandarin_3">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="mandarin_4">
+                    Mandarin 4</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="mandarin_4" id="mandarin_4">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="mandarin_5">
+                    Mandarin 5</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="mandarin_5" id="mandarin_5">
+                    <option value="3">Honors</option>
+                    <option value="2">Level 1</option>
+                    <option value="1">Level 2</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="foreign_language[]" value="mandarin_AP">
+                    AP Mandarin</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="mandarin_AP" id="mandarin_AP">
+                    <option value="4">AP</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+</div>
+</div>
+</div>
+
+
+<div id="english" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+<h3>English</h3>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="english[]" value="analytical_essay">
+                    Analytical Essays</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="analytical_essay" id="analytical_essay">
+                  <option value="4">High School (11-12th)</option>
+                    <option value="3">High School (9-10th)</option>
+                    <option value="2">Middle School</option>
+                    <option value="1">Elementary School</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="english[]" value="memoir">
+                    Memoir/Narrative/Fiction</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="memoir" id="memoir">
+                  <option value="4">High School (11-12th)</option>
+                    <option value="3">High School (9-10th)</option>
+                    <option value="2">Middle School</option>
+                    <option value="1">Elementary School</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="english[]" value="poetry">
+                    Poetry</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="poetry" id="poetry">
+                  <option value="4">High School (11-12th)</option>
+                    <option value="3">High School (9-10th)</option>
+                    <option value="2">Middle School</option>
+                    <option value="1">Elementary School</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="english[]" value="english_project">
+                    Project Help</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="english_project" id="english_project">
+                    <option value="4">High School (11-12th)</option>
+                    <option value="3">High School (9-10th)</option>
+                    <option value="2">Middle School</option>
+                    <option value="1">Elementary School</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-7">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"  name="english[]" value="other_english">
+                    Other</label>
+                </div>
+              </div>
+              <div class="col-xs-5">
+                <div class="form-group">
+                  <select class="form-control" name="other_english" id="other_english">
+                    <option value="4">High School (11-12th)</option>
+                    <option value="3">High School (9-10th)</option>
+                    <option value="2">Middle School</option>
+                    <option value="1">Elementary School</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+</div>
+</div>
+</div>
+
+<div id="music" class="tab-pane fade">
+  <div class="row">
+  <div class="col-md-6">
+<h3>Music</h3>
             <div class="checkbox">
               <label>
                 <input type="checkbox"  name="music" value="1">
@@ -811,10 +1250,20 @@
               </select>
               <p class="help-block">What level are you?</p>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
+</div>
+</div>
+</div>
+
+</div>
+
+
+<div class="clearfix"></div>
+
+
+
+
+<hr>
     <div class="pull-left">
       <button type="submit" class="btn btn-lg btn-success"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search </button>
     </div>

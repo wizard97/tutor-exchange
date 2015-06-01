@@ -27,8 +27,9 @@ class SearchModel
 
         $math_subject = array("elementary_math", "middle_math", "math_1", "math_2", "math_3", "math_4", "stats", "comp_sci", "calc");
         $science_subject = array("elementary_science", "middle_science", "earth_science", "bio", "chem", "phys");
-        $foreign_language_subject = array("elementary_french", "middle_french", "french_1", "french_2", "french_3", "french_4", "french_5", "french_AP", "elementary_spanish", "middle_spanish", "spanish_1", "spanish_2", "spanish_3", "spanish_4", "spanish_5", "spanish_AP");
+        $foreign_language_subject = array("elementary_french", "middle_french", "french_1", "french_2", "french_3", "french_4", "french_5", "french_AP", "elementary_spanish", "middle_spanish", "spanish_1", "spanish_2", "spanish_3", "spanish_4", "spanish_5", "spanish_AP", "german_1", "german_2", "german_3", "german_4", "italian_1", "italian_2", "italian_3", "italian_4", "italian_AP", "mandarin_1", "mandarin_2", "mandarin_3", "mandarin_4", "mandarin_5", "mandarin_AP");
         $social_studies_subject = array("elementary_social", "middle_social", "world_history_1", "world_history_2", "ap_world", "us_history", "econ", "psych");
+        $english_subject = array("analytical_essay", "memoir", "poetry", "english_project", "other_english");
 
         $sql_stub = "SELECT users.user_id, users.fname, users.lname, users.user_email, users.user_active, users.user_has_avatar, users.user_account_type, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_active =1 AND user_account_type >= 2 AND tutor_active = 1";
 
@@ -59,7 +60,7 @@ class SearchModel
             }
         }
 
-//science
+//social studies
         foreach($social_studies_subject as $social_class)
         {
             if (isset($_POST['social']) && isset($_POST[$social_class]) && in_array($social_class, $_POST['social']) && is_numeric($_POST[$social_class]) && $_POST[$social_class] >= 0 && $_POST[$social_class] <= 6)
@@ -69,7 +70,7 @@ class SearchModel
             }
         }
 
-//social studies
+//language
         foreach($foreign_language_subject as $language_class)
         {
             if (isset($_POST['foreign_language']) && isset($_POST[$language_class]) && in_array($language_class, $_POST['foreign_language']) && is_numeric($_POST[$language_class]) && $_POST[$language_class] >= 0 && $_POST[$language_class] <= 6)
@@ -78,7 +79,15 @@ class SearchModel
                 $sql_vars[":".$language_class] = $_POST[$language_class];
             }
         }
-
+//english
+        foreach($english_subject as $english_class)
+        {
+            if (isset($_POST['english']) && isset($_POST[$english_class]) && in_array($english_class, $_POST['english']) && is_numeric($_POST[$english_class]) && $_POST[$english_class] >= 0 && $_POST[$english_class] <= 6)
+            {
+                $sql_cond[] = $english_class." >= :".$english_class;
+                $sql_vars[":".$english_class] = $_POST[$english_class];
+            }
+        }
 
 //music
         if (isset($_POST['instrument']) && !empty($_POST['instrument']) && isset($_POST['music']) && $_POST['music'] == 1 && isset($_POST['music_level']) && !empty($_POST['music_level']) && is_numeric($_POST['music_level']))
