@@ -8,7 +8,7 @@
       <li class="list-group-item">Your name: <?php echo Session::get('fname').' '.Session::get('lname'); ?></li>
       <li class="list-group-item">Your email: <?php echo Session::get('user_email'); ?></li>
       <li class="list-group-item">Your account type is:
-        <?php if (Session::get('user_account_type') == 1){echo 'Student';}
+        <?php if (Session::get('user_account_type') == 1){echo 'Standard Tutor';}
 		if (Session::get('user_account_type') == 2){echo 'Standard Tutor';} if (Session::get('user_account_type') == 3) {echo 'Professional Tutor';}; ?>
       </li>
     </ul>

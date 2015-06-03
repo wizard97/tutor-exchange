@@ -10,25 +10,24 @@
 
 
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="<?php echo(URL.'public/css/bootstrap.min.css');?>"> 
+<link rel="stylesheet" href="<?php echo(URL.'public/css/bootstrap.min.css');?>">
 
 <!-- Optional theme -->
 <link rel="stylesheet" href="<?php echo(URL.'public/css/bootstrap-theme.min.css');?>">
 
-<link rel="stylesheet" href="<?php echo(URL.'public/font-awesome/css/font-awesome.min.css');?>">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
-<link rel="stylesheet" href="<?php echo(URL.'public/css/dataTables.bootstrap.css');?>">
+<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
 
-<script src="<?php echo(URL.'public/js/jquery-1.11.3.min.js');?>"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="<?php echo(URL.'public/js/bootstrap.min.js');?>"></script>
 
-<script type="text/javascript" src="<?php echo(URL.'public/js/jquery.dataTables.min.js');?>"></script>
+<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
 
-<script src="<?php echo(URL.'public/js/dataTables.bootstrap.js');?>"></script>
+<script src="https://cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
-<script src="<?php echo(URL.'public/js/waypoints.min.js');?>"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
 <style type="text/css">
 .table tbody>tr>td.vert-align{
     vertical-align: middle;

@@ -5,7 +5,7 @@
   <?php $this->renderFeedbackMessages(); ?>
   <form method="POST" action="<?php echo URL; ?>tutor/edittutor_action">
 
-  <p class="alert alert-success"><i class="fa fa-info-circle"></i> This is where you update your tutoring info. Make sure to fill it out as completely as possible and keep it updated.</p>
+  <p class="alert alert-success"><i class="fa fa-info-circle"></i> This is where you update your tutoring info. Make sure to fill it out as completely as possible and keep it updated. If you are unsure of what is covered in certain classes, please refer to the <a href="http://lps.lexingtonma.org/cms/lib2/ma01001631/centricity/domain/636/1314lhscatalog.pdf">LHS Program of Studies</a>.</p>
     
 <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#criteria">Your Info</a></li>
@@ -35,7 +35,7 @@
   <h3>Your Info</h3>
             <div class="form-group">
               <label for="age">Age</label>
-              <input type="number" class="form-control" name="age" id="age" size="5" maxlength="3" <?php if (!empty($this->user->age)){ echo("value=".'"'.$this->user->age.'"');} ?>>
+              <input type="number" class="form-control" name="age" id="age" size="5" maxlength="3" placeholder="Optional" <?php if (!empty($this->user->age)){ echo("value=".'"'.$this->user->age.'"');} ?>>
             </div>
             <div class="form-group">
               <label for="grade">Your grade</label>

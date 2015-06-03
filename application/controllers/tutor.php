@@ -23,12 +23,16 @@ class Tutor extends Controller
 
 
             include VIEWS_PATH.'_templates/classes.php';
-            $this->view->math_classes = $math_classes;
-            $this->view->science_classes = $science_classes;
-            $this->view->french_classes = $french_classes;
-            $this->view->spanish_classes = $spanish_classes;
-            $this->view->social_classes = $social_classes;
-            $tutor_model = $this->loadModel('Tutor');
+        $this->view->math_classes = $math_classes;
+        $this->view->science_classes = $science_classes;
+        $this->view->french_classes = $french_classes;
+        $this->view->spanish_classes = $spanish_classes;
+        $this->view->german_classes = $german_classes;
+        $this->view->italian_classes = $italian_classes;
+        $this->view->mandarin_classes = $mandarin_classes;
+        $this->view->social_classes = $social_classes;
+        $this->view->english_classes = $english_classes;
+        $tutor_model = $this->loadModel('Tutor');
             $this->view->tutor = $tutor_model->getUserProfile();
             if ($this->view->tutor == false)
             {

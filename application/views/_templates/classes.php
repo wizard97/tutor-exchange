@@ -2,25 +2,26 @@
 
 
 
-$math_subject = array("elementary_math", "middle_math", "math_1", "math_2", "math_3", "math_4", "stats", "comp_sci", "calc");
-$science_subject = array("elementary_science", "middle_science", "earth_science", "bio", "chem", "phys");
-$foreign_language_subject = array("elementary_french", "middle_french", "french_1", "french_2", "french_3", "french_4", "french_5", "french_AP", "elementary_spanish", "middle_spanish", "spanish_1", "spanish_2", "spanish_3", "spanish_4", "spanish_5", "spanish_AP");
-$social_studies_subject = array("elementary_social", "middle_social", "world_history_1", "world_history_2", "ap_world", "us_history", "econ", "psych");
+        $math_subject = array("elementary_math", "middle_math", "math_1", "math_2", "math_3", "math_4", "stats", "comp_sci", "calc");
+        $science_subject = array("elementary_science", "middle_science", "earth_science", "bio", "chem", "phys");
+        $foreign_language_subject = array("elementary_french", "middle_french", "french_1", "french_2", "french_3", "french_4", "french_5", "french_AP", "elementary_spanish", "middle_spanish", "spanish_1", "spanish_2", "spanish_3", "spanish_4", "spanish_5", "spanish_AP", "german_1", "german_2", "german_3", "german_4", "italian_1", "italian_2", "italian_3", "italian_4", "italian_AP", "mandarin_1", "mandarin_2", "mandarin_3", "mandarin_4", "mandarin_5", "mandarin_AP");
+        $social_studies_subject = array("elementary_social", "middle_social", "world_history_1", "world_history_2", "ap_world", "us_history", "econ", "psych");
+        $english_subject = array("analytical_essay", "memoir", "poetry", "english_project", "other_english");
 
 
 /*
 
-foreach($foreign_language_subject as $class)
+foreach($english_subject as $class)
 {
 
 
-echo ("\$foreign_language_classes[\"".$class."\"] = new stdClass;\n");
+echo ("\$english_classes[\"".$class."\"] = new stdClass;\n");
 
-echo ("\$foreign_language_classes[\"".$class."\"]->name = \"\";\n");
+echo ("\$english_classes[\"".$class."\"]->name = \"\";\n");
 
 for ($i=4; $i > 0; $i--)
 {
-echo ("\$foreign_language_classes[\"".$class."\"]->levels[".$i."] = ");
+echo ("\$english_classes[\"".$class."\"]->levels[".$i."] = ");
 
 switch($i)
 {
@@ -52,6 +53,52 @@ echo "\n";
 */
 
 
+
+   $math_subject = array("elementary_math", "middle_math", "math_1", "math_2", "math_3", "math_4", "stats", "comp_sci", "calc");
+        $science_subject = array("elementary_science", "middle_science", "earth_science", "bio", "chem", "phys");
+        $foreign_language_subject = array("elementary_french", "middle_french", "french_1", "french_2", "french_3", "french_4", "french_5", "french_AP", "elementary_spanish", "middle_spanish", "spanish_1", "spanish_2", "spanish_3", "spanish_4", "spanish_5", "spanish_AP", "german_1", "german_2", "german_3", "german_4", "italian_1", "italian_2", "italian_3", "italian_4", "italian_AP", "mandarin_1", "mandarin_2", "mandarin_3", "mandarin_4", "mandarin_5", "mandarin_AP");
+        $social_studies_subject = array("elementary_social", "middle_social", "world_history_1", "world_history_2", "ap_world", "us_history", "econ", "psych");
+        $english_subject = array("analytical_essay", "memoir", "poetry", "english_project", "other_english");
+
+
+//english
+$english_classes["analytical_essay"] = new stdClass;
+$english_classes["analytical_essay"]->name = "Analytical Essays";
+$english_classes["analytical_essay"]->levels[4] = "High School (11-12th)";
+$english_classes["analytical_essay"]->levels[3] = "High School (9-10th)";
+$english_classes["analytical_essay"]->levels[2] = "Middle School";
+$english_classes["analytical_essay"]->levels[1] = "Elementary School";
+
+$english_classes["memoir"] = new stdClass;
+$english_classes["memoir"]->name = "Memoir/Narrative/Fiction";
+$english_classes["memoir"]->levels[4] = "High School (11-12th)";
+$english_classes["memoir"]->levels[3] = "High School (9-10th)";
+$english_classes["memoir"]->levels[2] = "Middle School";
+$english_classes["memoir"]->levels[1] = "Elementary School";
+
+$english_classes["poetry"] = new stdClass;
+$english_classes["poetry"]->name = "Poetry";
+$english_classes["poetry"]->levels[4] = "High School (11-12th)";
+$english_classes["poetry"]->levels[3] = "High School (9-10th)";
+$english_classes["poetry"]->levels[2] = "Middle School";
+$english_classes["poetry"]->levels[1] = "Elementary School";
+
+$english_classes["english_project"] = new stdClass;
+$english_classes["english_project"]->name = "Project Help";
+$english_classes["english_project"]->levels[4] = "High School (11-12th)";
+$english_classes["english_project"]->levels[3] = "High School (9-10th)";
+$english_classes["english_project"]->levels[2] = "Middle School";
+$english_classes["english_project"]->levels[1] = "Elementary School";
+
+$english_classes["other_english"] = new stdClass;
+$english_classes["other_english"]->name = "Other (See About Me)";
+$english_classes["other_english"]->levels[4] = "High School (11-12th)";
+$english_classes["other_english"]->levels[3] = "High School (9-10th)";
+$english_classes["other_english"]->levels[2] = "Middle School";
+$english_classes["other_english"]->levels[1] = "Elementary School";
+
+
+//math
 $math_classes["elementary_math"] = new stdClass;
 $math_classes["elementary_math"]->name = "Elementary School Math";
 $math_classes["elementary_math"]->levels[3] = "Honors";
@@ -195,6 +242,7 @@ $social_classes["psych"]->levels[1] = "Level 2";
 
 
 //foriegn language
+//french
 $french_classes["elementary_french"] = new stdClass;
 $french_classes["elementary_french"]->name = "Elementary School French";
 $french_classes["elementary_french"]->levels[3] = "Honors";
@@ -239,6 +287,7 @@ $french_classes["french_AP"] = new stdClass;
 $french_classes["french_AP"]->name = "AP French";
 $french_classes["french_AP"]->levels[4] = "AP";
 
+//spanish
 $spanish_classes["elementary_spanish"] = new stdClass;
 $spanish_classes["elementary_spanish"]->name = "Elementary School Spanish";
 $spanish_classes["elementary_spanish"]->levels[3] = "Honors";
@@ -282,3 +331,111 @@ $spanish_classes["spanish_5"]->levels[1] = "Level 2";
 $spanish_classes["spanish_AP"] = new stdClass;
 $spanish_classes["spanish_AP"]->name = "AP Spanish";
 $spanish_classes["spanish_AP"]->levels[4] = "AP";
+
+//german
+$german_classes["german_1"] = new stdClass;
+$german_classes["german_1"]->name = "German 1";
+$german_classes["german_1"]->levels[4] = "AP";
+$german_classes["german_1"]->levels[3] = "Honors";
+$german_classes["german_1"]->levels[2] = "Level 1";
+$german_classes["german_1"]->levels[1] = "Level 2";
+
+$german_classes["german_2"] = new stdClass;
+$german_classes["german_2"]->name = "German 2";
+$german_classes["german_2"]->levels[4] = "AP";
+$german_classes["german_2"]->levels[3] = "Honors";
+$german_classes["german_2"]->levels[2] = "Level 1";
+$german_classes["german_2"]->levels[1] = "Level 2";
+
+$german_classes["german_3"] = new stdClass;
+$german_classes["german_3"]->name = "German 3";
+$german_classes["german_3"]->levels[4] = "AP";
+$german_classes["german_3"]->levels[3] = "Honors";
+$german_classes["german_3"]->levels[2] = "Level 1";
+$german_classes["german_3"]->levels[1] = "Level 2";
+
+$german_classes["german_4"] = new stdClass;
+$german_classes["german_4"]->name = "German 4";
+$german_classes["german_4"]->levels[4] = "AP";
+$german_classes["german_4"]->levels[3] = "Honors";
+$german_classes["german_4"]->levels[2] = "Level 1";
+$german_classes["german_4"]->levels[1] = "Level 2";
+
+//italian
+$italian_classes["italian_1"] = new stdClass;
+$italian_classes["italian_1"]->name = "Italian 1";
+$italian_classes["italian_1"]->levels[4] = "AP";
+$italian_classes["italian_1"]->levels[3] = "Honors";
+$italian_classes["italian_1"]->levels[2] = "Level 1";
+$italian_classes["italian_1"]->levels[1] = "Level 2";
+
+$italian_classes["italian_2"] = new stdClass;
+$italian_classes["italian_2"]->name = "Italian 2";
+$italian_classes["italian_2"]->levels[4] = "AP";
+$italian_classes["italian_2"]->levels[3] = "Honors";
+$italian_classes["italian_2"]->levels[2] = "Level 1";
+$italian_classes["italian_2"]->levels[1] = "Level 2";
+
+$italian_classes["italian_3"] = new stdClass;
+$italian_classes["italian_3"]->name = "Italian 3";
+$italian_classes["italian_3"]->levels[4] = "AP";
+$italian_classes["italian_3"]->levels[3] = "Honors";
+$italian_classes["italian_3"]->levels[2] = "Level 1";
+$italian_classes["italian_3"]->levels[1] = "Level 2";
+
+$italian_classes["italian_4"] = new stdClass;
+$italian_classes["italian_4"]->name = "Italian 4";
+$italian_classes["italian_4"]->levels[4] = "AP";
+$italian_classes["italian_4"]->levels[3] = "Honors";
+$italian_classes["italian_4"]->levels[2] = "Level 1";
+$italian_classes["italian_4"]->levels[1] = "Level 2";
+
+$italian_classes["italian_AP"] = new stdClass;
+$italian_classes["italian_AP"]->name = "AP Italian";
+$italian_classes["italian_AP"]->levels[4] = "AP";
+$italian_classes["italian_AP"]->levels[3] = "Honors";
+$italian_classes["italian_AP"]->levels[2] = "Level 1";
+$italian_classes["italian_AP"]->levels[1] = "Level 2";
+
+//mandarin
+$mandarin_classes["mandarin_1"] = new stdClass;
+$mandarin_classes["mandarin_1"]->name = "Mandarin 1";
+$mandarin_classes["mandarin_1"]->levels[4] = "AP";
+$mandarin_classes["mandarin_1"]->levels[3] = "Honors";
+$mandarin_classes["mandarin_1"]->levels[2] = "Level 1";
+$mandarin_classes["mandarin_1"]->levels[1] = "Level 2";
+
+$mandarin_classes["mandarin_2"] = new stdClass;
+$mandarin_classes["mandarin_2"]->name = "Mandarin 2";
+$mandarin_classes["mandarin_2"]->levels[4] = "AP";
+$mandarin_classes["mandarin_2"]->levels[3] = "Honors";
+$mandarin_classes["mandarin_2"]->levels[2] = "Level 1";
+$mandarin_classes["mandarin_2"]->levels[1] = "Level 2";
+
+$mandarin_classes["mandarin_3"] = new stdClass;
+$mandarin_classes["mandarin_3"]->name = "Mandarin 3";
+$mandarin_classes["mandarin_3"]->levels[4] = "AP";
+$mandarin_classes["mandarin_3"]->levels[3] = "Honors";
+$mandarin_classes["mandarin_3"]->levels[2] = "Level 1";
+$mandarin_classes["mandarin_3"]->levels[1] = "Level 2";
+
+$mandarin_classes["mandarin_4"] = new stdClass;
+$mandarin_classes["mandarin_4"]->name = "Mandarin 4";
+$mandarin_classes["mandarin_4"]->levels[4] = "AP";
+$mandarin_classes["mandarin_4"]->levels[3] = "Honors";
+$mandarin_classes["mandarin_4"]->levels[2] = "Level 1";
+$mandarin_classes["mandarin_4"]->levels[1] = "Level 2";
+
+$mandarin_classes["mandarin_5"] = new stdClass;
+$mandarin_classes["mandarin_5"]->name = "Mandarin 5";
+$mandarin_classes["mandarin_5"]->levels[4] = "AP";
+$mandarin_classes["mandarin_5"]->levels[3] = "Honors";
+$mandarin_classes["mandarin_5"]->levels[2] = "Level 1";
+$mandarin_classes["mandarin_5"]->levels[1] = "Level 2";
+
+$mandarin_classes["mandarin_AP"] = new stdClass;
+$mandarin_classes["mandarin_AP"]->name = "AP Mandarin";
+$mandarin_classes["mandarin_AP"]->levels[4] = "AP";
+$mandarin_classes["mandarin_AP"]->levels[3] = "Honors";
+$mandarin_classes["mandarin_AP"]->levels[2] = "Level 1";
+$mandarin_classes["mandarin_AP"]->levels[1] = "Level 2";

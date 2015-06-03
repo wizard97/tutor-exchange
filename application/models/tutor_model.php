@@ -337,6 +337,30 @@ public function getUserProfile()
         return false;
     }
 
+
+        if ($tutor->grade > 12)
+        {
+            switch($tutor->grade)
+            {
+                case 13:
+                $tutor->grade = "High School Graduate";
+                break;
+
+                case 14:
+                $tutor->grade = "College";
+                break;
+
+                case 15:
+                $tutor->grade = "College Graduate";
+                break;
+
+                default:
+                $tutor->grade = "College Graduate+";
+
+            }
+        }
+        else $tutor->grade = (string)$tutor->grade.'th';
+
     if ($tutor->tutor_active != 1) $_SESSION["feedback_neutral"][] = FEEDBACK_TUTOR_NOT_ACTIVE;
 
     return $tutor;

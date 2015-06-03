@@ -185,7 +185,31 @@ class SearchModel
             $all_users[$user->user_id]->fname = $user->fname;
             $all_users[$user->user_id]->lname = $user->lname;
             $all_users[$user->user_id]->age = $user->age;
-            $all_users[$user->user_id]->grade = $user->grade;
+
+        if ($user->grade > 12)
+        {
+        	switch($user->grade)
+        	{
+        		case 13:
+        		$all_users[$user->user_id]->grade = "High School Graduate";
+        		break;
+
+        		case 14:
+        		$all_users[$user->user_id]->grade = "College";
+        		break;
+
+        		case 15:
+        		$all_users[$user->user_id]->grade = "College Graduate";
+        		break;
+
+        		default:
+        		$all_users[$user->user_id]->grade = "College Graduate+";
+
+        	}
+        }
+        else $all_users[$user->user_id]->grade = (string)$user->grade.'th';
+
+
             $all_users[$user->user_id]->user_email = $user->user_email;
             $all_users[$user->user_id]->user_account_type = $user->user_account_type;
             $all_users[$user->user_id]->highest_math_name = $user->highest_math_name;
@@ -613,7 +637,30 @@ public function loadSaved()
             $all_users[$user->user_id]->fname = $user->fname;
             $all_users[$user->user_id]->lname = $user->lname;
             $all_users[$user->user_id]->age = $user->age;
-            $all_users[$user->user_id]->grade = $user->grade;
+            
+        if ($user->grade > 12)
+        {
+        	switch($user->grade)
+        	{
+        		case 13:
+        		$all_users[$user->user_id]->grade = "High School Graduate";
+        		break;
+
+        		case 14:
+        		$all_users[$user->user_id]->grade = "College";
+        		break;
+
+        		case 15:
+        		$all_users[$user->user_id]->grade = "College Graduate";
+        		break;
+
+        		default:
+        		$all_users[$user->user_id]->grade = "College Graduate+";
+
+        	}
+        }
+        else $all_users[$user->user_id]->grade = (string)$user->grade.'th';
+
             $all_users[$user->user_id]->user_email = $user->user_email;
             $all_users[$user->user_id]->user_account_type = $user->user_account_type;
             $all_users[$user->user_id]->highest_math_name = $user->highest_math_name;
@@ -725,6 +772,29 @@ public function deleteSaved()
             $_SESSION["feedback_negative"][] = FEEDBACK_USER_DOES_NOT_EXIST;
             return false;
         }
+
+        if ($tutor->grade > 12)
+        {
+        	switch($tutor->grade)
+        	{
+        		case 13:
+        		$tutor->grade = "High School Graduate";
+        		break;
+
+        		case 14:
+        		$tutor->grade = "College";
+        		break;
+
+        		case 15:
+        		$tutor->grade = "College Graduate";
+        		break;
+
+        		default:
+        		$tutor->grade = "College Graduate+";
+
+        	}
+        }
+        else $tutor->grade = (string)$tutor->grade.'th';
         if(array_key_exists($user_id, $this->getSavedTutors())) $tutor->saved = true;
         else $tutor->saved = false;
         $stmt = $this->db->prepare("UPDATE tutors SET profile_views=profile_views+1 WHERE id = :user_id LIMIT 1");

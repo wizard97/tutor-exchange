@@ -104,10 +104,10 @@ function updateFeedbackMessages()
 
                     <td class="vert-align"><?php echo $user->fname.' '.$user->lname;?></td>
                     <td class="vert-align"><?php echo $user->grade;?></td>
-                    <td class="vert-align"><?php echo $user->age;?></td>
+                    <td class="vert-align"><?php if ($user->age == 0) echo 'N/A'; else echo $user->age;?></td>
                     <td class="vert-align"><?php echo '$'.$user->rate;?></td>
                     <?php if(!empty($user->user_account_type > 2)) echo '<td class="vert-align">Professional Tutor</td>';
-                    else echo '<td class="vert-align">Student Tutor</td>';
+                    else echo '<td class="vert-align">Standard Tutor</td>';
                     ?>
                     <td class="vert-align">
                         <span class="text-nowrap">
@@ -170,7 +170,7 @@ function updateFeedbackMessages()
                                         {
                                             echo '<td class="vert-align">Professional Tutor</td>';
                                         }
-                                        else echo '<td class="vert-align">Student Tutor</td>';
+                                        else echo '<td class="vert-align">Standard Tutor</td>';
                                         ?>
 
                                         <td class="vert-align">

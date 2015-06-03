@@ -53,7 +53,11 @@ class Search extends Controller
         $this->view->science_classes = $science_classes;
         $this->view->french_classes = $french_classes;
         $this->view->spanish_classes = $spanish_classes;
+        $this->view->german_classes = $german_classes;
+        $this->view->italian_classes = $italian_classes;
+        $this->view->mandarin_classes = $mandarin_classes;
         $this->view->social_classes = $social_classes;
+        $this->view->english_classes = $english_classes;
         $search_model = $this->loadModel('Search');
         $this->view->tutor = $search_model->getUserProfile($user_id);
         if ($this->view->tutor == false)

@@ -171,175 +171,274 @@
             <div class="panel-heading">Tutoring Subjects</div>
             <div class="panel-body">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#Math">Math</a></li>
-                    <li><a data-toggle="tab" href="#Science">Science</a></li>
-                    <li><a data-toggle="tab" href="#SocialStudies">Social Studies</a></li>
+        <li class="active"><a data-toggle="tab" href="#Math">Math</a></li>
+        <li><a data-toggle="tab" href="#Science">Science</a></li>
+        <li><a data-toggle="tab" href="#SocialStudies">Social Studies</a></li>
+        <li><a data-toggle="tab" href="#English">English</a></li>
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">Language <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a data-toggle="tab" href="#French">French</a></li>
-                            <li><a data-toggle="tab" href="#Spanish">Spanish</a></li>
+    <li><a data-toggle="tab" href="#French">French</a></li>
+    <li><a data-toggle="tab" href="#German">German</a></li>
+    <li><a data-toggle="tab" href="#Italian">Italian</a></li>
+    <li><a data-toggle="tab" href="#Mandarin">Mandarin</a></li>
+    <li><a data-toggle="tab" href="#Spanish">Spanish</a></li>
                         </ul>
                     </li>
                     <li><a data-toggle="tab" href="#Music">Music</a></li>
                 </ul>
 
 
-                <div class="tab-content">
+   <div class="tab-content">
+        
+        <div id="Math" class="tab-pane fade in active">
+            <h3>Math Tutoring</h3>
 
-                    <div id="Math" class="tab-pane fade in active">
-                        <h3>Math Tutoring</h3>
+<?php if(!empty($this->tutor->highest_math_name)):?>
+            <strong>Highest Completed Math Class: </strong><?php echo($this->tutor->highest_math_name); if(!empty($this->tutor->highest_math_level)) echo(' ('.$this->tutor->highest_math_level.')'); ?>
+<?php endif;?>
+				<table class="table table-striped">
+					<caption>I can tutor the following classes:</caption>
+					<tr>
+					<th>Classes</th>
+					<th>Highest Level I Can Tutor</th>
+					</tr>
 
-                        <?php if(!empty($this->tutor->highest_math_name)):?>
-                            <strong>Highest Completed Math Class: </strong><?php echo($this->tutor->highest_math_name); if(!empty($this->tutor->highest_math_level)) echo(' ('.$this->tutor->highest_math_level.')'); ?>
-                        <?php endif;?>
-                        <table class="table table-striped">
-                            <caption>I can tutor the following classes:</caption>
-                            <tr>
-                                <th>Classes</th>
-                                <th>Highest Level I Can Tutor</th>
-                            </tr>
+                    <?php foreach ($this->math_classes as $db_name=>$class)
+                    if($this->tutor->{$db_name} > 0)
+                    {
+                        echo '<tr><td>'.$class->name.'</td>';
+                        echo '<td>'.$class->levels[(int)$this->tutor->{$db_name}].'</td></tr>';
+                    }
+                    ?>
+				</table>
 
-                            <?php foreach ($this->math_classes as $db_name=>$class)
-                            if($this->tutor->{$db_name} > 0)
-                            {
-                                echo '<tr><td>'.$class->name.'</td>';
-                                echo '<td>'.$class->levels[(int)$this->tutor->{$db_name}].'</td></tr>';
-                            }
-                            ?>
-                        </table>
-
-                    </div>
-
-
-
-                    <div id="SocialStudies" class="tab-pane fade">
-                        <h3>Social Studies Tutoring</h3>
-
-                        <?php if(!empty($this->tutor->highest_social_name)):?>
-                            <strong>Highest Completed Social Studies Class: </strong><?php echo($this->tutor->highest_social_name); if(!empty($this->tutor->highest_social_level)) echo(' ('.$this->tutor->highest_social_level.')'); ?>
-                        <?php endif;?>
-                        <table class="table table-striped">
-                            <caption>I can tutor the following classes:</caption>
-                            <tr>
-                                <th>Classes</th>
-                                <th>Highest Level I Can Tutor</th>
-                            </tr>
-
-                            <?php foreach ($this->social_classes as $db_name=>$class)
-                            if($this->tutor->{$db_name} > 0)
-                            {
-                                echo '<tr><td>'.$class->name.'</td>';
-                                echo '<td>'.$class->levels[(int)$this->tutor->{$db_name}].'</td></tr>';
-                            }
-                            ?>
-                        </table>
-
-                    </div>
-
-                    <div id="Science" class="tab-pane fade">
-                        <h3>Science Tutoring</h3>
-
-                        <?php if(!empty($this->tutor->highest_science_name)):?>
-                            <strong>Highest Completed Science Class: </strong><?php echo($this->tutor->highest_science_name); if(!empty($this->tutor->highest_science_level)) echo(' ('.$this->tutor->highest_science_level.')'); ?>
-                        <?php endif;?>
-                        <table class="table table-striped">
-                            <caption>I can tutor the following classes:</caption>
-                            <tr>
-                                <th>Classes</th>
-                                <th>Highest Level I Can Tutor</th>
-                            </tr>
-
-                            <?php foreach ($this->science_classes as $db_name=>$class)
-                            if($this->tutor->{$db_name} > 0)
-                            {
-                                echo '<tr><td>'.$class->name.'</td>';
-                                echo '<td>'.$class->levels[(int)$this->tutor->{$db_name}].'</td></tr>';
-                            }
-                            ?>
-                        </table>
-
-                    </div>
-
-                    <div id="French" class="tab-pane fade">
-                        <h3>French Tutoring</h3>
-
-                        <?php if(!empty($this->tutor->highest_french_name)):?>
-                            <strong>Highest Completed French Class: </strong><?php echo($this->tutor->highest_french_name); if(!empty($this->tutor->highest_french_level)) echo(' ('.$this->tutor->highest_french_level.')'); ?>
-                        <?php endif;?>
-                        <table class="table table-striped">
-                            <caption>I can tutor the following classes:</caption>
-                            <tr>
-                                <th>Classes</th>
-                                <th>Highest Level I Can Tutor</th>
-                            </tr>
-
-                            <?php foreach ($this->french_classes as $db_name=>$class)
-                            if($this->tutor->{$db_name} > 0)
-                            {
-                                echo '<tr><td>'.$class->name.'</td>';
-                                echo '<td>'.$class->levels[(int)$this->tutor->{$db_name}].'</td></tr>';
-                            }
-                            ?>
-                        </table>
-                    </div>
-
-                    <div id="Spanish" class="tab-pane fade">
-
-                        <h3>Spanish Tutoring</h3>
-
-                        <?php if(!empty($this->tutor->highest_spanish_name)):?>
-                            <strong>Highest Completed Spanish Class: </strong><?php echo($this->tutor->highest_spanish_name); if(!empty($this->tutor->highest_spanish_level)) echo(' ('.$this->tutor->highest_spanish_level.')'); ?>
-                        <?php endif;?>
-                        <table class="table table-striped">
-                            <caption>I can tutor the following classes:</caption>
-                            <tr>
-                                <th>Classes</th>
-                                <th>Highest Level I Can Tutor</th>
-                            </tr>
-
-                            <?php foreach ($this->spanish_classes as $db_name=>$class)
-                            if($this->tutor->{$db_name} > 0)
-                            {
-                                echo '<tr><td>'.$class->name.'</td>';
-                                echo '<td>'.$class->levels[(int)$this->tutor->{$db_name}].'</td></tr>';
-                            }
-                            ?>
-                        </table>
-                    </div>           
+        </div>
 
 
 
-                    <div id="Music" class="tab-pane fade">
-                        <h3>Music</h3>
-                        <?php if(!empty($this->tutor->instrument)):?>
-                            <ul class="list-group">
-                                <li class="list-group-item text-right list-group-item-info"><span class="pull-left"><strong class="">I tutor:</strong></span> <?php echo ucfirst($this->tutor->instrument);?></li>
-                                <li class="list-group-item text-right"><span class="pull-left"><strong class="">My Experience:</strong></span> <?php echo $this->tutor->music_years.' years';?></li>
-                                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Max Student Experience:</strong></span>
-                                    <?php 
-                                    switch($this->tutor->music_level)
-                                    {
-                                        case 1:
-                                        echo "None";
-                                        break;
-                                        case 2:
-                                        echo "Beginning (0-3 years)";
-                                        break;
-                                        case 3:
-                                        echo "Intermediate (3-6 years)";
-                                        break;
-                                        case 4:
-                                        echo "Advanced (6+ years)";
-                                        break;
-                                    }
-                                    ?>
-                                </li>
-                            </ul>
-                        <?php endif;?>
-                    </div>
+        <div id="SocialStudies" class="tab-pane fade">
+            <h3>Social Studies Tutoring</h3>
 
-                </div>
+<?php if(!empty($this->tutor->highest_social_name)):?>
+            <strong>Highest Completed Social Studies Class: </strong><?php echo($this->tutor->highest_social_name); if(!empty($this->tutor->highest_social_level)) echo(' ('.$this->tutor->highest_social_level.')'); ?>
+<?php endif;?>
+                <table class="table table-striped">
+                    <caption>I can tutor the following classes:</caption>
+                    <tr>
+                    <th>Classes</th>
+                    <th>Highest Level I Can Tutor</th>
+                    </tr>
+
+                    <?php foreach ($this->social_classes as $db_name=>$class)
+                    if($this->tutor->{$db_name} > 0)
+                    {
+                        echo '<tr><td>'.$class->name.'</td>';
+                        echo '<td>'.$class->levels[(int)$this->tutor->{$db_name}].'</td></tr>';
+                    }
+                    ?>
+                </table>
+
+        </div>
+
+        <div id="Science" class="tab-pane fade">
+            <h3>Science Tutoring</h3>
+
+<?php if(!empty($this->tutor->highest_science_name)):?>
+            <strong>Highest Completed Science Class: </strong><?php echo($this->tutor->highest_science_name); if(!empty($this->tutor->highest_science_level)) echo(' ('.$this->tutor->highest_science_level.')'); ?>
+<?php endif;?>
+                <table class="table table-striped">
+                    <caption>I can tutor the following classes:</caption>
+                    <tr>
+                    <th>Classes</th>
+                    <th>Highest Level I Can Tutor</th>
+                    </tr>
+
+                    <?php foreach ($this->science_classes as $db_name=>$class)
+                    if($this->tutor->{$db_name} > 0)
+                    {
+                        echo '<tr><td>'.$class->name.'</td>';
+                        echo '<td>'.$class->levels[(int)$this->tutor->{$db_name}].'</td></tr>';
+                    }
+                    ?>
+                </table>
+
+        </div>
+
+
+                <div id="English" class="tab-pane fade">
+            <h3>English Tutoring</h3>
+
+<?php if(!empty($this->tutor->highest_english_name)):?>
+            <strong>Highest Completed English Class: </strong><?php echo($this->tutor->highest_english_name); if(!empty($this->tutor->highest_english_level)) echo(' ('.$this->tutor->highest_english_level.')'); ?>
+<?php endif;?>
+                <table class="table table-striped">
+                    <caption>I can tutor in the following areas:</caption>
+                    <tr>
+                    <th>English Area</th>
+                    <th>Highest Level I Can Tutor</th>
+                    </tr>
+
+                    <?php foreach ($this->english_classes as $db_name=>$class)
+                    if($this->tutor->{$db_name} > 0)
+                    {
+                        echo '<tr><td>'.$class->name.'</td>';
+                        echo '<td>'.$class->levels[(int)$this->tutor->{$db_name}].'</td></tr>';
+                    }
+                    ?>
+                </table>
+
+        </div>
+
+        <div id="French" class="tab-pane fade">
+<h3>French Tutoring</h3>
+
+<?php if(!empty($this->tutor->highest_french_name)):?>
+            <strong>Highest Completed French Class: </strong><?php echo($this->tutor->highest_french_name); if(!empty($this->tutor->highest_french_level)) echo(' ('.$this->tutor->highest_french_level.')'); ?>
+<?php endif;?>
+                <table class="table table-striped">
+                    <caption>I can tutor the following classes:</caption>
+                    <tr>
+                    <th>Classes</th>
+                    <th>Highest Level I Can Tutor</th>
+                    </tr>
+
+                    <?php foreach ($this->french_classes as $db_name=>$class)
+                    if($this->tutor->{$db_name} > 0)
+                    {
+                        echo '<tr><td>'.$class->name.'</td>';
+                        echo '<td>'.$class->levels[(int)$this->tutor->{$db_name}].'</td></tr>';
+                    }
+                    ?>
+                    </table>
+        </div>
+
+        <div id="German" class="tab-pane fade">
+<h3>German Tutoring</h3>
+
+<?php if(!empty($this->tutor->highest_german_name)):?>
+            <strong>Highest Completed German Class: </strong><?php echo($this->tutor->highest_german_name); if(!empty($this->tutor->highest_german_level)) echo(' ('.$this->tutor->highest_german_level.')'); ?>
+<?php endif;?>
+                <table class="table table-striped">
+                    <caption>I can tutor the following classes:</caption>
+                    <tr>
+                    <th>Classes</th>
+                    <th>Highest Level I Can Tutor</th>
+                    </tr>
+
+                    <?php foreach ($this->german_classes as $db_name=>$class)
+                    if($this->tutor->{$db_name} > 0)
+                    {
+                        echo '<tr><td>'.$class->name.'</td>';
+                        echo '<td>'.$class->levels[(int)$this->tutor->{$db_name}].'</td></tr>';
+                    }
+                    ?>
+                    </table>
+        </div>
+
+
+            <div id="Italian" class="tab-pane fade">
+<h3>Italian Tutoring</h3>
+
+<?php if(!empty($this->tutor->highest_italian_name)):?>
+            <strong>Highest Completed Italian Class: </strong><?php echo($this->tutor->highest_italian_name); if(!empty($this->tutor->highest_italian_level)) echo(' ('.$this->tutor->highest_italian_level.')'); ?>
+<?php endif;?>
+                <table class="table table-striped">
+                    <caption>I can tutor the following classes:</caption>
+                    <tr>
+                    <th>Classes</th>
+                    <th>Highest Level I Can Tutor</th>
+                    </tr>
+
+                    <?php foreach ($this->italian_classes as $db_name=>$class)
+                    if($this->tutor->{$db_name} > 0)
+                    {
+                        echo '<tr><td>'.$class->name.'</td>';
+                        echo '<td>'.$class->levels[(int)$this->tutor->{$db_name}].'</td></tr>';
+                    }
+                    ?>
+                    </table>
+        </div>
+
+        <div id="Mandarin" class="tab-pane fade">
+<h3>Mandarin Tutoring</h3>
+
+<?php if(!empty($this->tutor->highest_mandarin_name)):?>
+            <strong>Highest Completed Mandarin Class: </strong><?php echo($this->tutor->highest_mandarin_name); if(!empty($this->tutor->highest_mandarin_level)) echo(' ('.$this->tutor->highest_mandarin_level.')'); ?>
+<?php endif;?>
+                <table class="table table-striped">
+                    <caption>I can tutor the following classes:</caption>
+                    <tr>
+                    <th>Classes</th>
+                    <th>Highest Level I Can Tutor</th>
+                    </tr>
+
+                    <?php foreach ($this->mandarin_classes as $db_name=>$class)
+                    if($this->tutor->{$db_name} > 0)
+                    {
+                        echo '<tr><td>'.$class->name.'</td>';
+                        echo '<td>'.$class->levels[(int)$this->tutor->{$db_name}].'</td></tr>';
+                    }
+                    ?>
+                    </table>
+        </div>
+
+        <div id="Spanish" class="tab-pane fade">
+
+<h3>Spanish Tutoring</h3>
+
+<?php if(!empty($this->tutor->highest_spanish_name)):?>
+            <strong>Highest Completed Spanish Class: </strong><?php echo($this->tutor->highest_spanish_name); if(!empty($this->tutor->highest_spanish_level)) echo(' ('.$this->tutor->highest_spanish_level.')'); ?>
+<?php endif;?>
+                <table class="table table-striped">
+                    <caption>I can tutor the following classes:</caption>
+                    <tr>
+                    <th>Classes</th>
+                    <th>Highest Level I Can Tutor</th>
+                    </tr>
+
+                    <?php foreach ($this->spanish_classes as $db_name=>$class)
+                    if($this->tutor->{$db_name} > 0)
+                    {
+                        echo '<tr><td>'.$class->name.'</td>';
+                        echo '<td>'.$class->levels[(int)$this->tutor->{$db_name}].'</td></tr>';
+                    }
+                    ?>
+                    </table>
+        </div>           
+
+
+
+        <div id="Music" class="tab-pane fade">
+            <h3>Music</h3>
+            <?php if(!empty($this->tutor->instrument)):?>
+            <ul class="list-group">
+                <li class="list-group-item text-right list-group-item-info"><span class="pull-left"><strong class="">I tutor:</strong></span> <?php echo ucfirst($this->tutor->instrument);?></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">My Experience:</strong></span> <?php echo $this->tutor->music_years.' years';?></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Max Student Experience:</strong></span>
+                <?php 
+                switch($this->tutor->music_level)
+                {
+                case 1:
+                echo "None";
+                break;
+                case 2:
+                echo "Beginning (0-3 years)";
+                break;
+                case 3:
+                echo "Intermediate (3-6 years)";
+                break;
+                case 4:
+                echo "Advanced (6+ years)";
+                break;
+                }
+                ?>
+                </li>
+            </ul>
+            <?php endif;?>
+        </div>
+    
+    </div>
 
             </div>
         </div>
