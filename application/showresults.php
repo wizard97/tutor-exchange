@@ -55,6 +55,7 @@ function updateFeedbackMessages()
 }
 
 </script>
+
 <div class="container">
     <!-- pass url from php to ajax -->
     <input type="hidden" id="url" value="<?php echo URL; ?>search/showresults_action">
@@ -82,7 +83,6 @@ function updateFeedbackMessages()
                     <th>Age</th>
                     <th>Hourly Rate</th>
                     <th>Tutor Type</th>
-                    <th>Percent Match</th>
                     <th>Reviews</th>
                     <th>Options</th>
 
@@ -109,7 +109,6 @@ function updateFeedbackMessages()
                     <?php if(!empty($user['user_account_type'] > 2)) echo '<td class="vert-align">Professional Tutor</td>';
                     else echo '<td class="vert-align">Standard Tutor</td>';
                     ?>
-                    <td class="vert-align"><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $user['percent_match'];?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $user['percent_match'];?>%;"><?php echo $user['percent_match'];?>%</div></td>
                     <td class="vert-align">
                         <span class="text-nowrap">
                             <span style="font-size: 18px">
@@ -152,7 +151,6 @@ function updateFeedbackMessages()
                                         <th>Age</th>
                                         <th>Hourly Rate</th>
                                         <th>Tutor Type</th>
-                                        <th>Percent Match</th>
                                         <th>Tutor Reviews</th>
                                     </tr>
                                 </thead>
@@ -174,7 +172,7 @@ function updateFeedbackMessages()
                                         }
                                         else echo '<td class="vert-align">Standard Tutor</td>';
                                         ?>
-                                        <td class="vert-align"><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $user['percent_match'];?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $user['percent_match'];?>%;"><?php echo $user['percent_match'];?>%</div></td>
+
                                         <td class="vert-align">
                                             <span class="text-nowrap">
                                                 <span style="font-size: 18px">

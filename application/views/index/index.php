@@ -17,7 +17,7 @@
     <h2>Hello, Lexington MA!</h2>
     <p>This site was designed by Lexington students for Lexington students. We will find the best tutor for you based on pricing, subject, and tutor level. This site welcomes both student and professional tutor signups.</p>
     <p>
-    <a class="btn btn-success btn-lg" href="<?php echo(URL . 'search/index');?>" role="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Find a Tutor</a> 
+    <a class="btn btn-success btn-lg" href="<?php echo(URL . 'search/index');?>" role="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Find a Tutor</a>
     <a class="btn btn-primary btn-lg" href="<?php echo(URL . 'login/register');?>" role="button"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Start Tutoring</a>
     </px>
   </div>
@@ -29,8 +29,6 @@
 </div>
 
 <!-- <div class="alert alert-success" role="alert"><strong>New in V1.12:</strong> Save tutor button now works without page refresh (using ajax requests and jQuery), Crontab jobs now auto emails tutor when listing expires.</div> -->
-
-
     <div class="row social">
         <div class="col-sm-6 col-md-6 col-lg-3">
 
@@ -87,7 +85,40 @@
 
     </div>
 
-	<hr>
+
+<div class="row">
+<div class="col-md-6">
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-plus"></i> Latest Features</h3>
+  </div>
+  <div class="panel-body" style="height: 110px">
+<ul>
+<li>English and foreign language tutoring</li>
+<li>Crontab followup emails</li>
+</ul>
+  </div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-wrench"></i> Upcoming Features</h3>
+  </div>
+  <div class="panel-body" style="height: 110px">
+  <ul>
+<li>Database normalization, to more easily add classes</li>
+<li>Improved tutor matching algorithm, see percentage of how well tutors match your search!</li>
+<li>Play around with these new features on our <a href="http://wisner.duckdns.org:8080/index/index">BETA Test Server</a></li>
+</ul>
+  </div>
+</div>
+</div>
+</div>
+<div class="clearfix"></div>
+
+<hr>
 
 <div class="row">
 
@@ -115,7 +146,7 @@
                             <a href="<?php echo(URL . 'search/index');?>" class="btn btn-default">Find a Tutor »</a>
                         </p>
                     </div>
-                
+
             </div>
 
             <div class="col-md-3 col-sm-6 hero-feature">
@@ -129,7 +160,7 @@
                             <a href="<?php echo(URL . 'login/register');?>" class="btn btn-default">Start Tutoring »</a>
                         </p>
                     </div>
-                
+
             </div>
 
             <div class="col-md-3 col-sm-6 hero-feature">
@@ -143,14 +174,13 @@
                             <a href="https://github.com/wizard97/tutor-exchange" class="btn btn-default">Source Code »</a>
                         </p>
                     </div>
-               
+
             </div>
 
         </div>
 
 
-	
+
 
 
 </div>
-

@@ -22,6 +22,8 @@ class Search extends Controller
     {
        // $overview_model = $this->loadModel('Overview');
        // $this->view->users = $overview_model->getAllUsersProfiles();
+        $search_model = $this->loadModel('Search');
+        $this->view->classes = $search_model->getClasses();
         $this->view->render('search/index');
     }
 
@@ -31,7 +33,7 @@ class Search extends Controller
      * @param $user_id int id the the user
      */
     function showResults()
-    {       
+    {
             $search_model = $this->loadModel('Search');
             $this->view->users = $search_model->getResults();
             if (is_array($this->view->users))
@@ -47,7 +49,7 @@ class Search extends Controller
     function showtutorprofile($user_id)
     {
         Auth::handleLogin();
-        
+
         include VIEWS_PATH.'_templates/classes.php';
         $this->view->math_classes = $math_classes;
         $this->view->science_classes = $science_classes;
@@ -120,7 +122,7 @@ class Search extends Controller
             header('location: ' . URL . 'search/emailtutor/'.$user_id);
 
         }
-        
+
         /* for old review page
         function reviewTutor($user_id)
         {
@@ -137,7 +139,7 @@ class Search extends Controller
             }
         }
         */
-        
+
         function reviewTutor_action($user_id)
         {
         Auth::handleLogin();

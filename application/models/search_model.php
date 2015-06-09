@@ -15,6 +15,40 @@ class SearchModel
         $this->db = $db;
     }
 
+
+    public function getClasses()
+    {
+      //get the subjects from the db
+      $smt = $this->db->prepare("SELECT class_type FROM classes GROUP BY class_type");
+      $smt->execute();
+      $subjects = $smt->fetchAll();
+
+      $class_types = array();
+      foreach ($subjects as $sub) $class_types[] = $sub->class_type;
+      $classes = array();
+      $stmt = $this->db->prepare("SELECT * FROM classes WHERE class_type = ? ORDER BY class_order ASC");
+      $query = $this->db->prepare("SELECT level_num, level_name FROM class_levels WHERE class_id = ? ORDER BY level_num DESC");
+
+      foreach ($class_types as $type)
+      {
+        $stmt->execute(array($type));
+        $results = $stmt->fetchAll();
+
+        foreach ($results as $class)
+        {
+        $classes[$type][$class->class_id]['class_name'] = $class->class_name;
+
+        //get the levels for the class
+        $query->execute(array($class->class_id));
+        $levels_array = $query->fetchAll();
+        if (empty($levels_array)) unset($classes[$type][$class->class_id]);
+        else foreach($levels_array as $level) $classes[$type][$class->class_id]['level_names'][$level->level_num] = $level->level_name;
+        }
+      }
+      return $classes;
+    }
+
+
     /**
      * Gets an array that contains all the users in the database. The array's keys are the user ids.
      * Each array element is an object, containing a specific user's data.
@@ -33,61 +67,45 @@ class SearchModel
 
         $sql_stub = "SELECT users.user_id, users.fname, users.lname, users.user_email, users.user_active, users.user_has_avatar, users.user_account_type, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_active =1 AND user_account_type >= 2 AND tutor_active = 1";
 
+
+        $sql =
+        "SELECT COUNT(*) AS count, t.id
+        FROM tutor_classes tc
+        INNER JOIN tutors t ON (t.id = tc.tutor_id)
+        INNER JOIN classes c ON (c.class_id = tc.class_id)
+        INNER JOIN class_levels l ON (tc.class_id = l.class_id AND tc.level_num = l.level_num)
+        INNER JOIN users u ON (t.id = u.user_id)
+        WHERE t.tutor_active = 1 AND u.user_active = 1 AND u.user_account_type >= 2";
+
 //stores variables passed to sql querry
         $sql_vars=array();
        //array of sql query to be built later
         $sql_cond=array();
+        $sql_or_cond=array();
 
 //create the prepared statement based on classes the user selected
 
 //math
-        foreach($math_subject as $math_class)
-        {
-            if (isset($_POST['math']) && isset($_POST[$math_class]) && in_array($math_class, $_POST['math']) && is_numeric($_POST[$math_class]) && $_POST[$math_class] >= 0 && $_POST[$math_class] <= 6)
-            {
-            	$sql_cond[] = $math_class." >= :".$math_class;
-                $sql_vars[":".$math_class] = $_POST[$math_class];
-            }
-        }
+$classes = $this->getClasses();
+$selections = 0;
 
-//science
-        foreach($science_subject as $science_class)
-        {
-            if (isset($_POST['science']) && isset($_POST[$science_class]) && in_array($science_class, $_POST['science']) && is_numeric($_POST[$science_class]) && $_POST[$science_class] >= 0 && $_POST[$science_class] <= 6)
-            {
-            	$sql_cond[] = $science_class." >= :".$science_class;
-                $sql_vars[":".$science_class] = $_POST[$science_class];
-            }
-        }
+foreach ($classes as $class_type => $subject_classes)
+{
+  if (isset($_POST[$class_type]))
+  {
+    foreach ($subject_classes as $class_id => $class)
+    {
+      if (in_array($class_id, $_POST[$class_type]) && isset($_POST['class_'.$class_id]) && array_key_exists($_POST['class_'.$class_id], $class['level_names']))
+      {
+        $sql_or_cond[] = '(tc.class_id = :id_'.$class_id.' AND tc.level_num >= :level_id_'.$class_id.')';
+        $sql_vars[':id_'.$class_id] = $class_id;
+        $sql_vars[':level_id_'.$class_id] = $_POST['class_'.$class_id];
+        $selections++;
+      }
+    }
+  }
 
-//social studies
-        foreach($social_studies_subject as $social_class)
-        {
-            if (isset($_POST['social']) && isset($_POST[$social_class]) && in_array($social_class, $_POST['social']) && is_numeric($_POST[$social_class]) && $_POST[$social_class] >= 0 && $_POST[$social_class] <= 6)
-            {
-            	$sql_cond[] = $social_class." >= :".$social_class;
-                $sql_vars[":".$social_class] = $_POST[$social_class];
-            }
-        }
-
-//language
-        foreach($foreign_language_subject as $language_class)
-        {
-            if (isset($_POST['foreign_language']) && isset($_POST[$language_class]) && in_array($language_class, $_POST['foreign_language']) && is_numeric($_POST[$language_class]) && $_POST[$language_class] >= 0 && $_POST[$language_class] <= 6)
-            {
-            	$sql_cond[] = $language_class." >= :".$language_class;
-                $sql_vars[":".$language_class] = $_POST[$language_class];
-            }
-        }
-//english
-        foreach($english_subject as $english_class)
-        {
-            if (isset($_POST['english']) && isset($_POST[$english_class]) && in_array($english_class, $_POST['english']) && is_numeric($_POST[$english_class]) && $_POST[$english_class] >= 0 && $_POST[$english_class] <= 6)
-            {
-                $sql_cond[] = $english_class." >= :".$english_class;
-                $sql_vars[":".$english_class] = $_POST[$english_class];
-            }
-        }
+}
 
 //music
         if (isset($_POST['instrument']) && !empty($_POST['instrument']) && isset($_POST['music']) && $_POST['music'] == 1 && isset($_POST['music_level']) && !empty($_POST['music_level']) && is_numeric($_POST['music_level']))
@@ -96,6 +114,7 @@ class SearchModel
         	$sql_cond[] = "music_level >= :music_level";
             $sql_vars[":instrument"] = $_POST['instrument'];
             $sql_vars[":music_level"] = $_POST['music_level'];
+            $selections++;
         }
 
 
@@ -149,6 +168,7 @@ class SearchModel
             $sql_vars[":min_grade"] = trim($_POST['min_grade']);
         }
 
+
 //get the saved tutors
         if(SESSION::get('user_logged_in'))
         {
@@ -159,114 +179,112 @@ class SearchModel
             $_SESSION["feedback_neutral"][] = FEEDBACK_WARNING_SEARCH_NOT_LOGGED_IN;
         }
 
-        //build the dynamic querry from the array, and show professional tutors first
-        if (!empty($sql_cond)) $sql_stub.= " AND ".implode(' AND ', $sql_cond)." ORDER BY user_account_type DESC";
-         else $sql_stub.= " ORDER BY user_account_type DESC";
+        //build the dynamic querry from the array
+        if (!empty($sql_cond)) $sql.= " AND ".implode(' AND ', $sql_cond);
+        if (!empty($sql_or_cond)) $sql.= " AND (".implode(' OR ', $sql_or_cond).')';
 
 
+        $sql .= " GROUP BY t.id ASC ORDER BY COUNT(*) DESC, u.user_account_type DESC, u.fname ASC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($sql_vars);
 
-        $sth = $this->db->prepare($sql_stub);
-        $sth->execute($sql_vars);
-
-
-        $count =  $sth->rowCount();
+        $count =  $stmt->rowCount();
         if ($count == 0) {
             $_SESSION["feedback_neutral"][] = FEEDBACK_WARNING_NO_RESULTS;
             return array();
         }
 
+        $tutors = $stmt->fetchAll();
+
+        //get each tutors info
+        $stm = $this->db->prepare("SELECT users.user_id, users.fname, users.lname, users.user_email, users.user_active, users.user_has_avatar, users.user_account_type, tutors.* FROM users INNER JOIN tutors ON users.user_id=tutors.id WHERE user_id = ?");
         $all_users = array();
 
-        foreach ($sth->fetchAll() as $user) {
-            // a new object for every user. This is eventually not really optimal when it comes
-            // to performance, but it fits the view style better
-            $all_users[$user->user_id] = new stdClass();
-            $all_users[$user->user_id]->user_id = $user->user_id;
-            $all_users[$user->user_id]->fname = $user->fname;
-            $all_users[$user->user_id]->lname = $user->lname;
-            $all_users[$user->user_id]->age = $user->age;
-
-        if ($user->grade > 12)
+        foreach ($tutors as $tutor)
         {
-        	switch($user->grade)
-        	{
-        		case 13:
-        		$all_users[$user->user_id]->grade = "High School Graduate";
-        		break;
+          $stm->execute(array($tutor->id));
+          $user = $stm->fetch();
 
-        		case 14:
-        		$all_users[$user->user_id]->grade = "College";
-        		break;
+          // a new array for every user. This is eventually not really optimal when it comes
+          // to performance, but it fits the view style better
+          $all_users[$user->user_id] = array();
+          $all_users[$user->user_id]['user_id'] = $user->user_id;
+          $all_users[$user->user_id]['fname'] = $user->fname;
+          $all_users[$user->user_id]['lname'] = $user->lname;
+          $all_users[$user->user_id]['age'] = $user->age;
+          if ($selections != 0) $all_users[$user->user_id]['percent_match'] = number_format(($tutor->count/$selections)*100, 0);
+          else $all_users[$user->user_id]['percent_match'] = 100;
+      if ($user->grade > 12)
+      {
+        switch($user->grade)
+        {
+          case 13:
+          $all_users[$user->user_id]['grade'] = "High School Graduate";
+          break;
 
-        		case 15:
-        		$all_users[$user->user_id]->grade = "College Graduate";
-        		break;
+          case 14:
+          $all_users[$user->user_id]['grade'] = "College";
+          break;
 
-        		default:
-        		$all_users[$user->user_id]->grade = "College Graduate+";
+          case 15:
+          $all_users[$user->user_id]['grade'] = "College Graduate";
+          break;
 
-        	}
+          default:
+          $all_users[$user->user_id]['grade'] = "College Graduate+";
+
         }
-        else $all_users[$user->user_id]->grade = (string)$user->grade.'th';
+      }
+      else $all_users[$user->user_id]['grade'] = (string)$user->grade.'th';
 
 
-            $all_users[$user->user_id]->user_email = $user->user_email;
-            $all_users[$user->user_id]->user_account_type = $user->user_account_type;
-            $all_users[$user->user_id]->highest_math_name = $user->highest_math_name;
-            $all_users[$user->user_id]->highest_math_level = $user->highest_math_level;
-            $all_users[$user->user_id]->rate = $user->rate;
+          $all_users[$user->user_id]['user_email'] = $user->user_email;
+          $all_users[$user->user_id]['user_account_type'] = $user->user_account_type;
+          $all_users[$user->user_id]['highest_math_name'] = $user->highest_math_name;
+          $all_users[$user->user_id]['highest_math_level'] = $user->highest_math_level;
+          $all_users[$user->user_id]['rate']= $user->rate;
 
 //reviews
-            $stmt = $this->db->prepare("SELECT * FROM reviews WHERE tutor_id = :user_id");
-            $stmt->execute(array(':user_id' => $user->user_id));
+          $stmt = $this->db->prepare("SELECT * FROM reviews WHERE tutor_id = ?");
+          $stmt->execute(array($user->user_id));
+          //number of reviews
+          $review_number = $stmt->rowCount();
+          $all_users[$user->user_id]['review_number'] = $review_number;
 
-            $all_users[$user->user_id]->review_number = $stmt->rowCount();
+          if ($review_number != 0)
+          {
+              $avg_rating = 0;
+              //sum up all reviews, to find average later
+              foreach ($stmt->fetchAll() as $tutor_review) $avg_rating += $tutor_review->rating;
 
-            if ($stmt->rowCount() != 0)
-            {
-                $avg_rating = 0;
-
-                $i = 0;
-                foreach ($stmt->fetchAll() as $tutor_review) {
-                //sum up all reviews, to find average later
-                    $avg_rating += $tutor_review->rating;
-                    $i++;
-                }
-
-                $all_users[$user->user_id]->star_count = floor($avg_rating/($stmt->rowCount()));
-                $all_users[$user->user_id]->avg_rating = round((float)$avg_rating/(float)($stmt->rowCount()), 1);
-                if((float)$all_users[$user->user_id]->avg_rating - floor($all_users[$user->user_id]->avg_rating) >= 0.2 && (float)$all_users[$user->user_id]->avg_rating - floor($all_users[$user->user_id]->avg_rating) <= 0.7) $all_users[$user->user_id]->half_star = true;
-                else $all_users[$user->user_id]->half_star = false;
-            }
-            else
-            {
-                $all_users[$user->user_id]->star_count = 0;
-                $all_users[$user->user_id]->half_star = false;
-                $all_users[$user->user_id]->avg_rating = 0;
-            }
+              $all_users[$user->user_id]['star_count'] = floor($avg_rating/$review_number);
+              $all_users[$user->user_id]['avg_rating'] = round((float)$avg_rating/(float)$review_number, 1);
+              if((float)$all_users[$user->user_id]['avg_rating'] - floor($all_users[$user->user_id]['avg_rating']) > 0.2 && (float)$all_users[$user->user_id]['avg_rating'] - floor($all_users[$user->user_id]['avg_rating']) <= 0.7) $all_users[$user->user_id]['half_star'] = true;
+              else $all_users[$user->user_id]['half_star'] = false;
+          }
+          else
+          {
+              $all_users[$user->user_id]['star_count'] = 0;
+              $all_users[$user->user_id]['half_star'] = false;
+              $all_users[$user->user_id]['avg_rating'] = 0;
+          }
 
 
 
-            if(SESSION::get('user_logged_in') && array_key_exists((string)$user->user_id, $tutor_array))
-            {
-                $all_users[$user->user_id]->check = true;
-            }
-            else
-            {
-             $all_users[$user->user_id]->check = false; 
-         }
+          if(SESSION::get('user_logged_in') && array_key_exists((string)$user->user_id, $tutor_array))
+          {
+              $all_users[$user->user_id]['check'] = true;
+          }
+          else
+          {
+           $all_users[$user->user_id]['check'] = false;
+       }
 
 
-         if (USE_GRAVATAR) {
-            $all_users[$user->user_id]->user_avatar_link =
-            $this->getGravatarLinkFromEmail($user->user_email);
-        } else {
-            $all_users[$user->user_id]->user_avatar_link =
-            $this->getUserAvatarFilePath($user->user_has_avatar, $user->user_id);
-        }
-
-        $all_users[$user->user_id]->user_active = $user->user_active;
-    }
+          if (USE_GRAVATAR) $all_users[$user->user_id]['user_avatar_link'] = $this->getGravatarLinkFromEmail($user->user_email);
+          else $all_users[$user->user_id]['user_avatar_link'] = $this->getUserAvatarFilePath($user->user_has_avatar, $user->user_id);
+          $all_users[$user->user_id]['user_active'] = $user->user_active;
+  }
     return $all_users;
 }
 
@@ -404,7 +422,7 @@ public function getTutor($user_id)
     if (!isset($user_id))
     {
        $_SESSION["feedback_negative"][] = FEEDBACK_USER_DOES_NOT_EXIST;
-       return false;   
+       return false;
    }
 
    $query = $this->db->prepare("SELECT fname, lname, user_id FROM users WHERE user_id = :user_id LIMIT 1");
@@ -427,7 +445,7 @@ public function emailTutor_action($user_id)
     if (!isset($user_id))
     {
        $_SESSION["feedback_negative"][] = FEEDBACK_USER_DOES_NOT_EXIST;
-       return false;   
+       return false;
    }
 
 
@@ -486,7 +504,7 @@ else
 if (empty(trim($_POST['message'])) || !isset($_POST['message']))
 {
   $_SESSION["feedback_negative"][] =  FEEDBACK_NO_MESSAGE;
-  return false;  
+  return false;
 }
 //create heading for message
 $mail->Body = "Dear ".$tutor->fname." ".$tutor->lname.",\n\n"."Someone looking for a tutor on Lexington Tutor Exchange has contacted you. Please note they will not know your email address until you reply.\n\nSincerely,\nLexington Tutor Exchange\n\n_____Begin Forwarded Message_____\n\n".trim($_POST['message']);
@@ -516,7 +534,7 @@ public function reviewTutor_action($user_id)
     if (!isset($user_id))
     {
        $_SESSION["feedback_negative"][] = FEEDBACK_USER_DOES_NOT_EXIST;
-       return false;   
+       return false;
    }
    elseif($user_id == SESSION::get('user_id'))
    {
@@ -637,7 +655,7 @@ public function loadSaved()
             $all_users[$user->user_id]->fname = $user->fname;
             $all_users[$user->user_id]->lname = $user->lname;
             $all_users[$user->user_id]->age = $user->age;
-            
+
         if ($user->grade > 12)
         {
         	switch($user->grade)
